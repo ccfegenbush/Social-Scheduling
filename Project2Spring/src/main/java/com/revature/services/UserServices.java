@@ -15,6 +15,7 @@ public class UserServices {
 	@Autowired
 	private UserRepo ur;
 	
+	
 	public List<AppUser> findAll() {
 		return ur.findAll();
 	}
@@ -25,5 +26,9 @@ public class UserServices {
 	
 	public AppUser login(String username, String password) {
 		return ur.findByUsernameAndPassword(username, password);
+	}
+
+	public AppUser save(AppUser u) {
+		return ur.saveAndFlush(u);
 	}
 }

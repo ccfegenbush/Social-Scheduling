@@ -29,8 +29,6 @@ public class UserController {
 	public List<AppUser> findAll() {
 		System.out.println("finding all users");
 		List<AppUser> users = new ArrayList<>();
-//		users.add(new AppUser(1, "DAN", "pass", "admin", "DAN", "DAN", "DAN");
-//		return users;
 		return us.findAll();
 	}
 
@@ -42,15 +40,15 @@ public class UserController {
 
 	@CrossOrigin
 	@PostMapping("login")
-	public AppUser login(@RequestBody AppUser u){
+	public AppUser login(@RequestBody AppUser u) {
 		return us.login(u.getUsername(), u.getPassword());
 	}
-	
-//	@GetMapping("events/{id}"){
-//		public List<AppUser> usersThatWillGoToEventWithId(@PathVariable int id){
-//			return us.findByEvents.id;
-//		}
-//	}
+
+	@CrossOrigin
+	@PostMapping("register")
+	public AppUser register(@RequestBody AppUser u) {
+		return us.save(u);
+	}
 	
 	@PostMapping
 	public ResponseEntity<AppUser> save(@RequestBody AppUser u) {
