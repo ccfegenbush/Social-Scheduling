@@ -14,13 +14,13 @@ CREATE TABLE project2.users(
 
 CREATE TABLE project2.interests(
 	interest_id SERIAL PRIMARY KEY NOT NULL,
-	interest_name VARCHAR(50) NOT NULL,
+	interest_name VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE project2.user_has_interests(
+CREATE TABLE project2.user_has_interest(
 	user_interest_id SERIAL PRIMARY KEY NOT NULL,
 	user_id INTEGER REFERENCES project2.users(user_id),
-	interest_id INTEGER REFERENCES project2.interest(interest_id)
+	interest_id INTEGER REFERENCES project2.interests(interest_id)
 );
 
 CREATE TABLE project2.schedule(
