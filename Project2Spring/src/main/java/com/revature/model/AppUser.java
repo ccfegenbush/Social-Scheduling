@@ -21,13 +21,15 @@ public class AppUser {
 	private String firstName;
 	@Column(name = "user_last_name")
 	private String lastName;
+	@Column(name = "user_age")
+	private int age;
 	@Column(name = "user_email")
 	private String email;
 
 	@Override
 	public String toString() {
 		return "AppUser [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", email=" + email + "]";
+				+ ", lastName=" + lastName + ", email=" + email + ", age=" + age + "]";
 	}
 
 	@Override
@@ -131,14 +133,22 @@ public class AppUser {
 		this.email = email;
 	}
 
-	public AppUser(int id, String username, String password, String firstName, String lastName, String email,
-			String interest) {
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+	
+	public AppUser(int id, String username, String password, String firstName, String lastName, int age, String email) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.age = age;
 		this.email = email;
 	}
 

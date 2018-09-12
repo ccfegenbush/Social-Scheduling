@@ -32,10 +32,10 @@ public class UserController {
 		return us.findAll();
 	}
 
-	@GetMapping("{id}")
-	public AppUser findById(@PathVariable int id) {
-		return new AppUser(1, "DAN", "pass", "admin", "DAN", "DAN", "DAN");
-	}
+//	@GetMapping("{id}")
+//	public AppUser findById(@PathVariable int id) {
+//		return new AppUser(1, "DAN", "pass", "admin", "DAN", "DAN",3, "DAN");
+//	}
 
 	@PostMapping
 	public ResponseEntity<AppUser> save(@RequestBody AppUser u) {
