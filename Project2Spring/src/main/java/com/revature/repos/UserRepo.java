@@ -8,4 +8,5 @@ import com.revature.model.AppUser;
 @Repository
 public interface UserRepo extends JpaRepository<AppUser, Integer>{
 
+	AppUser findByUsernameAndPassword(String username, String password);
 }

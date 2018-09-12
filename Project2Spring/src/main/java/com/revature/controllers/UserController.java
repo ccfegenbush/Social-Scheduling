@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.revature.model.AppUser;
 import com.revature.services.UserServices;
 
+//@CrossOrigin(origins = "http://localhost:8080/userse", maxAge = 3600)
 @RestController
 @RequestMapping("users")
 public class UserController {
@@ -27,16 +29,27 @@ public class UserController {
 	public List<AppUser> findAll() {
 		System.out.println("finding all users");
 		List<AppUser> users = new ArrayList<>();
-//		users.add(new AppUser(1, "DAN", "pass", "admin", "DAN", "DAN", "DAN");
-//		return users;
 		return us.findAll();
 	}
 
-//	@GetMapping("{id}")
-//	public AppUser findById(@PathVariable int id) {
-//		return new AppUser(1, "DAN", "pass", "admin", "DAN", "DAN",3, "DAN");
-//	}
+	@GetMapping("{id}")
+	public AppUser findById(@PathVariable int id) {
+		AppUser user = us.findOne(id);
+		return user;
+	}
 
+	@CrossOrigin
+	@PostMapping("login")
+	public AppUser login(@RequestBody AppUser u) {
+		return us.login(u.getUsername(), u.getPassword());
+	}
+
+	@CrossOrigin
+	@PostMapping("register")
+	public AppUser register(@RequestBody AppUser u) {
+		return us.save(u);
+	}
+	
 	@PostMapping
 	public ResponseEntity<AppUser> save(@RequestBody AppUser u) {
 		u.setId(1);

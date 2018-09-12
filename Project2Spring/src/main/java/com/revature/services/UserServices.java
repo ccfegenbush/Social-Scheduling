@@ -17,12 +17,18 @@ public class UserServices {
 	
 	
 	public List<AppUser> findAll() {
-//		List<AppUser> users = new ArrayList<>();
-//		users.add(new AppUser(1, "DAN", "pass", "admin", "DAN", "DAN", "DAN"));
 		return ur.findAll();
 	}
 	
-	public Optional<AppUser> findById(){
-		return ur.findById(1);
+	public AppUser findOne(int id) {
+		return ur.findById(id).get();
+	}
+	
+	public AppUser login(String username, String password) {
+		return ur.findByUsernameAndPassword(username, password);
+	}
+
+	public AppUser save(AppUser u) {
+		return ur.saveAndFlush(u);
 	}
 }
