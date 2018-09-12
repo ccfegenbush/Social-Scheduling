@@ -1,12 +1,30 @@
 package com.revature.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "events")
 public class Event {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "event_id")
 	private int id;
+	@Column(name = "event_name")
 	private String name;
+	@Column(name = "event_type")
 	private String type;
+	@Column(name = "event_description")
 	private String description;
+	@Column(name = "event_date")
 	private String date;
+	@Column(name = "event_timestamp")
 	private String timestamp;
+	@Column(name = "event_author_id")
 	private int authorId;
 
 	public Event(int id, String name, String type, String description, String date, String timestamp, int authorId) {

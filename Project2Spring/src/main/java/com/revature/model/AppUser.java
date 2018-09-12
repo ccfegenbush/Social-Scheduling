@@ -1,20 +1,33 @@
 package com.revature.model;
 
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "users")
 public class AppUser {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "user_id")
 	private int id;
 	private String username;
 	private String password;
+	@Column(name = "user_first_name")
 	private String firstName;
+	@Column(name = "user_last_name")
 	private String lastName;
+	@Column(name = "user_email")
 	private String email;
-	private String interest;
 
 	@Override
 	public String toString() {
 		return "AppUser [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", email=" + email + ", interest=" + interest + "]";
+				+ ", lastName=" + lastName + ", email=" + email + "]";
 	}
 
 	@Override
@@ -24,7 +37,6 @@ public class AppUser {
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + id;
-		result = prime * result + ((interest == null) ? 0 : interest.hashCode());
 		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
@@ -52,11 +64,7 @@ public class AppUser {
 			return false;
 		if (id != other.id)
 			return false;
-		if (interest == null) {
-			if (other.interest != null)
-				return false;
-		} else if (!interest.equals(other.interest))
-			return false;
+
 		if (lastName == null) {
 			if (other.lastName != null)
 				return false;
@@ -123,14 +131,6 @@ public class AppUser {
 		this.email = email;
 	}
 
-	public String getInterest() {
-		return interest;
-	}
-
-	public void setInterest(String interest) {
-		this.interest = interest;
-	}
-
 	public AppUser(int id, String username, String password, String firstName, String lastName, String email,
 			String interest) {
 		super();
@@ -140,7 +140,6 @@ public class AppUser {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.interest = interest;
 	}
 
 	public AppUser() {
