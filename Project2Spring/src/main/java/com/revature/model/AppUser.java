@@ -6,21 +6,73 @@ public class AppUser {
 	private int id;
 	private String username;
 	private String password;
-	private String role;
-	private List<Movie> movies;
+	private String firstName;
+	private String lastName;
+	private String email;
+	private String interest;
 
-	public AppUser() {
-		super();
-		// TODO Auto-generated constructor stub
+	@Override
+	public String toString() {
+		return "AppUser [id=" + id + ", username=" + username + ", password=" + password + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", email=" + email + ", interest=" + interest + "]";
 	}
 
-	public AppUser(int id, String username, String password, String role, List<Movie> movies) {
-		super();
-		this.id = id;
-		this.username = username;
-		this.password = password;
-		this.role = role;
-		this.movies = movies;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((interest == null) ? 0 : interest.hashCode());
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AppUser other = (AppUser) obj;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (firstName == null) {
+			if (other.firstName != null)
+				return false;
+		} else if (!firstName.equals(other.firstName))
+			return false;
+		if (id != other.id)
+			return false;
+		if (interest == null) {
+			if (other.interest != null)
+				return false;
+		} else if (!interest.equals(other.interest))
+			return false;
+		if (lastName == null) {
+			if (other.lastName != null)
+				return false;
+		} else if (!lastName.equals(other.lastName))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		return true;
 	}
 
 	public int getId() {
@@ -47,72 +99,52 @@ public class AppUser {
 		this.password = password;
 	}
 
-	public String getRole() {
-		return role;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public List<Movie> getMovies() {
-		return movies;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setMovies(List<Movie> movies) {
-		this.movies = movies;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + id;
-		result = prime * result + ((movies == null) ? 0 : movies.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + ((role == null) ? 0 : role.hashCode());
-		result = prime * result + ((username == null) ? 0 : username.hashCode());
-		return result;
+	public String getEmail() {
+		return email;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		AppUser other = (AppUser) obj;
-		if (id != other.id)
-			return false;
-		if (movies == null) {
-			if (other.movies != null)
-				return false;
-		} else if (!movies.equals(other.movies))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (role == null) {
-			if (other.role != null)
-				return false;
-		} else if (!role.equals(other.role))
-			return false;
-		if (username == null) {
-			if (other.username != null)
-				return false;
-		} else if (!username.equals(other.username))
-			return false;
-		return true;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	@Override
-	public String toString() {
-		return "AppUser [id=" + id + ", username=" + username + ", password=" + password + ", role=" + role
-				+ ", movies=" + movies + "]";
+	public String getInterest() {
+		return interest;
 	}
 
+	public void setInterest(String interest) {
+		this.interest = interest;
+	}
+
+	public AppUser(int id, String username, String password, String firstName, String lastName, String email,
+			String interest) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.interest = interest;
+	}
+
+	public AppUser() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 }

@@ -27,14 +27,14 @@ public class UserController {
 	public List<AppUser> findAll() {
 		System.out.println("finding all users");
 		List<AppUser> users = new ArrayList<>();
-//		users.add(new AppUser(1, "blake", "pass", "admin", new ArrayList<>()));
+//		users.add(new AppUser(1, "DAN", "pass", "admin", "DAN", "DAN", "DAN");
 //		return users;
 		return us.findAll();
 	}
 
 	@GetMapping("{id}")
 	public AppUser findById(@PathVariable int id) {
-		return new AppUser(id, "blake", "pass", "admin", new ArrayList<>());
+		return new AppUser(1, "DAN", "pass", "admin", "DAN", "DAN", "DAN");
 	}
 
 	@PostMapping
