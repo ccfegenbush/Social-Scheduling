@@ -10,6 +10,7 @@ import './include/bootstrap';
 import { store } from './Store';
 import { SetInterestsComponent } from './components/interests/InterestComponent';
 import { LandingPage } from './views/landingPage';
+import MyCalendar from './components/calendar/calendar';
 
 class App extends React.Component {
   public render() {
@@ -20,11 +21,13 @@ class App extends React.Component {
             <AppNav />
             <div id="main-content-container">
               <Switch>
-                <Route path="/" component={LandingPage} />
+               
                 <Route path="/home" component={HomeComponent} />
                 <Route path="/sign-in" component={SignInComponent} />
                 <Route path="/register" component={NewUserComponent} />
+                <Route path="/calendar" component={MyCalendar} />
                 <Route path="/users/set-interests" component = {SetInterestsComponent} />
+                <Route path="/" component={LandingPage} />
                 <Route component={HomeComponent} />
               </Switch>
             </div>
