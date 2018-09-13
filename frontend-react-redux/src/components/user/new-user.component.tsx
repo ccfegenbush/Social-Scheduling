@@ -22,11 +22,11 @@ export class NewUserComponent extends React.Component<any, any> {
         const u = this.state;
         e.preventDefault();
         const user = {
+            "age": Number(u.age),
+            "email": u.email,
+            "firstName": u.firstName,
+            "lastName": u.lastName,
             "password": u.password,
-            "user_age": Number(u.age),
-            "user_email": u.email,
-            "user_first_name": u.firstName,
-            "user_last_name": u.lastName,
             "username": u.username
         }
         fetch(environment.context + 'users/register', {
