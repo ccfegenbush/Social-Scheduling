@@ -27,12 +27,11 @@ const AppNav: React.StatelessComponent<any> = (props) => {
             <li className="nav-item active">
               <Link to="/register" className="unset-anchor nav-link">Register</Link>
             </li>
-            <li className="nav-item active dropdown">
-              <a className="nav-link dropdown-toggle pointer" id="examples-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Examples</a>
-              <div className="dropdown-menu" aria-labelledby="examples-dropdown">
-                <div className="dropdown-item"><Link to="/sign-in" className="unset-anchor nav-link active">Movies</Link></div>
-              </div>
+
+               <li className="nav-item active">
+              <Link to="/users/set-interests" className="unset-anchor nav-link">Set Interests</Link>
             </li>
+           
           </ul>
         </div>
       </nav>
