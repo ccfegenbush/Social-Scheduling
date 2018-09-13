@@ -7,7 +7,7 @@ import { HomeComponent } from './components/home/home.component';
 import SignInComponent from './components/sign-in/sign-in.component';
 import { Provider } from 'react-redux';
 import { store } from './Store';
-import { NewUserComponent } from './components/user/new-user.component';
+import  NewUserComponent  from './components/user/new-user.component';
 
 class App extends React.Component {
   public render() {

@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import { signInReducer } from "./sign-in.reducer";
+import { newUserReducer } from "./new-user.reducer";
 
 export interface ISignInState {
   credentials: {
@@ -9,10 +10,21 @@ export interface ISignInState {
   errorMessage: string
 }
 
+export interface INewUserState {
+  age: number,
+  email: string,
+  firstName: string,
+  lastName: string,
+  password: string,
+  username: string
+}
+
 export interface IState {
-  signIn: ISignInState,
+  newUser: INewUserState,
+  signIn: ISignInState 
 }
 
 export const state = combineReducers<IState>({
-  signIn: signInReducer,
+  newUser: newUserReducer,
+  signIn: signInReducer
 })
