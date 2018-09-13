@@ -1,4 +1,4 @@
-Possible Project 2 Database
+
 
 CREATE SCHEMA project2;
 
@@ -18,9 +18,9 @@ CREATE TABLE project2.interests(
 );
 
 CREATE TABLE project2.user_has_interest(
-	user_interest_id SERIAL PRIMARY KEY NOT NULL,
-	user_id INTEGER REFERENCES project2.users(user_id),
-	interest_id INTEGER REFERENCES project2.interests(interest_id)
+	user_id INTEGER REFERENCES project2.users(user_id) NOT NULL,
+	interest_id INTEGER REFERENCES project2.interests(interest_id) NOT NULL,
+    PRIMARY KEY (user_id, interest_id)
 );
 
 CREATE TABLE project2.schedule(
@@ -60,5 +60,4 @@ CREATE TABLE project2.friends(
 	user_id INTEGER REFERENCES project2.users(user_id),
 	other_user_id INTEGER REFERENCES project2.users(user_id)
 );
-
 

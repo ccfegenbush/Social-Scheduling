@@ -1,25 +1,51 @@
 import * as React from 'react';
 import { environment } from '../../environment';
+import { RouteComponentProps } from 'react-router';
+import * as newUserActions from '../../actions/new-user/new-user.actions';
+import { connect } from 'react-redux';
+import { INewUserState, IState } from '../../reducers';
 
-export class NewUserComponent extends React.Component<any, any> {
+interface IProps extends RouteComponentProps<{}>, INewUserState {
+    updateAge: (age: string) => any,
+    updateEmail: (email: string) => any,
+    updateFirstName: (firstName: string) => any,
+    updateLastName: (lastName: string) => any,
+    updatePassword: (password: string) => any,
+    updateUsername: (username: string) => any,
+    onSubmit: (user: any) => any
+}
+
+class NewUserComponent extends React.Component<IProps, {}> {
     constructor(props: any) {
         super(props);
-        this.state = {
-            age: 0,
-            email: '',
-            firstName: '',
-            lastName: '',
-            password: '',
-            username: ''
-        }
     }
 
-    public onChange = (e: any) => {
-        this.setState({ [e.target.name]: e.target.value })
+    public usernameChange = (e: any) => {
+        this.props.updateUsername(e.target.value);
+    }
+
+    public passwordChange = (e: any) => {
+        this.props.updatePassword(e.target.value);
+    }
+
+    public firstNameChange = (e: any) => {
+        this.props.updateFirstName(e.target.value);
     }
     
-    public onSubmit = (e: any) => {
-        const u = this.state;
+    public lastNameChange = (e: any) => {
+        this.props.updateLastName(e.target.value);
+    }
+
+    public ageChange = (e: any) => {
+        this.props.updateAge(e.target.value);
+    }
+
+    public emailChange = (e: any) => {
+        this.props.updateEmail(e.target.value);
+    }
+    
+    public onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        const u = this.props;
         e.preventDefault();
         const user = {
             "age": Number(u.age),
@@ -29,7 +55,7 @@ export class NewUserComponent extends React.Component<any, any> {
             "password": u.password,
             "username": u.username
         }
-        fetch(environment.context + 'users/register', {
+        fetch(environment.context + "users/register", {
             body: JSON.stringify(user),
             headers: {
                 'Accept': 'application/json',
@@ -47,7 +73,7 @@ export class NewUserComponent extends React.Component<any, any> {
     }
 
     public render() {
-        const u = this.state;
+        const u = this.props;
         return (
             <div>
                 <form className="form-signin" onSubmit={this.onSubmit}>
@@ -55,7 +81,7 @@ export class NewUserComponent extends React.Component<any, any> {
 
                     <label htmlFor="inputUsername" className="sr-only">Username</label>
                     <input
-                    onChange={this.onChange}
+                    onChange={this.usernameChange}
                     value={u.username}
                     type="text"
                     name="username"
@@ -65,7 +91,7 @@ export class NewUserComponent extends React.Component<any, any> {
 
                     <label htmlFor="inputPassword" className="sr-only">Password</label>
                     <input
-                    onChange={this.onChange}
+                    onChange={this.passwordChange}
                     value={u.password}
                     type="password"
                     name="password"
@@ -75,7 +101,7 @@ export class NewUserComponent extends React.Component<any, any> {
 
                     <label htmlFor="inputFirstName" className="sr-only">First Name</label>
                     <input
-                    onChange={this.onChange}
+                    onChange={this.firstNameChange}
                     value={u.firstName}
                     type="text"                    
                     name="firstName"
@@ -85,7 +111,7 @@ export class NewUserComponent extends React.Component<any, any> {
 
                     <label htmlFor="inputLastName" className="sr-only">Last Name</label>
                     <input
-                    onChange={this.onChange}
+                    onChange={this.lastNameChange}
                     value={u.lastName}
                     type="text"                    
                     name="lastName"
@@ -95,7 +121,7 @@ export class NewUserComponent extends React.Component<any, any> {
 
                     <label htmlFor="inputAge" className="sr-only">Age</label>
                     <input
-                    onChange={this.onChange}
+                    onChange={this.ageChange}
                     value={u.age}
                     type="text"                    
                     name="age"
@@ -105,7 +131,7 @@ export class NewUserComponent extends React.Component<any, any> {
 
                     <label htmlFor="inputEmail" className="sr-only">Email</label>
                     <input
-                    onChange={this.onChange}
+                    onChange={this.emailChange}
                     value={u.email}
                     type="text"                    
                     name="email"
@@ -115,10 +141,19 @@ export class NewUserComponent extends React.Component<any, any> {
 
                     <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
                 </form>
-                <p> Hello from new user! </p>
+                
             </div>
         )
     }
-
-
 }
+
+    const mapStateToProps = (state: IState) => (state.newUser);
+    const mapDispatchToProps = {
+        updateAge: newUserActions.updateAge,
+        updateEmail: newUserActions.updateEmail,
+        updateFirstName: newUserActions.updateFirstName,
+        updateLastName: newUserActions.updateLastName,
+        updatePassword: newUserActions.updatePassword,
+        updateUsername: newUserActions.updateUsername
+    }
+export default connect(mapStateToProps, mapDispatchToProps)(NewUserComponent);
