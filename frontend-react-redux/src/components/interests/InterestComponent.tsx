@@ -5,23 +5,21 @@ export class SetInterestsComponent extends React.Component<any, any> {
 
     constructor(props: any) {
         super(props);
-        this.onReimbTypeSet = this.onReimbTypeSet.bind(this)
         this.state = {
             interest: 0,
         }
     }
-    public onReimbTypeSet = (e: any) => {
-        console.log(e.target);
+
+    public onChange = (e: any) => {
         this.setState({
           interest:  Number(e.target.value)
         });
-        console.log(this.state)
       }
 
     public onSubmit = (e: any) => {
-        console.log(e)
-        const i = this.state;
         e.preventDefault();
+        const i = this.state;
+        console.log("current sumbit interest id: " + i);
         const interests = {
             "interest": i.interest,
             // "interest2": i.interest2,
@@ -36,7 +34,7 @@ export class SetInterestsComponent extends React.Component<any, any> {
             method: 'POST'
         })
             .then(resp => resp.json())
-            .then(userData => {
+            .then(interestData => {
                 this.props.history.push('/home');
             })
             .catch(err => {
@@ -53,10 +51,8 @@ export class SetInterestsComponent extends React.Component<any, any> {
                 <div className="form-group">
                     <label htmlFor="inputInterest1Type" >Interest 1:</label>
                     <select className="form-control"
-                        id="sel1"
-                        onChange={this.onReimbTypeSet}
+                        onChange={this.onChange}
                         value={u.interest}
-                        placeholder="Interest Type 1"
                         required 
                     >
                         <option value="1">Sports</option>
