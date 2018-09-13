@@ -5,29 +5,25 @@ export class SetInterestsComponent extends React.Component<any, any> {
 
     constructor(props: any) {
         super(props);
+        this.onReimbTypeSet = this.onReimbTypeSet.bind(this)
         this.state = {
-            interest1: '',
-            // interest2: '',
-            // interest3: ''
+            interest: 0,
         }
     }
     public onReimbTypeSet = (e: any) => {
-    
+        console.log(e.target);
         this.setState({
-          interest1: e.target.value
-        //   credentials: {
-        //     ...this.state.inters,
-        //     reimbType: e.target.value
-        //   }
+          interest:  Number(e.target.value)
         });
         console.log(this.state)
       }
 
     public onSubmit = (e: any) => {
+        console.log(e)
         const i = this.state;
         e.preventDefault();
         const interests = {
-            "interest1": i.interest1,
+            "interest": i.interest,
             // "interest2": i.interest2,
             // "interest3": i.interest3
         }
@@ -59,7 +55,7 @@ export class SetInterestsComponent extends React.Component<any, any> {
                     <select className="form-control"
                         id="sel1"
                         onChange={this.onReimbTypeSet}
-                        value={u.interest1}
+                        value={u.interest}
                         placeholder="Interest Type 1"
                         required 
                     >
