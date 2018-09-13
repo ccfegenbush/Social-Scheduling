@@ -15,7 +15,7 @@ interface IProps extends RouteComponentProps<{}>, INewUserState {
     onSubmit: (user: any) => any
 }
 
-class NewUserComponent extends React.Component<IProps, {}> {
+export class NewUserComponent extends React.Component<IProps, {}> {
     constructor(props: any) {
         super(props);
     }
@@ -141,7 +141,7 @@ class NewUserComponent extends React.Component<IProps, {}> {
 
                     <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
                 </form>
-                <p> Hello from new user! </p>
+                
             </div>
         )
     }
