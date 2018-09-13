@@ -115,7 +115,7 @@ export class NewUserComponent extends React.Component<any, any> {
 
                     <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
                 </form>
-                <p> Hello from new user! </p>
+                
             </div>
         )
     }
