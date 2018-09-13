@@ -15,7 +15,7 @@ interface IProps extends RouteComponentProps<{}>, INewUserState {
     onSubmit: (user: any) => any
 }
 
-export class NewUserComponent extends React.Component<IProps, {}> {
+class NewUserComponent extends React.Component<IProps, {}> {
     constructor(props: any) {
         super(props);
     }

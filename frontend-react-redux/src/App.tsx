@@ -5,7 +5,7 @@ import './App.css';
 import { HomeComponent } from './components/home/home.component';
 import AppNav from './components/nav/nav.component';
 import SignInComponent from './components/sign-in/sign-in.component';
-import { NewUserComponent } from './components/user/new-user.component';
+import NewUserComponent from './components/user/new-user.component';
 import './include/bootstrap';
 import { store } from './Store';
 import { SetInterestsComponent } from './components/interests/InterestComponent';
