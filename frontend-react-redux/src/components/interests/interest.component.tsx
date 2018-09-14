@@ -22,15 +22,15 @@ class SetInterestsComponent extends React.Component<IProps, {}> {
 
       }
 
-    public onSubmit = (e: any) => {
+    public onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const i = this.props;
         console.log("current sumbit interest id: " + i);
         const interests = {
-            "id":  JSON.parse(localStorage.getItem('userid') || '{}').users_id,
+            "id":  JSON.parse(localStorage.getItem('userId') || '{}'),
             "interestId": i.interest
         }
-        fetch(environment.context + `users/interests/${interests.interestId}`, {
+        fetch(environment.context + `users/${interests.id}/addInterest`, {
             body: JSON.stringify(interests),
             headers: {
                 'Accept': 'application/json',
