@@ -7,12 +7,14 @@ export class SetInterestsComponent extends React.Component<any, any> {
         super(props);
         this.onReimbTypeSet = this.onReimbTypeSet.bind(this)
         this.state = {
-            interest: 0,
+            interest: 4,
+            userId: 1
         }
     }
     public onReimbTypeSet = (e: any) => {
         console.log(e.target);
         this.setState({
+                ...this.state,
           interest:  Number(e.target.value)
         });
         console.log(this.state)
@@ -23,11 +25,12 @@ export class SetInterestsComponent extends React.Component<any, any> {
         const i = this.state;
         e.preventDefault();
         const interests = {
-            "interest": i.interest,
+            "interestId": i.interest,
+            "userID" : i.userId
             // "interest2": i.interest2,
             // "interest3": i.interest3
         }
-        fetch(environment.context + 'interests/create', {
+        fetch(environment.context + 'UserInterests/create', {
             body: JSON.stringify(interests),
             headers: {
                 'Accept': 'application/json',
