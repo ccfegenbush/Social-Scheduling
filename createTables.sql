@@ -43,8 +43,10 @@ CREATE TABLE project2.event(
 	event_name VARCHAR(100) NOT NULL,
 	event_type VARCHAR (15) NOT NULL,
 	event_description VARCHAR(15) NOT NULL,
-	event_date VARCHAR(250) NOT NULL,
-	event_time TIMESTAMP NOT NULL,
+	event_start_date VARCHAR(250) NOT NULL,
+	event_end_date VARCHAR(250) NOT NULL,
+	event_start_time TIMESTAMP NOT NULL,
+	event_end_time TIMESTAMP NOT NULL,
 	event_location VARCHAR(100) NOT NULL,
 	event_author_id INTEGER REFERENCES project2.users(user_id)
 );
@@ -55,9 +57,40 @@ CREATE TABLE project2.event_attendees(
 	user_id INTEGER REFERENCES project2.users(user_id)
 );
 
-CREATE TABLE project2.friends(
-	friends_id SERIAL PRIMARY KEY NOT NULL,
-	user_id INTEGER REFERENCES project2.users(user_id),
-	other_user_id INTEGER REFERENCES project2.users(user_id)
+CREATE TABLE project2.user_has_friends (
+  user_id INTEGER NOT NULL REFERENCES project2.users(user_id),
+  friend_id INTEGER NOT NULL REFERENCES project2.users(user_id),
+  PRIMARY KEY (user_id, friend_id)
 );
 
+CREATE TABLE project2.user_has_friends (
+  user_id INTEGER NOT NULL REFERENCES project2.users(user_id),
+  friend_id INTEGER NOT NULL REFERENCES project2.users(user_id),
+  PRIMARY KEY (user_id, friend_id)
+);
+
+-- Table: project2.friend_request
+
+-- DROP TABLE project2.friend_request;
+
+CREATE TABLE project2.friend_request
+(
+    user_id integer NOT NULL,
+    request_id integer NOT NULL,
+    CONSTRAINT request_table_pkey PRIMARY KEY (user_id, request_id),
+    CONSTRAINT request_request_id_fkey FOREIGN KEY (request_id)
+        REFERENCES project2.users (user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT request_user_id_fkey FOREIGN KEY (user_id)
+        REFERENCES project2.users (user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE project2.friend_request
+    OWNER to postgres;
