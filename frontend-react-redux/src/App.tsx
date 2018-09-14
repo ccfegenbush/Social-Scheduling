@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 import { HomeComponent } from './components/home/home.component';
-import { SetInterestsComponent } from './components/interests/InterestComponent';
+import SetInterestsComponent from './components/interests/interest.component';
 import AppNav from './components/nav/nav.component';
 import SignInComponent from './components/sign-in/sign-in.component';
 import NewUserComponent from './components/user/new-user.component';

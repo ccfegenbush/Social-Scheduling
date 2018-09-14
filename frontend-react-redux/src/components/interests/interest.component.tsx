@@ -1,14 +1,16 @@
 import * as React from 'react';
 import { environment } from '../../environment';
 import { RouteComponentProps } from 'react-router';
-import { IUserInterestsState } from '../../reducers';
+import { IUserInterestsState, IState } from '../../reducers';
+import * as userInterestsActions from '../../actions/user-interests/user-interests.actions';
+import { connect } from 'react-redux';
 
 interface IProps extends RouteComponentProps<{}>, IUserInterestsState {
     updateInterest: (interest: string) => any,
     onSubmit: (interest: any) => any
 }
 
-export class SetInterestsComponent extends React.Component<IProps, {}> {
+class SetInterestsComponent extends React.Component<IProps, {}> {
 
     constructor(props: any) {
         super(props);
@@ -28,7 +30,7 @@ export class SetInterestsComponent extends React.Component<IProps, {}> {
             "id":  JSON.parse(localStorage.getItem('userid') || '{}').users_id,
             "interestId": i.interest
         }
-        fetch(environment.context + `users/interests/${interests.id}`, {
+        fetch(environment.context + `users/interests/${interests.interestId}`, {
             body: JSON.stringify(interests),
             headers: {
                 'Accept': 'application/json',
@@ -73,3 +75,9 @@ export class SetInterestsComponent extends React.Component<IProps, {}> {
         )
     }
 }
+
+    const mapStateToProps = (state: IState) => (state.userInterests);
+    const mapDispatchToProps = {
+        updateInterest: userInterestsActions.updateInterest
+    }
+export default connect(mapStateToProps, mapDispatchToProps) (SetInterestsComponent);
