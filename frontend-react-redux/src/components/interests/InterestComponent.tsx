@@ -1,24 +1,26 @@
 import * as React from 'react';
 import { environment } from '../../environment';
+import { RouteComponentProps } from 'react-router';
+import { IUserInterestsState } from '../../reducers';
 
-export class SetInterestsComponent extends React.Component<any, any> {
+interface IProps extends RouteComponentProps<{}>, IUserInterestsState {
+    updateInterest: (interest: string) => any,
+    onSubmit: (interest: any) => any
+}
+
+export class SetInterestsComponent extends React.Component<IProps, {}> {
 
     constructor(props: any) {
         super(props);
-        this.state = {
-            interest: 0,
-        }
     }
 
-    public onChange = (e: any) => {
-        this.setState({
-          interest:  Number(e.target.value)
-        });
+    public interestChange = (e: any) => {
+        this.props.updateInterest(e.target.value);
       }
 
     public onSubmit = (e: any) => {
         e.preventDefault();
-        const i = this.state;
+        const i = this.props;
         console.log("current sumbit interest id: " + i);
         const interests = {
             "interest": i.interest,
@@ -43,7 +45,7 @@ export class SetInterestsComponent extends React.Component<any, any> {
     }
 
     public render() {
-        const u = this.state;
+        const u = this.props;
         return (
             <form style={{ background: '#ADD8E6' }} className="form-signup" onSubmit={this.onSubmit}>
                 <h1 className="h3 mb-3 font-weight-normal">Please fill in the reimbursement information</h1>
@@ -51,7 +53,7 @@ export class SetInterestsComponent extends React.Component<any, any> {
                 <div className="form-group">
                     <label htmlFor="inputInterest1Type" >Interest 1:</label>
                     <select className="form-control"
-                        onChange={this.onChange}
+                        onChange={this.interestChange}
                         value={u.interest}
                         required 
                     >
