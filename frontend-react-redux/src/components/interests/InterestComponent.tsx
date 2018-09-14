@@ -1,32 +1,32 @@
 import * as React from 'react';
 import { environment } from '../../environment';
+import { RouteComponentProps } from 'react-router';
+import { IUserInterestsState } from '../../reducers';
 
-export class SetInterestsComponent extends React.Component<any, any> {
+interface IProps extends RouteComponentProps<{}>, IUserInterestsState {
+    updateInterest: (interest: string) => any,
+    onSubmit: (interest: any) => any
+}
+
+export class SetInterestsComponent extends React.Component<IProps, {}> {
 
     constructor(props: any) {
         super(props);
-        this.onReimbTypeSet = this.onReimbTypeSet.bind(this)
-        this.state = {
-            interest: 4,
-            userId: 1
-        }
+
     }
-    public onReimbTypeSet = (e: any) => {
-        console.log(e.target);
-        this.setState({
-                ...this.state,
-          interest:  Number(e.target.value)
-        });
-        console.log(this.state)
+
+    public interestChange = (e: any) => {
+        this.props.updateInterest(e.target.value);
+
       }
 
     public onSubmit = (e: any) => {
-        console.log(e)
-        const i = this.state;
         e.preventDefault();
+        const i = this.props;
+        console.log("current sumbit interest id: " + i);
         const interests = {
             "interestId": i.interest,
-            "userID" : i.userId
+            // "userID" : i.userId
             // "interest2": i.interest2,
             // "interest3": i.interest3
         }
@@ -39,7 +39,7 @@ export class SetInterestsComponent extends React.Component<any, any> {
             method: 'POST'
         })
             .then(resp => resp.json())
-            .then(userData => {
+            .then(interestData => {
                 this.props.history.push('/home');
             })
             .catch(err => {
@@ -48,7 +48,7 @@ export class SetInterestsComponent extends React.Component<any, any> {
     }
 
     public render() {
-        const u = this.state;
+        const u = this.props;
         return (
             <form style={{ background: '#ADD8E6' }} className="form-signup" onSubmit={this.onSubmit}>
                 <h1 className="h3 mb-3 font-weight-normal">Please fill in the reimbursement information</h1>
@@ -56,10 +56,8 @@ export class SetInterestsComponent extends React.Component<any, any> {
                 <div className="form-group">
                     <label htmlFor="inputInterest1Type" >Interest 1:</label>
                     <select className="form-control"
-                        id="sel1"
-                        onChange={this.onReimbTypeSet}
+                        onChange={this.interestChange}
                         value={u.interest}
-                        placeholder="Interest Type 1"
                         required 
                     >
                         <option value="1">Sports</option>
