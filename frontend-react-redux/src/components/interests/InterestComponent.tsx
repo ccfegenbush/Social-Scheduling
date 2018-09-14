@@ -25,8 +25,8 @@ export class SetInterestsComponent extends React.Component<IProps, {}> {
         const i = this.props;
         console.log("current sumbit interest id: " + i);
         const interests = {
-            "id":  JSON.parse(localStorage.getItem('userid') || '{}').ers_users_id,
-            "interestId": i.interest,
+            "id":  JSON.parse(localStorage.getItem('userid') || '{}').users_id,
+            "interestId": i.interest
         }
         fetch(environment.context + `users/interests/${interests.id}`, {
             body: JSON.stringify(interests),
