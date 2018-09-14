@@ -106,7 +106,7 @@ export class AddFriendComponent extends React.Component<any, any> {
 
                 <thead>
           <tr>
-            <th scope="Friend Name"> Friend Name</th>
+            <th scope="Friend Name"> Friend Name:</th>
             </tr>
         </thead>
             </div>

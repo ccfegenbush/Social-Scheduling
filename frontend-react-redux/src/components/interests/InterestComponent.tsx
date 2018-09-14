@@ -26,11 +26,11 @@ export class SetInterestsComponent extends React.Component<IProps, {}> {
         console.log("current sumbit interest id: " + i);
         const interests = {
             "interestId": i.interest,
-            // "userID" : i.userId
+            "id" : localStorage.getItem("userid").
             // "interest2": i.interest2,
             // "interest3": i.interest3
         }
-        fetch(environment.context + 'UserInterests/create', {
+        fetch(environment.context + `users/interests/${usersId}`, {
             body: JSON.stringify(interests),
             headers: {
                 'Accept': 'application/json',
@@ -51,7 +51,7 @@ export class SetInterestsComponent extends React.Component<IProps, {}> {
         const u = this.props;
         return (
             <form style={{ background: '#ADD8E6' }} className="form-signup" onSubmit={this.onSubmit}>
-                <h1 className="h3 mb-3 font-weight-normal">Please fill in the reimbursement information</h1>
+                <h1 className="h3 mb-3 font-weight-normal">Please fill in the interest information</h1>
 
                 <div className="form-group">
                     <label htmlFor="inputInterest1Type" >Interest 1:</label>
