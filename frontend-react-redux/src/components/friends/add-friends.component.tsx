@@ -5,8 +5,8 @@ export class AddFriendComponent extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            friendName : '',
-            username : ''
+            friendName: '',
+            username: ''
         }
     }
 
@@ -16,8 +16,8 @@ export class AddFriendComponent extends React.Component<any, any> {
         const u = this.state;
         e.preventDefault();
         const user = {
-            friendName : u.friendName,
-            username : u.username
+            friendName: u.friendName,
+            username: u.username
         }
         fetch(environment.context + 'friends', {
             body: JSON.stringify(user),
@@ -27,21 +27,21 @@ export class AddFriendComponent extends React.Component<any, any> {
             },
             method: 'GET'
         })
-        .then(resp => resp.json())
-        .then(userData => {
-            this.props.history.push('/home');
-        })
-        .catch(err => {
-            console.log(err);
-        })
+            .then(resp => resp.json())
+            .then(userData => {
+                this.props.history.push('/home');
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
-    
+
     public onSubmit = (e: any) => {
         const u = this.state;
         e.preventDefault();
         const user = {
-            friendName : u.friendName,
-            username : u.username
+            friendName: u.friendName,
+            username: u.username
         }
         fetch(environment.context + 'friends', {
             body: JSON.stringify(user),
@@ -51,21 +51,21 @@ export class AddFriendComponent extends React.Component<any, any> {
             },
             method: 'GET'
         })
-        .then(resp => resp.json())
-        .then(userData => {
-            this.props.history.push('/home');
-        })
-        .catch(err => {
-            console.log(err);
-        })
+            .then(resp => resp.json())
+            .then(userData => {
+                this.props.history.push('/home');
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     public onAddFriend = (e: any) => {
         const u = this.state;
         e.preventDefault();
         const user = {
-            friendName : u.friendName,
-            username : u.username
+            friendName: u.friendName,
+            username: u.username
         }
         fetch(environment.context + 'friends', {
             body: JSON.stringify(user),
@@ -75,13 +75,13 @@ export class AddFriendComponent extends React.Component<any, any> {
             },
             method: 'POST'
         })
-        .then(resp => resp.json())
-        .then(userData => {
-            this.props.history.push('/home');
-        })
-        .catch(err => {
-            console.log(err);
-        })
+            .then(resp => resp.json())
+            .then(userData => {
+                this.props.history.push('/home');
+            })
+            .catch(err => {
+                console.log(err);
+            })
     }
 
     public render() {
@@ -93,25 +93,23 @@ export class AddFriendComponent extends React.Component<any, any> {
 
                     <label htmlFor="inputUsername" className="sr-only">Search for friends!</label>
                     <input
-                    onChange={this.onChange}
-                    value={u.username}
-                    type="text"
-                    name="friendName"
-                    className="form-control"
-                    placeholder="Friend Name"
-                    required />
+                        onChange={this.onChange}
+                        value={u.username}
+                        type="text"
+                        name="friendName"
+                        className="form-control"
+                        placeholder="Friend Name"
+                        required />
 
                     <button className="btn btn-lg btn-primary btn-block" type="Search">Search for a Friend</button>
                 </form>
 
                 <thead>
-          <tr>
-            <th scope="Friend Name"> Friend Name:</th>
-            </tr>
-        </thead>
+                    <tr>
+                        <th scope="Friend Name"> Friend Name:</th>
+                    </tr>
+                </thead>
             </div>
         )
     }
-
-
 }

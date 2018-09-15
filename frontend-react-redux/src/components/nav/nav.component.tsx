@@ -30,6 +30,11 @@ const AppNav: React.StatelessComponent<any> = (props) => {
             <li className="nav-item active">
               <Link to="/calendar" className="unset-anchor nav-link">Calendar</Link>
             </li>
+
+          <li className="nav-item active">
+              <Link to="/make-event" className="unset-anchor nav-link">Make Event</Link>
+            </li>
+
             <li className="nav-item active">
               <Link to="/users/set-interests" className="unset-anchor nav-link">Set Interests</Link>
             </li>
