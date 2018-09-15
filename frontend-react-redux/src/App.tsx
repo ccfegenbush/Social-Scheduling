@@ -15,8 +15,6 @@ import { LandingPage } from './views/landingPage';
 import newEventComponent from './components/events/new-event.component';
 
 
-
-
 class App extends React.Component {
   public render() {
     return (
@@ -24,9 +22,9 @@ class App extends React.Component {
         <BrowserRouter>
           <div>
             <AppNav />
-            <div id="main-content-container">
+            <br/>
+            <div id="main-content-container" className="container mt-5 pt-5">
               <Switch>
-               
                 <Route path="/home" component={HomeComponent} />
                 <Route path="/sign-in" component={SignInComponent} />
                 <Route path="/register" component={NewUserComponent} />
