@@ -7,10 +7,10 @@ const initialState: INewEventState = {
     endDate: '',
     endTime: '',
     eventLocation: '',
+    eventType: '',
     name: '',
     startDate: '',
-    startTime: '',
-    type: '',
+    startTime: ''
 }
 
 export const newEventReducer = (state = initialState, action: any) => {
@@ -53,7 +53,7 @@ export const newEventReducer = (state = initialState, action: any) => {
         case newEventTypes.UPDATE_EVENT_TYPE:
             return {
                 ...state,
-                startTime: action.payload.startTime
+                eventType: action.payload.eventType
             }
         case newEventTypes.UPDATE_EVENT_LOCATION:
             return {

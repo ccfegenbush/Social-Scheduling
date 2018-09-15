@@ -30,7 +30,7 @@ export interface INewEventState {
   name: string,
   startDate: string,
   startTime: string, 
-  type: string
+  eventType: string
 }
 
 export interface IUserInterestsState {

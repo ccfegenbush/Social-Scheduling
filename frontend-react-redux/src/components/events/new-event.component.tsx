@@ -67,11 +67,11 @@ class NewEventComponent extends React.Component<IProps, {}> {
             "description": ev.description,
             "endDate": ev.endDate,
             "endTime": ev.endTime,
+            "eventType": ev.eventType,
             "location": ev.eventLocation,
             "name": ev.name,
             "startDate": ev.startDate,
             "startTime": ev.startTime,
-            "type": ev.type,
         }
 
         console.log(event)
@@ -109,12 +109,12 @@ class NewEventComponent extends React.Component<IProps, {}> {
                         placeholder="Event Name"
                         required />
 
-                    <label htmlFor="ev" className="sr-only">Event type</label>
+                    <label htmlFor="inputType" className="sr-only">Event type</label>
                     <input
                         onChange={this.eventTypeChange}
-                        value={u.type}
+                        value={u.eventType}
                         type="text"
-                        name="eventType"
+                        name="event Type"
                         className="form-control"
                         placeholder="Event Type"
                         required />

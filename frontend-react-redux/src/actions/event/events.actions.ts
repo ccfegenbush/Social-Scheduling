@@ -9,10 +9,10 @@ export const updateEventName = (name: string) => {
     }
 }
 
-export const updateEventType = (type: string) => {
+export const updateEventType = (eventType: string) => {
     return {
         payload: {
-            type
+            eventType
         },
         type: newEventTypes.UPDATE_EVENT_TYPE
     }
