@@ -19,7 +19,7 @@ export class AddFriendComponent extends React.Component<any, any> {
             friendName: u.friendName,
             username: u.username
         }
-        fetch(environment.context + 'friends', {
+        fetch(environment.context + 'users', {
             body: JSON.stringify(user),
             headers: {
                 'Accept': 'application/json',
