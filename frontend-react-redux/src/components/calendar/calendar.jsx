@@ -15,7 +15,7 @@ let events = [
 ]
 
 const MyCalendar = (props) => {
-    return <div>
+    return <div className="mt-5 pt-5 container">
         <BigCalendar events={events}
             defaultDate={new Date()}
             defaultView="month"

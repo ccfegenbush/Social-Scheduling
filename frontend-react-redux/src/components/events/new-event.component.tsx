@@ -95,7 +95,7 @@ class NewEventComponent extends React.Component<IProps, {}> {
     public render() {
         const u = this.props;
         return (
-            <div>
+            <div className="mt-5 pt-5 container">
                 <form className="form-signin" onSubmit={this.onSubmit}>
                     <h1 className="h3 mb-3 font-weight-normal">Create a New Event</h1>
 

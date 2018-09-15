@@ -18,10 +18,9 @@ class App extends React.Component {
     return (
       <Provider store={store}>
         <BrowserRouter>
-          <div>
+          <React.Fragment>
             <AppNav />
-            <br/>
-            <div id="main-content-container" className="container mt-5 pt-5">
+            <div id="main-content-container" className="mb-5 pb-5">
               <Switch>
                 <Route path="/home" component={LandingPage} />
                 <Route path="/sign-in" component={SignInComponent} />
@@ -34,7 +33,7 @@ class App extends React.Component {
                 <Route component={LandingPage} />
               </Switch>
             </div>
-          </div>
+          </React.Fragment>
         </BrowserRouter>
       </Provider>
     );
