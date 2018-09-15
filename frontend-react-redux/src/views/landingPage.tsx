@@ -4,9 +4,8 @@ export class LandingPage extends React.Component {
 
     public render() {
         return (
-            <div>
-            
-            </div>
+            <div></div>
+
         );
     }
 }
