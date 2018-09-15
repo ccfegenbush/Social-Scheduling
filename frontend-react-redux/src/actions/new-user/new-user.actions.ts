@@ -53,3 +53,4 @@ export const updateEmail = (email: string) => {
         type: newUserTypes.UPDATE_EMAIL
     }
 }
+

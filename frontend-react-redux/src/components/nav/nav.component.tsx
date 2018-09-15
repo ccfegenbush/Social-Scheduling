@@ -18,7 +18,7 @@ const AppNav: React.StatelessComponent<any> = (props) => {
               {JSON.parse(localStorage.getItem('userId') || '{}')} </li> : null}
 
             <li className="nav-item">
-              <Link to="/home" className="nav-link">Home</Link>
+              <Link to="/" className="nav-link">Home</Link>
             </li>
             <li className="nav-item">
               <Link to="/sign-in" className="nav-link">Sign In</Link>
