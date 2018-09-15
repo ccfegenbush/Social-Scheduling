@@ -7,21 +7,21 @@ import { AddFriendComponent } from './components/friends/add-friends.component';
 import SetInterestsComponent from './components/interests/interest.component';
 import AppNav from './components/nav/nav.component';
 import SignInComponent from './components/sign-in/sign-in.component';
-import NewUserComponent from './components/user/new-user.component';
+import NewUserComponent from './components/create-user/new-user.component';
 import './include/bootstrap';
 import { store } from './Store';
 import { LandingPage } from './views/landingPage';
 import newEventComponent from './components/events/new-event.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 class App extends React.Component {
   public render() {
     return (
       <Provider store={store}>
         <BrowserRouter>
-          <div>
+          <React.Fragment>
             <AppNav />
-            <br/>
-            <div id="main-content-container" className="container mt-5 pt-5">
+            <div id="main-content-container" className="mb-5 pb-5">
               <Switch>
                 <Route path="/home" component={LandingPage} />
                 <Route path="/sign-in" component={SignInComponent} />
@@ -30,11 +30,12 @@ class App extends React.Component {
                 <Route path="/users/set-interests" component = {SetInterestsComponent} />
                 <Route path="/add-friends" component = {AddFriendComponent} />
                 <Route path="/make-event" component = {newEventComponent} />
+                <Route path="/profile" component={ProfileComponent} />
                 <Route path="/" component={LandingPage} />
                 <Route component={LandingPage} />
               </Switch>
             </div>
-          </div>
+          </React.Fragment>
         </BrowserRouter>
       </Provider>
     );
