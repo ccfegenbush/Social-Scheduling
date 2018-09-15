@@ -1,11 +1,13 @@
 import * as React from 'react';
 
-export class ProfileComponent extends React.Component {
+
+export class ProfileComponent extends React.Component<any, any> {
 
 
     public render() {
         return (
-            <p>Profile page</p>
+            <div className="container mt-5 pt-5"><p>Profile page</p>
+            </div>
         )
     }
 }
