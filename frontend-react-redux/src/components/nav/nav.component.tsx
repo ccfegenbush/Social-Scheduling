@@ -18,9 +18,10 @@ const AppNav: React.StatelessComponent<any> = (props) => {
         </button>
         <div className="collapse navbar-collapse" id="navbarsExample04">
           <ul className="navbar-nav ml-auto margin-nav">
-            <li className="nav-item active">
-            {JSON.parse(localStorage.getItem('userId') || '{}')}
-            </li>
+            
+            { (localStorage.getItem('userId')) ? <li className="nav-item active">
+                {JSON.parse(localStorage.getItem('userId')  || '{}')} </li>: null }
+           
             <li className="nav-item active">
               <Link to="/home" className="unset-anchor nav-link">Home</Link>
             </li>
