@@ -65,7 +65,7 @@ class NewUserComponent extends React.Component<IProps, {}> {
         })
         .then(resp => resp.json())
         .then(userData => {
-            this.props.history.push('/home');
+            this.props.history.push('/users/set-interests');
         })
         .catch(err => {
             console.log(err);

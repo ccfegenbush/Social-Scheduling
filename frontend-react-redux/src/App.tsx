@@ -7,7 +7,7 @@ import { AddFriendComponent } from './components/friends/add-friends.component';
 import SetInterestsComponent from './components/interests/interest.component';
 import AppNav from './components/nav/nav.component';
 import SignInComponent from './components/sign-in/sign-in.component';
-import NewUserComponent from './components/user/new-user.component';
+import NewUserComponent from './components/create-user/new-user.component';
 import './include/bootstrap';
 import { store } from './Store';
 import { LandingPage } from './views/landingPage';
