@@ -40,6 +40,17 @@ const AppNav: React.StatelessComponent<any> = (props) => {
             <li className="nav-item">
               <Link to="/add-friends" className="nav-link">Add Friends</Link>
             </li>
+            <li className="dropdown">
+              <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" 
+                 aria-expanded="false">Friends</a>
+              <ul className="dropdown-menu">
+                <li>View Friends</li>
+                <li>View Friend Requests</li>
+                <li className="nav-item">
+                  <Link to ="/add-friends" className="nav-link">Add Friend</Link>
+                </li>
+              </ul>
+            </li>
             <li className="nav-item">
               <Link to="/profile" className="nav-link">Profile</Link>
             </li>
