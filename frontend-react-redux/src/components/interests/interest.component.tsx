@@ -14,12 +14,10 @@ class SetInterestsComponent extends React.Component<IProps, {}> {
 
     constructor(props: any) {
         super(props);
-
     }
 
     public interestChange = (e: any) => {
         this.props.updateInterest(e.target.value);
-
     }
 
     public onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
