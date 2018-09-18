@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './App.css';
 import MyCalendar from './components/calendar/calendar';
 import { AddFriendComponent } from './components/friends/add-friends.component';
-import SetInterestsComponent from './components/interests/interest.component';
 import AppNav from './components/nav/nav.component';
 import SignInComponent from './components/sign-in/sign-in.component';
 import NewUserComponent from './components/create-user/new-user.component';
@@ -27,12 +26,11 @@ class App extends React.Component {
                 <Route path="/home" component={LandingPage} />
                 <Route path="/sign-in" component={SignInComponent} />
                 <Route path="/register" component={NewUserComponent} />
-                <Route path="/calendar" component={MyCalendar} />
-                <Route path="/users/set-interests" component = {SetInterestsComponent} />
+                <Route path="/calendar" component={MyCalendar} />                
+                <Route path="/set-interests" component = {InterestsFormComponent} />
                 <Route path="/add-friends" component = {AddFriendComponent} />
                 <Route path="/make-event" component = {newEventComponent} />
                 <Route path="/profile" component={ProfileComponent} />
-                <Route path="/interests-form" component = {InterestsFormComponent} />
                 <Route path="/" component={LandingPage} />
                 <Route component={LandingPage} />
               </Switch>

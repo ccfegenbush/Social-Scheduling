@@ -1,7 +1,6 @@
 import { combineReducers } from "redux";
 import { signInReducer } from "./sign-in.reducer";
 import { newUserReducer } from "./new-user.reducer";
-import { userInterestsReducer } from "./user-interests.reducer";
 import { newEventReducer } from "./new-event.reducer";
 
 export interface ISignInState {
@@ -33,21 +32,14 @@ export interface INewEventState {
   eventType: string
 }
 
-export interface IUserInterestsState {
-  interest: string
-}
-
 export interface IState {
   newEvent: INewEventState,
   newUser: INewUserState,
-  signIn: ISignInState,
-  userInterests: IUserInterestsState
+  signIn: ISignInState
 }
 
 export const state = combineReducers<IState>({
   newEvent: newEventReducer,
   newUser: newUserReducer,
-  signIn: signInReducer,
-  userInterests: userInterestsReducer
-
+  signIn: signInReducer
 })
