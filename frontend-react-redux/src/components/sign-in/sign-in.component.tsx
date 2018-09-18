@@ -61,35 +61,50 @@ class SignInComponent extends React.Component<IProps, {}> {
     const { errorMessage, credentials } = this.props;
 
     return (
-      <div className="container mt-5 pt-5">
-        <form className="form-signin" onSubmit={this.submit}>
-          <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
-
-          <label htmlFor="inputUsername" className="sr-only">Username</label>
-          <input
-            onChange={this.usernameChange}
-            value={credentials.username}
-            type="text"
-            id="inputUsername"
-            className="form-control"
-            placeholder="Username"
-            required />
-
-          <label htmlFor="inputPassword" className="sr-only">Password</label>
-          <input
-            onChange={this.passwordChange}
-            value={credentials.password}
-            type="password"
-            id="inputPassword"
-            className="form-control"
-            placeholder="Password"
-            required />
-
-          <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-          {errorMessage && <p id="error-message">{errorMessage}</p>}
-        </form>
-      </div>
-
+        <section id="contact">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-12 text-center">
+                <h2 className="section-heading text-uppercase">Sign in</h2>
+                <h3 className="section-subheading text-muted">{errorMessage && <p id="error-message">{errorMessage}</p>}</h3>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-lg-12">
+                <form id="contactForm" name="sentMessage" className="form-signin" onSubmit={this.submit}>
+                  <div className="row">
+                    <div className="col-md-4 offset-md-4">
+                      <div className="form-group">
+                        <input onChange={this.usernameChange}
+                          value={credentials.username}
+                          type="text"
+                          id="inputUsername"
+                          className="form-control"
+                          placeholder="Username"
+                          data-validation-required-message="Please enter your username." required />
+                        <p className="help-block text-danger"></p>
+                      </div>
+                      <div className="form-group">
+                        <input className="form-control"
+                          onChange={this.passwordChange}
+                          value={credentials.password}
+                          type="password"
+                          id="inputPassword"
+                          placeholder="Password" data-validation-required-message="Please enter your password." required />
+                        <p className="help-block text-danger"></p>
+                      </div>
+                    </div>
+                    <div className="clearfix"></div>
+                    <div className="col-lg-4 offset-md-4 text-center">
+                      <div id="success"></div>
+                      <button className="btn btn-primary btn-block text-uppercase" type="submit">Sign in</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
     );
   }
 }

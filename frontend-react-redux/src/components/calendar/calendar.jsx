@@ -39,6 +39,11 @@ export default class MyCalendar extends React.Component {
             })
     }
 
+
+    onSelectSlot({start, end, slots, action }){
+        alert({start});
+    }
+
     render() {
         return <div className="mt-5 pt-5 container">
             {this.state.errMessage}
@@ -46,6 +51,7 @@ export default class MyCalendar extends React.Component {
                 defaultDate={new Date()}
                 defaultView="month"
                 style={{ height: "100vh" }}
+                selectable={true}
             />
         </div>
     }

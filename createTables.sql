@@ -51,18 +51,6 @@ CREATE TABLE project2.event(
 	event_author_id INTEGER REFERENCES project2.users(user_id)
 );
 
-CREATE TABLE project2.event_attendees(
-	attendee_id SERIAL PRIMARY KEY NOT NULL,
-	event_id INTEGER REFERENCES project2.event(event_id),
-	user_id INTEGER REFERENCES project2.users(user_id)
-);
-
-CREATE TABLE project2.user_has_friends (
-  user_id INTEGER NOT NULL REFERENCES project2.users(user_id),
-  friend_id INTEGER NOT NULL REFERENCES project2.users(user_id),
-  PRIMARY KEY (user_id, friend_id)
-);
-
 CREATE TABLE project2.user_has_friends (
   user_id INTEGER NOT NULL REFERENCES project2.users(user_id),
   friend_id INTEGER NOT NULL REFERENCES project2.users(user_id),
@@ -94,3 +82,43 @@ TABLESPACE pg_default;
 
 ALTER TABLE project2.friend_request
     OWNER to postgres;
+<<<<<<< HEAD
+
+	-- Table: project2.user_has_invitations
+
+-- DROP TABLE project2.user_has_invitations;
+
+CREATE TABLE project2.user_has_invitations
+(
+    invitation_id integer NOT NULL DEFAULT nextval('project2.user_has_invitations_invitation_id_seq'::regclass),
+    event_id integer NOT NULL,
+    user_id integer NOT NULL,
+    status_id integer NOT NULL DEFAULT 1,
+    CONSTRAINT user_has_invitations_pkey PRIMARY KEY (invitation_id),
+    CONSTRAINT event_id FOREIGN KEY (event_id)
+        REFERENCES project2.event (event_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT user_id FOREIGN KEY (user_id)
+        REFERENCES project2.users (user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE project2.user_has_invitations
+    OWNER to postgres;
+=======
+	
+
+	
+CREATE TABLE project2.user_has_invitations (
+  invitation_id SERIAL PRIMARY KEY NOT NULL,
+  event_id INTEGER NOT NULL REFERENCES project2.event(event_id),
+  user_id INTEGER NOT NULL REFERENCES project2.users(user_id),
+  status_id INTEGER DEFAULT 1
+);
+>>>>>>> 2b98550e85cdf761e1228b1c0ff62420b1198791
