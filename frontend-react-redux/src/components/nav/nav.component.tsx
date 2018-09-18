@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { IState } from '../../reducers';
 import { connect } from 'react-redux';
+import { logoutCleanUp } from '../../utils';
 
 const AppNav: React.StatelessComponent<any> = (props) => {  
   return (
@@ -53,6 +54,9 @@ const AppNav: React.StatelessComponent<any> = (props) => {
             </li>
             <li className="nav-item">
               <Link to="/profile" className="nav-link">Profile</Link>
+            </li>
+            <li className="nav-item" onClick={() => logoutCleanUp()}>
+              <Link to="/sign-in" className="nav-link">Sign Out</Link>
             </li>
           </ul>
         </div>
