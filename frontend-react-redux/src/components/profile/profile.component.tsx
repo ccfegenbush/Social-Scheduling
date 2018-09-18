@@ -20,9 +20,9 @@ export class ProfileComponent extends React.Component<any, any>  {
     }
 
     public componentDidMount() {
-
-        let usersId = this.state.username === null ? this.state.username.usersId : 1
-        usersId = Number(usersId);
+        const usersId = JSON.parse(localStorage.getItem('userId') || '{}');
+        // let usersId = this.state.username === null ? this.state.username.usersId :
+        // usersId = Number(usersId);
 
         fetch(environment.context + `users/${usersId}`, {})
             .then(resp => resp.json())
