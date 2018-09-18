@@ -16,6 +16,13 @@ export class InterestsFormComponent extends React.Component<any, any> {
         }));
     }
 
+    public removeInterest = (e: any, index: number) => {
+        e.preventDefault();
+        this.setState({
+            interests: this.state.interests.filter((_:any, i:any) => i !== index)
+        });
+    }
+
     public handleChange = (e:any) => {
         e.preventDefault();
         const interests = [...this.state.interests]   
@@ -74,6 +81,7 @@ export class InterestsFormComponent extends React.Component<any, any> {
                                         <option value="6">Traveling</option>
                                         <option value="7">Gaming</option>
                                     </select>
+                                    <button onClick={(e) => this.removeInterest(e, index)}>Remove</button>
                                 </div>
                             )
                         })

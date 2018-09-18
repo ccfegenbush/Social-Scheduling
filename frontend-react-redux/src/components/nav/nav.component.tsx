@@ -52,8 +52,16 @@ const AppNav: React.StatelessComponent<any> = (props) => {
                 </li>
               </ul>
             </li>
-            <li className="nav-item">
-              <Link to="/profile" className="nav-link">Profile</Link>
+            <li className="dropdown">
+              <a href="#" className="dropdown-toggle" data-toggle="dropdown" role="button" 
+                 aria-expanded="false">Profile</a>
+              <ul className="dropdown-menu">
+                <li className="nav-item">
+                  <Link to="/profile" className="nav-link">View Profile</Link>
+                </li>
+                <li>Edit Profile</li>
+                <li>Edit Interests</li>
+              </ul>
             </li>
             <li className="nav-item" onClick={() => logoutCleanUp()}>
               <Link to="/sign-in" className="nav-link">Sign Out</Link>
