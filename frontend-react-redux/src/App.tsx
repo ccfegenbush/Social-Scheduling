@@ -13,6 +13,7 @@ import { store } from './Store';
 import { LandingPage } from './views/landingPage';
 import newEventComponent from './components/events/new-event.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { InterestsFormComponent } from './components/interests/interests-form.component';
 
 class App extends React.Component {
   public render() {
@@ -31,6 +32,7 @@ class App extends React.Component {
                 <Route path="/add-friends" component = {AddFriendComponent} />
                 <Route path="/make-event" component = {newEventComponent} />
                 <Route path="/profile" component={ProfileComponent} />
+                <Route path="/interests-form" component = {InterestsFormComponent} />
                 <Route path="/" component={LandingPage} />
                 <Route component={LandingPage} />
               </Switch>

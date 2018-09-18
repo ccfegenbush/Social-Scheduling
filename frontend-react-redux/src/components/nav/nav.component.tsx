@@ -54,6 +54,9 @@ const AppNav: React.StatelessComponent<any> = (props) => {
             <li className="nav-item">
               <Link to="/profile" className="nav-link">Profile</Link>
             </li>
+            <li className="nav-item">
+              <Link to="/interests-form" className="nav-link">Interest Form</Link>
+            </li>
           </ul>
         </div>
       </div>

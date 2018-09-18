@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 interface IProps extends RouteComponentProps<{}>, IUserInterestsState {
     updateInterest: (interest: string) => any,
-    onSubmit: (interest: any) => any
+    onSubmit: (interest: string) => any
 }
 
 class SetInterestsComponent extends React.Component<IProps, {}> {
@@ -49,10 +49,10 @@ class SetInterestsComponent extends React.Component<IProps, {}> {
         return (
             <div className="mt-5 pt-5 container">
                 <form style={{ background: '#ADD8E6' }} className="form-signup" onSubmit={this.onSubmit}>
-                    <h1 className="h3 mb-3 font-weight-normal">Please fill in the interest information</h1>
+                    <h1 className="h3 mb-3 font-weight-normal">Please select your interests</h1>
 
                     <div className="form-group">
-                        <label htmlFor="inputInterest1Type" >Interest 1:</label>
+                        <label htmlFor="inputInterestType" >New Interest:</label>
                         <select className="form-control"
                             onChange={this.interestChange}
                             value={u.interest}
