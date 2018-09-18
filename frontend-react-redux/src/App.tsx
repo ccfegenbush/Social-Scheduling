@@ -24,7 +24,7 @@ class App extends React.Component {
         <BrowserRouter>
           <React.Fragment>
             <AppNav />
-            <div id="main-content-container" className="mb-5 pb-5">
+            <div id="main-content-container">
               <Switch>
                 <Route path="/home" component={LandingPage} />
                 <Route path="/sign-in" component={SignInComponent} />
