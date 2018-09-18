@@ -51,12 +51,6 @@ CREATE TABLE project2.event(
 	event_author_id INTEGER REFERENCES project2.users(user_id)
 );
 
-CREATE TABLE project2.event_attendees(
-	attendee_id SERIAL PRIMARY KEY NOT NULL,
-	event_id INTEGER REFERENCES project2.event(event_id),
-	user_id INTEGER REFERENCES project2.users(user_id)
-);
-
 CREATE TABLE project2.user_has_friends (
   user_id INTEGER NOT NULL REFERENCES project2.users(user_id),
   friend_id INTEGER NOT NULL REFERENCES project2.users(user_id),
@@ -94,3 +88,18 @@ TABLESPACE pg_default;
 
 ALTER TABLE project2.friend_request
     OWNER to postgres;
+	
+
+	
+CREATE TABLE project2.user_has_invitations (
+  event_id INTEGER NOT NULL UNIQUE REFERENCES project2.event(event_id),
+  user_id INTEGER NOT NULL UNIQUE REFERENCES project2.users(user_id),
+  PRIMARY KEY (event_id, user_id)
+);
+
+CREATE TABLE project2.attendees(
+	attendees_id SERIAL PRIMARY KEY NOT NULL,
+	event_id INTEGER REFERENCES project2.user_has_invitations(event_id) NOT NULL,  
+	user_id INTEGER REFERENCES project2.user_has_invitations(user_id) NOT NULL,
+	status_id INTEGER DEFAULT 1
+);
