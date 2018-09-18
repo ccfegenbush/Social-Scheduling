@@ -63,12 +63,6 @@ CREATE TABLE project2.user_has_friends (
   PRIMARY KEY (user_id, friend_id)
 );
 
-CREATE TABLE project2.user_has_friends (
-  user_id INTEGER NOT NULL REFERENCES project2.users(user_id),
-  friend_id INTEGER NOT NULL REFERENCES project2.users(user_id),
-  PRIMARY KEY (user_id, friend_id)
-);
-
 -- Table: project2.friend_request
 
 -- DROP TABLE project2.friend_request;
@@ -93,4 +87,32 @@ WITH (
 TABLESPACE pg_default;
 
 ALTER TABLE project2.friend_request
+    OWNER to postgres;
+
+	-- Table: project2.user_has_invitations
+
+-- DROP TABLE project2.user_has_invitations;
+
+CREATE TABLE project2.user_has_invitations
+(
+    invitation_id integer NOT NULL DEFAULT nextval('project2.user_has_invitations_invitation_id_seq'::regclass),
+    event_id integer NOT NULL,
+    user_id integer NOT NULL,
+    status_id integer NOT NULL DEFAULT 1,
+    CONSTRAINT user_has_invitations_pkey PRIMARY KEY (invitation_id),
+    CONSTRAINT event_id FOREIGN KEY (event_id)
+        REFERENCES project2.event (event_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION,
+    CONSTRAINT user_id FOREIGN KEY (user_id)
+        REFERENCES project2.users (user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE project2.user_has_invitations
     OWNER to postgres;

@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { environment } from '../../environment';
+import * as Autocomplete  from  'react-autocomplete';
+import { getStocks, matchStocks } from './data';
 
 export class AddFriendComponent extends React.Component<any, any> {
     constructor(props: any) {
@@ -19,7 +21,7 @@ export class AddFriendComponent extends React.Component<any, any> {
             friendName: u.friendName,
             username: u.username
         }
-        fetch(environment.context + 'users', {
+        fetch(environment.context + 'friends', {
             body: JSON.stringify(user),
             headers: {
                 'Accept': 'application/json',
@@ -85,31 +87,60 @@ export class AddFriendComponent extends React.Component<any, any> {
     }
 
     public render() {
-        const u = this.state;
+        // const u = this.state;
         return (
-            <div className="container mt-5 pt-5">
-                <form className="form-signin" onSubmit={this.onSubmit}>
-                    <h1 className="h3 mb-3 font-weight-normal">Search for Friends by name</h1>
-
-                    <label htmlFor="inputUsername" className="sr-only">Search for friends!</label>
-                    <input
-                        onChange={this.onChange}
-                        value={u.username}
-                        type="text"
-                        name="friendName"
-                        className="form-control"
-                        placeholder="Friend Name"
-                        required />
-
-                    <button className="btn btn-lg btn-primary btn-block" type="Search">Search for a Friend</button>
-                </form>
-
-                <thead>
-                    <tr>
-                        <th scope="Friend Name"> Friend Name:</th>
-                    </tr>
-                </thead>
+            <div style = {{ marginTop: 40, marginLeft: 50 }}>
+        <Autocomplete
+          value={ this.state.value }
+          inputProps={{ id: 'states-autocomplete' }}
+          wrapperStyle={{ position: 'relative', display: 'inline-block' }}
+          items={ getStocks() }
+          getItemValue={ item => item.name }
+          shouldItemRender={ matchStocks }
+          onChange={(event, value) => this.setState({ value }) }
+          onSelect={ value => this.setState({ value }) }
+          renderMenu={ children => (
+            <div className = "menu">
+              { children }
             </div>
-        )
+          )}
+          renderItem={ (item, isHighlighted) => (
+            <div
+              className={`item ${isHighlighted ? 'item-highlighted' : ''}`}
+              key={ item.abbr } >
+              { item.name }
+            </div>
+          )}
+        />
+      </div>
+      );
+
+        //     <div style = {{ marginTop: 40, marginLeft: 50 }}>
+        //     <Autocomplete
+        //       value={ this.state.value }
+        //       inputProps={{ id: 'states-autocomplete' }}
+        //       wrapperStyle={{ position: 'relative', display: 'inline-block' }}
+        //       items={ getStocks() }
+        //       getItemValue={ item => item.name }
+        //       shouldItemRender={ matchStocks }
+        //       onChange={(event, value) => this.setState({ value }) }
+        //       onSelect={ value => this.setState({ value }) }
+        //       renderMenu={ children => (
+        //         <div className = "menu">
+        //           { children }
+        //         </div>
+        //       )}
+        //       renderItem={ (item, isHighlighted) => (
+        //         <div
+        //           className={`item ${isHighlighted ? 'item-highlighted' : ''}`}
+        //           key={ item.abbr } >
+        //           { item.name }
+        //         </div>
+        //       )}
+        //     />
+        //   </div>
+        //   );
+        // )
+       
     }
 }
