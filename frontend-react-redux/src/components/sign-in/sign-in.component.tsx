@@ -6,7 +6,8 @@ import { connect } from 'react-redux';
 import { environment } from '../../environment';
 
 interface IProps extends RouteComponentProps<{}>, ISignInState {
-  updateError: (message: string) => any
+  setLoginUser: (user: object) => any,
+  updateError: (message: string) => any,
   updatePassword: (password: string) => any,
   updateUsername: (username: string) => any,
   submit: (credentials: any) => any
@@ -43,7 +44,8 @@ class SignInComponent extends React.Component<IProps, {}> {
       .then(resp => {
         localStorage.setItem('user', JSON.stringify(resp));
         localStorage.setItem('userId', JSON.stringify(resp.id));
-        this.props.history.push('/calender');
+        this.props.setLoginUser(resp);
+        this.props.history.push('/calendar');
       })
       .catch(err => {
         console.log(err);
@@ -111,6 +113,7 @@ class SignInComponent extends React.Component<IProps, {}> {
 
 const mapStateToProps = (state: IState) => (state.signIn);
 const mapDispatchToProps = {
+  setLoginUser: signInActions.setLoginUser,
   updateError: signInActions.updateError,
   updatePassword: signInActions.updatePassword,
   updateUsername: signInActions.updateUsername,

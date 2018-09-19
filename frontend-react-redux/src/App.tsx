@@ -14,6 +14,7 @@ import { store } from './Store';
 import { LandingPage } from './views/landingPage';
 import newEventComponent from './components/events/new-event.component';
 import { InterestsFormComponent } from './components/interests/interests-form.component';
+import editProfileComponent from './components/profile/edit-profile/edit-profile.component';
 
 class App extends React.Component {
   public state = { value: '' };
@@ -23,7 +24,7 @@ class App extends React.Component {
         <BrowserRouter>
           <React.Fragment>
             <AppNav />
-            <div id="main-content-container" className="mb-5 pb-5">
+            <div id="main-content-container">
               <Switch>
                 <Route path="/home" component={LandingPage} />
                 <Route path="/sign-in" component={SignInComponent} />
@@ -34,6 +35,7 @@ class App extends React.Component {
                 <Route path="/make-event" component={newEventComponent} />
                 <Route path="/events/invitations" component={InvitationComponent} />
                 <Route path="/profile" component={ProfileComponent} />
+                <Route path="/edit-profile" component={editProfileComponent} />
                 <Route path="/" component={LandingPage} />
                 <Route component={LandingPage} />
               </Switch>

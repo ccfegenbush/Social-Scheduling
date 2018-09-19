@@ -2,15 +2,21 @@ import { signInTypes } from "../actions/sign-in/sign-in.types";
 import { ISignInState } from ".";
 
 const initialState: ISignInState = {
-  credentials : {
+  credentials: {
     password: '',
     username: ''
   },
-  errorMessage: ''
+  errorMessage: '',
+  signinUser: {}
 }
 
 export const signInReducer = (state = initialState, action: any) => {
   switch (action.type) {
+    case signInTypes.SET_LOGIN_USER:
+      return {
+        ...state,
+        signinUser: action.payload.signinUser
+      }
     case signInTypes.UPDATE_ERROR:
       return {
         ...state,
