@@ -94,7 +94,7 @@ class EditProfileComponent extends React.Component<IProps, {}> {
         return (
             <div className="container mt-5 pt-5">
                 <form className="form-signin" onSubmit={this.onSubmit}>
-                    <h1 className="h3 mb-3 font-weight-normal">Create a New User</h1>
+                    <h1 className="h3 mb-3 font-weight-normal">Update Profile</h1>
 
                     <label htmlFor="inputUsername" className="sr-only">Username</label>
                     <input
