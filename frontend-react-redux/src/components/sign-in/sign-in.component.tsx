@@ -24,7 +24,6 @@ class SignInComponent extends React.Component<IProps, {}> {
     e.preventDefault();
     fetch(environment.context + 'users/login', {
       body: JSON.stringify(this.props.credentials),
-      // credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
