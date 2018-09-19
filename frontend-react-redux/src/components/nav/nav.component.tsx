@@ -91,7 +91,7 @@ class AppNav extends React.Component<any, any> {
                         <Link to="/edit-profile" className="nav-link">Edit Profile</Link>
                       </li>
                       <li className="nav-item">
-                        <Link to="/set-interests" className="nav-link">Set Interests</Link>
+                        <Link to="/edit-interests" className="nav-link">Edit Interests</Link>
                       </li>
                     </ul>
                   </li>
