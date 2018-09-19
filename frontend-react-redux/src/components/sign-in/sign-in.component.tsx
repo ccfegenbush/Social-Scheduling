@@ -68,7 +68,7 @@ class SignInComponent extends React.Component<IProps, {}> {
             <div className="row">
               <div className="col-lg-12 text-center">
                 <h2 className="section-heading text-uppercase">Sign in</h2>
-                <h3 className="section-subheading text-muted">{errorMessage && <p id="error-message">{errorMessage}</p>}</h3>
+                <h3 className="section-subheading text-muted text-danger">{errorMessage && <p id="error-message">{errorMessage}</p>}</h3>
               </div>
             </div>
             <div className="row">
