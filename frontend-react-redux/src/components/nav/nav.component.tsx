@@ -55,58 +55,50 @@ class AppNav extends React.Component<any, any> {
                       View Event invitations
                     </Link>
                   </li>
-                  <li className="nav-item">
-                    <Link to="/set-interests" className="nav-link">
-                      Set Interests
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to="/add-friends" className="nav-link">
-                      Add Friends
-                    </Link>
-                  </li>
-                  <li className="dropdown">
+
+                  <li className="nav-item dropdown">
                     <a
                       href="#"
-                      className="dropdown-toggle nav-item"
+                      className="dropdown-toggle nav-link"
                       data-toggle="dropdown"
                       role="button"
                       aria-expanded="false"
                     >
                       Friends
-                </a>
-                    <ul className="dropdown-menu">
-                      <li>View Friends</li>
-                      <li>View Friend Requests</li>
-                      <li><Link to="/add-friends" className="nav-link">Add Friend</Link></li>
+                    </a>
+                    <ul className="dropdown-menu bg-dark">
+                      <li><Link to="/add-friends" className="nav-link">Add Friends</Link></li>
+                      <li><a className="nav-link">View Friends</a></li>
+                      <li><a className="nav-link">View Friend Requests</a></li>
                     </ul>
                   </li>
-                  <li className="dropdown">
+
+                  <li className="nav-item dropdown">
                     <a
                       href="#"
-                      className="dropdown-toggle nav-item"
+                      className="dropdown-toggle nav-link"
                       data-toggle="dropdown"
                       role="button"
                       aria-expanded="false"
                     >
                       Profile
                 </a>
-                    <ul className="dropdown-menu">
+                    <ul className="dropdown-menu bg-dark">
                       <li>
                         <Link to="/profile" className="nav-link">View Profile</Link>
                       </li>
                       <li>
-                        <Link to="/edit-profile" className="nav-link">
-                          Edit Profile
-                        </Link>
+                        <Link to="/edit-profile" className="nav-link">Edit Profile</Link>
                       </li>
-                      <li>Edit Interests</li>
+                      <li className="nav-item">
+                        <Link to="/set-interests" className="nav-link">Set Interests</Link>
+                      </li>
                     </ul>
                   </li>
                   <li className="nav-item" onClick={this.onClick}>
                     <Link to="/sign-in" className="nav-link">
                       Sign Out
-                </Link>
+                    </Link>
                   </li>
                 </ul>
               )
