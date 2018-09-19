@@ -85,7 +85,7 @@ class NewEventComponent extends React.Component<IProps, {}> {
     })
       .then(resp => resp.json())
       .then(userData => {
-        this.props.history.push("/home");
+        this.props.history.push("/calendar");
       })
       .catch(err => {
         console.log(err);
