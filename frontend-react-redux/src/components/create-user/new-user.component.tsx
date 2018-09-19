@@ -63,8 +63,20 @@ class NewUserComponent extends React.Component<IProps, {}> {
             },
             method: 'POST'
         })
-        .then(resp => resp.json())
-        .then(userData => {
+        .then(resp => {
+            console.log(resp.status)
+            if (resp.status === 401) {
+            console.log('Invalid request');
+            } else if (resp.status === 200) {
+            return resp.json();
+            } else {
+            console.log('Failed to create user at this time');
+            }
+            throw new Error('Failed to login');
+      })
+        .then(resp => {
+            localStorage.setItem('user', JSON.stringify(resp));
+            localStorage.setItem('userId', JSON.stringify(resp.id));
             this.props.history.push('/users/set-interests');
         })
         .catch(err => {
