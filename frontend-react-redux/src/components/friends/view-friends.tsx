@@ -2,19 +2,16 @@ import * as React from 'react';
 import { updateUsername } from '../../actions/sign-in/sign-in.actions';
 import { environment } from '../../environment';
 
-export class ProfileComponent extends React.Component<any, any>  {
+export class FriendComponent extends React.Component<any, any>  {
 
     public constructor(props: any) {
         super(props);
         const userJSON = localStorage.getItem("user")
         const user = userJSON !== null ? JSON.parse(userJSON) : updateUsername
         this.state = {
-            age: '',
-            email: '',
-            firstname: '',
-            interests: [],
-            lastname: '',
+            friends: [],
             profileInfo: [],
+            userData: [],
             username: user,
         }
     }
@@ -22,22 +19,22 @@ export class ProfileComponent extends React.Component<any, any>  {
     public componentDidMount() {
         const usersId = JSON.parse(localStorage.getItem('userId') || '{}');
 
-        fetch(environment.context + `users/${usersId}`, {})
+        // find all of our friends
+        fetch(environment.context + `users/${usersId}/friends`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'GET'
+        })
             .then(resp => resp.json())
-            .then(profileInfo => {
-                this.setState({ profileInfo })
-                console.log(this.state.username)
-            })
-            .catch(err => {
-                console.log(err)
-            })
-
-        fetch(environment.context + `users/${usersId}/interests`, {})
-            .then(resp => resp.json())
-            .then(interests => {
-                this.setState({ interests })
-
-                console.log(this.state.interests)
+            .then(userData => {
+                for (const x of userData) {
+                    this.setState({
+                        ...this.state,
+                       friends : [...this.state.friends, x.username ]
+                    })
+                }
             })
             .catch(err => {
                 console.log(err)
@@ -45,9 +42,10 @@ export class ProfileComponent extends React.Component<any, any>  {
     }
 
     public render() {
-        const listInterests = this.state.interests.map(
+        console.log(this.state.friends)
+        const listFriends = this.state.friends.map(
             (p: any) => <li key=
-                {p.interest}>{p.interest}</li>)
+                {p.friend}>{p.friend}</li>)
         return (
             <div>
                 <table style={{ background: '#ADD8E6' }} className="table table-striped">
@@ -64,19 +62,19 @@ export class ProfileComponent extends React.Component<any, any>  {
                     <tbody id="profile-table-body">
                         {
                             <tr key={this.state.id} >
-                                <td>{this.state.username.username}</td>
-                                <td>{this.state.username.firstName}</td>
-                                <td>{this.state.username.lastName}</td>
-                                <td>{this.state.username.age}</td>
-                                <td>{this.state.username.email}</td>
+                                <td>{this.state.friends.username}</td>
+                                <td>{this.state.friends.firstName}</td>
+                                <td>{this.state.friends.lastName}</td>
+                                <td>{this.state.friends.age}</td>
+                                <td>{this.state.friends.email}</td>
                             </tr>
                         }
                     </tbody>
                 </table>
                 <div>
-                    Interests:
+                    Friends:
                             <div>
-                        {listInterests}
+                        {listFriends}
                     </div>
                 </div>
             </div>
