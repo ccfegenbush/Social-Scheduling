@@ -14,7 +14,7 @@ class AppNav extends React.Component<any, any> {
     logoutCleanUp();
   }
 
-  public componentWillMount(){
+  public componentWillMount() {
     const userId = localStorage.getItem('userId') || null;
     console.log(userId);
   }
@@ -37,7 +37,7 @@ class AppNav extends React.Component<any, any> {
           <i className="fas fa-bars" />
           </button>
           <div className="collapse navbar-collapse" id="navbarResponsive">
-            { this.props.signIn.signinUser.id || localStorage.getItem("userId") ?
+            {this.props.signIn.signinUser.id || localStorage.getItem("userId") ?
               (
                 <ul className="navbar-nav text-uppercase ml-auto">
                   <li className="nav-item">
@@ -48,27 +48,27 @@ class AppNav extends React.Component<any, any> {
                   <li className="nav-item">
                     <Link to="/make-event" className="nav-link">
                       Make Event
-                </Link>
+                    </Link>
                   </li>
                   <li className="nav-item">
                     <Link to="/events/invitations" className="nav-link">
                       View Event invitations
-                </Link>
+                    </Link>
                   </li>
                   <li className="nav-item">
                     <Link to="/set-interests" className="nav-link">
                       Set Interests
-                </Link>
+                    </Link>
                   </li>
                   <li className="nav-item">
                     <Link to="/add-friends" className="nav-link">
                       Add Friends
-                </Link>
+                    </Link>
                   </li>
                   <li className="dropdown">
                     <a
                       href="#"
-                      className="dropdown-toggle"
+                      className="dropdown-toggle nav-item"
                       data-toggle="dropdown"
                       role="button"
                       aria-expanded="false"
@@ -78,17 +78,13 @@ class AppNav extends React.Component<any, any> {
                     <ul className="dropdown-menu">
                       <li>View Friends</li>
                       <li>View Friend Requests</li>
-                      <li className="nav-item">
-                        <Link to="/add-friends" className="nav-link">
-                          Add Friend
-                    </Link>
-                      </li>
+                      <li><Link to="/add-friends" className="nav-link">Add Friend</Link></li>
                     </ul>
                   </li>
                   <li className="dropdown">
                     <a
                       href="#"
-                      className="dropdown-toggle"
+                      className="dropdown-toggle nav-item"
                       data-toggle="dropdown"
                       role="button"
                       aria-expanded="false"
@@ -96,15 +92,13 @@ class AppNav extends React.Component<any, any> {
                       Profile
                 </a>
                     <ul className="dropdown-menu">
-                      <li className="nav-item">
-                        <Link to="/profile" className="nav-link">
-                          View Profile
-                    </Link>
+                      <li>
+                        <Link to="/profile" className="nav-link">View Profile</Link>
                       </li>
                       <li>
                         <Link to="/edit-profile" className="nav-link">
                           Edit Profile
-                    </Link>
+                        </Link>
                       </li>
                       <li>Edit Interests</li>
                     </ul>
