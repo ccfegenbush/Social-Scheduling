@@ -52,7 +52,6 @@ export class InterestsFormComponent extends React.Component<any, any> {
                     console.log(err);
                 })
         }
-        
     }
 
     public render() {

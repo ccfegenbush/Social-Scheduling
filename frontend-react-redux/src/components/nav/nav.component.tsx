@@ -14,7 +14,7 @@ class AppNav extends React.Component<any, any> {
     logoutCleanUp();
   }
 
-  public componentWillMount(){
+  public componentWillMount() {
     const userId = localStorage.getItem('userId') || null;
     console.log(userId);
   }
@@ -37,7 +37,7 @@ class AppNav extends React.Component<any, any> {
           <i className="fas fa-bars" />
           </button>
           <div className="collapse navbar-collapse" id="navbarResponsive">
-            { this.props.signIn.signinUser.id || localStorage.getItem("userId") ?
+            {this.props.signIn.signinUser.id || localStorage.getItem("userId") ?
               (
                 <ul className="navbar-nav text-uppercase ml-auto">
                   <li className="nav-item">
@@ -48,71 +48,57 @@ class AppNav extends React.Component<any, any> {
                   <li className="nav-item">
                     <Link to="/make-event" className="nav-link">
                       Make Event
-                </Link>
+                    </Link>
                   </li>
                   <li className="nav-item">
                     <Link to="/events/invitations" className="nav-link">
                       View Event invitations
-                </Link>
+                    </Link>
                   </li>
-                  <li className="nav-item">
-                    <Link to="/set-interests" className="nav-link">
-                      Set Interests
-                </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to="/add-friends" className="nav-link">
-                      Add Friends
-                </Link>
-                  </li>
-                  <li className="dropdown">
+
+                  <li className="nav-item dropdown">
                     <a
                       href="#"
-                      className="dropdown-toggle"
+                      className="dropdown-toggle nav-link"
                       data-toggle="dropdown"
                       role="button"
                       aria-expanded="false"
                     >
                       Friends
-                </a>
-                    <ul className="dropdown-menu">
-                      <li>View Friends</li>
-                      <li>View Friend Requests</li>
-                      <li className="nav-item">
-                        <Link to="/add-friends" className="nav-link">
-                          Add Friend
-                    </Link>
-                      </li>
+                    </a>
+                    <ul className="dropdown-menu bg-dark">
+                      <li><Link to="/add-friends" className="nav-link">Add Friends</Link></li>
+                      <li><a className="nav-link">View Friends</a></li>
+                      <li><a className="nav-link">View Friend Requests</a></li>
                     </ul>
                   </li>
-                  <li className="dropdown">
+
+                  <li className="nav-item dropdown">
                     <a
                       href="#"
-                      className="dropdown-toggle"
+                      className="dropdown-toggle nav-link"
                       data-toggle="dropdown"
                       role="button"
                       aria-expanded="false"
                     >
                       Profile
                 </a>
-                    <ul className="dropdown-menu">
-                      <li className="nav-item">
-                        <Link to="/profile" className="nav-link">
-                          View Profile
-                    </Link>
+                    <ul className="dropdown-menu bg-dark">
+                      <li>
+                        <Link to="/profile" className="nav-link">View Profile</Link>
                       </li>
                       <li>
-                        <Link to="/edit-profile" className="nav-link">
-                          Edit Profile
-                    </Link>
+                        <Link to="/edit-profile" className="nav-link">Edit Profile</Link>
                       </li>
-                      <li>Edit Interests</li>
+                      <li className="nav-item">
+                        <Link to="/set-interests" className="nav-link">Set Interests</Link>
+                      </li>
                     </ul>
                   </li>
                   <li className="nav-item" onClick={this.onClick}>
                     <Link to="/sign-in" className="nav-link">
                       Sign Out
-                </Link>
+                    </Link>
                   </li>
                 </ul>
               )

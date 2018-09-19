@@ -1,21 +1,22 @@
-import * as React from 'react';
-import { environment } from '../../environment';
-import { RouteComponentProps } from 'react-router';
-import * as newUserActions from '../../actions/new-user/new-user.actions';
-import { connect } from 'react-redux';
-import { INewUserState, IState } from '../../reducers';
+import * as React from "react";
+import { environment } from "../../environment";
+import { RouteComponentProps } from "react-router";
+import * as newUserActions from "../../actions/new-user/new-user.actions";
+import { connect } from "react-redux";
+import { INewUserState, IState } from "../../reducers";
 
 interface IProps extends RouteComponentProps<{}>, INewUserState {
-    updateAge: (age: string) => any,
-    updateEmail: (email: string) => any,
-    updateFirstName: (firstName: string) => any,
-    updateLastName: (lastName: string) => any,
-    updatePassword: (password: string) => any,
-    updateUsername: (username: string) => any,
-    onSubmit: (user: any) => any
+  updateAge: (age: string) => any;
+  updateEmail: (email: string) => any;
+  updateFirstName: (firstName: string) => any;
+  updateLastName: (lastName: string) => any;
+  updatePassword: (password: string) => any;
+  updateUsername: (username: string) => any;
+  onSubmit: (user: any) => any;
 }
 
 class NewUserComponent extends React.Component<IProps, {}> {
+
     constructor(props: any) {
         super(props);
     }
@@ -63,8 +64,20 @@ class NewUserComponent extends React.Component<IProps, {}> {
             },
             method: 'POST'
         })
-        .then(resp => resp.json())
-        .then(userData => {
+        .then(resp => {
+            console.log(resp.status)
+            if (resp.status === 401) {
+            console.log('Invalid request');
+            } else if (resp.status === 200) {
+            return resp.json();
+            } else {
+            console.log('Failed to create user at this time');
+            }
+            throw new Error('Failed to login');
+      })
+        .then(resp => {
+            localStorage.setItem('user', JSON.stringify(resp));
+            localStorage.setItem('userId', JSON.stringify(resp.id));
             this.props.history.push('/users/set-interests');
         })
         .catch(err => {
@@ -72,88 +85,130 @@ class NewUserComponent extends React.Component<IProps, {}> {
         })
     }
 
-    public render() {
-        const u = this.props;
-        return (
-            <div className="container mt-5 pt-5">
-                <form className="form-signin" onSubmit={this.onSubmit}>
-                    <h1 className="h3 mb-3 font-weight-normal">Create a New User</h1>
-
-                    <label htmlFor="inputUsername" className="sr-only">Username</label>
-                    <input
-                    onChange={this.usernameChange}
-                    value={u.username}
-                    type="text"
-                    name="username"
-                    className="form-control"
-                    placeholder="Username"
-                    required />
-
-                    <label htmlFor="inputPassword" className="sr-only">Password</label>
-                    <input
-                    onChange={this.passwordChange}
-                    value={u.password}
-                    type="password"
-                    name="password"
-                    className="form-control"
-                    placeholder="Password"
-                    required />
-
-                    <label htmlFor="inputFirstName" className="sr-only">First Name</label>
-                    <input
-                    onChange={this.firstNameChange}
-                    value={u.firstName}
-                    type="text"                    
-                    name="firstName"
-                    className="form-control"
-                    placeholder="First Name"
-                    required />
-
-                    <label htmlFor="inputLastName" className="sr-only">Last Name</label>
-                    <input
-                    onChange={this.lastNameChange}
-                    value={u.lastName}
-                    type="text"                    
-                    name="lastName"
-                    className="form-control"
-                    placeholder="Last Name"
-                    required />
-
-                    <label htmlFor="inputAge" className="sr-only">Age</label>
-                    <input
-                    onChange={this.ageChange}
-                    value={u.age}
-                    type="text"                    
-                    name="age"
-                    className="form-control"
-                    placeholder="Age"
-                    required />
-
-                    <label htmlFor="inputEmail" className="sr-only">Email</label>
-                    <input
-                    onChange={this.emailChange}
-                    value={u.email}
-                    type="text"                    
-                    name="email"
-                    className="form-control"
-                    placeholder="Email"
-                    required />
-
-                    <button className="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-                </form>
-                
+public render() {
+    const u = this.props;
+    return (
+        <section className="contact">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-12 text-center">
+                <h2 className="section-heading text-uppercase">Register</h2>
+                <h3 className="section-subheading text-muted" />
+              </div>
             </div>
-        )
-    }
+            <div className="row">
+              <div className="col-lg-12">    
+
+            <form className="form-signin" onSubmit={this.onSubmit}>
+                  <div className="row">
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <p className="help-block text-dark">Your Email *:</p>
+                        <input
+                          className="form-control"
+                          onChange={this.emailChange}
+                          value={u.email}
+                          type="text"
+                          name="email"
+                          data-validation-required-message="Please enter your email address."
+                          required
+                        />
+                      </div>
+                      <div className="form-group">
+                        <p className="help-block text-dark">Your Username *:</p>
+                        <input
+                          className="form-control"
+                          onChange={this.usernameChange}
+                          value={u.username}
+                          type="text"
+                          name="username"
+                          data-validation-required-message="Please enter your username."
+                          required
+                        />
+                      </div>
+                      <div className="form-group">
+                        <p className="help-block text-dark">Your Password *:</p>
+                        <input
+                          className="form-control"
+                          onChange={this.passwordChange}
+                          value={u.password}
+                          type="password"
+                          name="password"
+                          data-validation-required-message="Please enter your password."
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="col-md-6">
+                      <div className="form-group">
+                        <p className="help-block text-dark">
+                          Your Firstname *:
+                        </p>
+                        <input
+                          className="form-control"
+                          onChange={this.firstNameChange}
+                          value={u.firstName}
+                          type="text"
+                          name="firstName"
+                          data-validation-required-message="Please enter your first name."
+                          required
+                        />
+                      </div>
+                      <div className="form-group">
+                        <p className="help-block text-dark">Your Lastname *:</p>
+                        <input
+                          className="form-control"
+                          onChange={this.lastNameChange}
+                          value={u.lastName}
+                          type="text"
+                          name="lastName"
+                          data-validation-required-message="Please enter your last name."
+                          required
+                        />
+                      </div>
+                      <div className="form-group">
+                        <p className="help-block text-dark">Your Age *:</p>
+                        <input
+                          className="form-control"
+                          onChange={this.ageChange}
+                          value={u.age}
+                          type="text"
+                          name="age"
+                          data-validation-required-message="Please enter your age."
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className="clearfix" />
+                    
+                    <div className="col-lg-12 text-center">
+                      <button
+                        className="btn btn-primary btn-xl text-uppercase px-5 mt-2"
+                        type="submit"
+                      >
+                        Sign Up
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
+    );
+  }
 }
 
-    const mapStateToProps = (state: IState) => (state.newUser);
-    const mapDispatchToProps = {
-        updateAge: newUserActions.updateAge,
-        updateEmail: newUserActions.updateEmail,
-        updateFirstName: newUserActions.updateFirstName,
-        updateLastName: newUserActions.updateLastName,
-        updatePassword: newUserActions.updatePassword,
-        updateUsername: newUserActions.updateUsername
-    }
-export default connect(mapStateToProps, mapDispatchToProps)(NewUserComponent);
+const mapStateToProps = (state: IState) => state.newUser;
+const mapDispatchToProps = {
+  updateAge: newUserActions.updateAge,
+  updateEmail: newUserActions.updateEmail,
+  updateFirstName: newUserActions.updateFirstName,
+  updateLastName: newUserActions.updateLastName,
+  updatePassword: newUserActions.updatePassword,
+  updateUsername: newUserActions.updateUsername
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NewUserComponent);
