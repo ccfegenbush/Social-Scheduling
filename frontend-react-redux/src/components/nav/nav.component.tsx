@@ -69,7 +69,7 @@ class AppNav extends React.Component<any, any> {
                     <ul className="dropdown-menu bg-dark">
                       <li><Link to="/add-friends" className="nav-link">Add Friends</Link></li>
                       <li><Link to="/view-friends" className="nav-link">View Friends</Link></li>
-                      <li><a className="nav-link">View Friend Requests</a></li>
+                      <li><Link to="/view-friend-requests" className="nav-link">View Friend Requests</Link></li>
                     </ul>
                   </li>
 
