@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { environment } from '../../environment';
+import { environment } from '../../../environment';
 import { RouteComponentProps } from 'react-router';
-import * as newUserActions from '../../actions/new-user/new-user.actions';
+import * as newUserActions from '../../../actions/new-user/new-user.actions';
 import { connect } from 'react-redux';
-import { INewUserState, IState } from '../../reducers';
+import { INewUserState, IState } from '../../../reducers';
 
 interface IProps extends RouteComponentProps<{}>, INewUserState {
     updateAge: (age: string) => any,
@@ -15,7 +15,7 @@ interface IProps extends RouteComponentProps<{}>, INewUserState {
     onSubmit: (user: any) => any
 }
 
-class NewUserComponent extends React.Component<IProps, {}> {
+class EditProfileComponent extends React.Component<IProps, {}> {
     constructor(props: any) {
         super(props);
     }
@@ -55,7 +55,7 @@ class NewUserComponent extends React.Component<IProps, {}> {
             "password": u.password,
             "username": u.username
         }
-        fetch(environment.context + "users/register", {
+        fetch(environment.context + "users/update", {
             body: JSON.stringify(user),
             headers: {
                 'Accept': 'application/json',
@@ -65,7 +65,7 @@ class NewUserComponent extends React.Component<IProps, {}> {
         })
         .then(resp => resp.json())
         .then(userData => {
-            this.props.history.push('/home');
+            this.props.history.push('/users/set-interests');
         })
         .catch(err => {
             console.log(err);
@@ -75,7 +75,7 @@ class NewUserComponent extends React.Component<IProps, {}> {
     public render() {
         const u = this.props;
         return (
-            <div>
+            <div className="container mt-5 pt-5">
                 <form className="form-signin" onSubmit={this.onSubmit}>
                     <h1 className="h3 mb-3 font-weight-normal">Create a New User</h1>
 
@@ -156,4 +156,4 @@ class NewUserComponent extends React.Component<IProps, {}> {
         updatePassword: newUserActions.updatePassword,
         updateUsername: newUserActions.updateUsername
     }
-export default connect(mapStateToProps, mapDispatchToProps)(NewUserComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(EditProfileComponent);
