@@ -16,7 +16,7 @@ interface IProps extends RouteComponentProps<{}>, INewUserState {
 }
 
 class NewUserComponent extends React.Component<IProps, {}> {
-    
+
     constructor(props: any) {
         super(props);
     }
@@ -183,7 +183,7 @@ public render() {
                     
                     <div className="col-lg-12 text-center">
                       <button
-                        className="btn btn-primary btn-xl text-uppercase px-5"
+                        className="btn btn-primary btn-xl text-uppercase px-5 mt-2"
                         type="submit"
                       >
                         Sign Up
