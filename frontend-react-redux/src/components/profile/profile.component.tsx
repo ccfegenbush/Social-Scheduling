@@ -21,13 +21,10 @@ export class ProfileComponent extends React.Component<any, any>  {
 
     public componentDidMount() {
         const usersId = JSON.parse(localStorage.getItem('userId') || '{}');
-        // let usersId = this.state.username === null ? this.state.username.usersId :
-        // usersId = Number(usersId);
 
         fetch(environment.context + `users/${usersId}`, {})
             .then(resp => resp.json())
             .then(profileInfo => {
-
                 this.setState({ profileInfo })
                 console.log(this.state.username)
             })

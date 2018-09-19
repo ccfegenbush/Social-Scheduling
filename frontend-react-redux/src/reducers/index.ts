@@ -8,7 +8,8 @@ export interface ISignInState {
     password: string,
     username: string
   },
-  errorMessage: string
+  errorMessage: string,
+  signinUser: {}
 }
 
 export interface INewUserState {
