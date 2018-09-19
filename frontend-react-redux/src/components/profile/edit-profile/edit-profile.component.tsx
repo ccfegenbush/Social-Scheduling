@@ -20,6 +20,24 @@ class EditProfileComponent extends React.Component<IProps, {}> {
         super(props);
     }
 
+    public componentDidMount() {
+        fetch(environment.context + `users/${JSON.parse(localStorage.getItem('userId') || '{}')}`, {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        method: 'GET'
+    })
+    .then(resp => resp.json())
+    .then(user => {
+        this.props.updateAge(user.age);
+        this.props.updateEmail(user.email);
+        this.props.updateFirstName(user.firstName);
+        this.props.updateLastName(user.lastName);
+        this.props.updateUsername(user.username);
+    })
+    }
+
     public usernameChange = (e: any) => {
         this.props.updateUsername(e.target.value);
     }
@@ -52,10 +70,9 @@ class EditProfileComponent extends React.Component<IProps, {}> {
             "email": u.email,
             "firstName": u.firstName,
             "lastName": u.lastName,
-            "password": u.password,
             "username": u.username
         }
-        fetch(environment.context + "users/update", {
+        fetch(environment.context + `users/updateUser/${JSON.parse(localStorage.getItem('userId') || '{}')}`, {
             body: JSON.stringify(user),
             headers: {
                 'Accept': 'application/json',
@@ -65,7 +82,7 @@ class EditProfileComponent extends React.Component<IProps, {}> {
         })
         .then(resp => resp.json())
         .then(userData => {
-            this.props.history.push('/users/set-interests');
+            this.props.history.push('/users/profile');
         })
         .catch(err => {
             console.log(err);
@@ -89,7 +106,7 @@ class EditProfileComponent extends React.Component<IProps, {}> {
                     placeholder="Username"
                     required />
 
-                    <label htmlFor="inputPassword" className="sr-only">Password</label>
+                    {/* <label htmlFor="inputPassword" className="sr-only">Password</label>
                     <input
                     onChange={this.passwordChange}
                     value={u.password}
@@ -97,7 +114,7 @@ class EditProfileComponent extends React.Component<IProps, {}> {
                     name="password"
                     className="form-control"
                     placeholder="Password"
-                    required />
+                    required /> */}
 
                     <label htmlFor="inputFirstName" className="sr-only">First Name</label>
                     <input

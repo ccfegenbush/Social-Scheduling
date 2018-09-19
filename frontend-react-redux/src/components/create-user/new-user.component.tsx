@@ -77,7 +77,7 @@ class NewUserComponent extends React.Component<IProps, {}> {
         .then(resp => {
             localStorage.setItem('user', JSON.stringify(resp));
             localStorage.setItem('userId', JSON.stringify(resp.id));
-            this.props.history.push('/users/set-interests');
+            this.props.history.push('/set-interests');
         })
         .catch(err => {
             console.log(err);

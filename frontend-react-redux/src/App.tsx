@@ -30,7 +30,7 @@ class App extends React.Component {
                 <Route path="/sign-in" component={SignInComponent} />
                 <Route path="/register" component={NewUserComponent} />
                 <Route path="/calendar" component={MyCalendar} />
-                <Route path="/users/set-interests" component={InterestsFormComponent} />
+                <Route path="/set-interests" component={InterestsFormComponent} />
                 <Route path="/add-friends" component={AddFriendComponent} />
                 <Route path="/make-event" component={newEventComponent} />
                 <Route path="/events/invitations" component={InvitationComponent} />
