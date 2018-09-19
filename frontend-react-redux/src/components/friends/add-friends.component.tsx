@@ -67,39 +67,14 @@ export class AddFriendComponent extends React.Component<any, any> {
       }
 
       public getUsernames() {
-// console.log(this.state.usernames)
-        // const names= []
-        // const usernamesFormat = {}
-        // const allUsers = this.state.usernames
-
-        // for (const x of allUsers){
-        //     const item = allUsers[x]
-        //     usernames.push({
-        //         "name": item
-        //     })
-        // }
-        //    const usernames = JSON.parse(this.state.usernames)
-        //    console.log(usernames)
-        //    return   usernames     
-        return [
-            {  name: 'dan' },
-            { name: 'danny' },
-            {  name: 'josh' },
-            {  name: 'joshh' },
-            {  name: 'dannnnnnnnnnnn' },
-            {  name: 'dannnnnn' },
-            {  name: 'test' },
-            {  name: 'danm' },
-            {  name: 'test2' },
-            {  name: 'test3' },
-            {  name: 'dannnnnn' },
-            {  name: 'jrod' },
-            {  name: 'seitzjoshua' },
-          ];
+        const allUsers = this.state.usernames
+        const usernameObjs = allUsers.map((username:any) => ({name: username}));
+        console.log(usernameObjs);
+        return usernameObjs
     }
 
     public render() {
-        console.log(this.state.usernames)
+        // console.log(this.state.usernames)
         return (
             <div style={{ marginTop: 40, marginLeft: 50 }}>
                 <Autocomplete
@@ -124,6 +99,7 @@ export class AddFriendComponent extends React.Component<any, any> {
                         </div>
                     )}
                 />
+                <button onClick = {this.onAddFriend}>Add Friend</button>
             </div>
         );
     }
