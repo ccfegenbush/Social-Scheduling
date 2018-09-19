@@ -72,7 +72,7 @@ class EditProfileComponent extends React.Component<IProps, {}> {
             "lastName": u.lastName,
             "username": u.username
         }
-        fetch(environment.context + `users/updateUser/${JSON.parse(localStorage.getItem('userId') || '{}')}`, {
+        fetch(environment.context + `users/${JSON.parse(localStorage.getItem('userId') || '{}')}/updateUser`, {
             body: JSON.stringify(user),
             headers: {
                 'Accept': 'application/json',
