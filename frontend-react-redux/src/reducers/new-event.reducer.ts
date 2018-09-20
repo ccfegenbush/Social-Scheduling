@@ -11,6 +11,7 @@ const initialState: INewEventState = {
     eventLocation: '',
     eventType: '',
     name: '',
+    showModal: false,
     startDate: '',
     startTime: ''
 }
@@ -71,6 +72,11 @@ export const newEventReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 eventLocation: action.payload.eventLocation
+            }
+        case newEventTypes.UPDATE_SHOW_MODAL:
+            return {
+                ...state,
+                showModal: action.payload.showModal
             }
     }
     return state;

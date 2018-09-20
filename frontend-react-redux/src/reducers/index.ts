@@ -32,7 +32,8 @@ export interface INewEventState {
   name: string,
   startDate: string,
   startTime: string, 
-  eventType: string
+  eventType: string,
+  showModal: boolean
 }
 
 export interface IState {

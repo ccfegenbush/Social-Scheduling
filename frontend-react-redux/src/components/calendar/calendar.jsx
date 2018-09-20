@@ -5,6 +5,7 @@ import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { environment } from '../../environment';
 import * as newEventActions from "../../actions/event/events.actions";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 
 BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
@@ -39,6 +40,10 @@ class MyCalendar extends React.Component {
         return;
     }
 
+    toggle = () => {
+        this.props.updateShowModal(!this.props.showModal);
+    }
+
     render() {
         return <div className="mt-5 pt-5 container">
             {this.props.errMessage}
@@ -48,11 +53,39 @@ class MyCalendar extends React.Component {
                 style={{ height: "100vh" }}
                 selectable={true}
                 onSelectSlot={this.onSelectSlot}
+                onSelectEvent={this.toggle}
             />
+            <Modal isOpen={this.props.showModal} toggle={this.toggle} className='modal display-block'>
+            <p>fwojef</p>
+                <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+                <ModalBody className="modal-main">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                </ModalBody>
+                <ModalFooter>
+                    <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
+                    <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                </ModalFooter>
+            </Modal>
         </div>
     }
-
 }
+
+// const Modal = ({ handleClose, show, children }) => {
+//     const showHideClassName = show ? 'modal display-block' : 'modal display-none';
+  
+//     return (
+//       <div className={showHideClassName}>
+//         <section className='modal-main'>
+//           {children}
+//           <button
+//             onClick={handleClose}
+//           >
+//             Close
+//           </button>
+//         </section>
+//       </div>
+//     );
+//   };
 
 const mapStateToProps = (state) => state.newEvent;
 
@@ -61,6 +94,7 @@ const mapDispatchToProps = {
     getErrMessage: newEventActions.getErrMessage,
     updateEventEndDate: newEventActions.updateEventEndDate,
     updateEventStartDate: newEventActions.updateEventStartDate,
+    updateShowModal: newEventActions.updateShowModal
 };
 
 export default connect(

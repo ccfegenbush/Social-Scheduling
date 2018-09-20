@@ -96,3 +96,11 @@ export const updateAuthorId = (authorId: number) => {
         type: newEventTypes.UPDATE_AUTHOR_ID
     }
 }
+export const updateShowModal = (showModal: boolean) => {
+    return {
+        payload: {
+            showModal
+        },
+        type: newEventTypes.UPDATE_SHOW_MODAL
+    }
+}
