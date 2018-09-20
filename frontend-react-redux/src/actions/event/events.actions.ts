@@ -1,5 +1,24 @@
 import { newEventTypes } from "./events.types";
 
+
+export const getErrMessage = (errMessage: string) => {
+    return {
+        payload: {
+            errMessage
+        },
+        type: newEventTypes.GET_ERR_MESSAGE
+    }
+}
+
+export const getAllEvents = (allEvents: object[]) => {
+    return {
+        payload: {
+            allEvents
+        },
+        type: newEventTypes.GET_ALL_EVENTS
+    }
+}
+
 export const updateEventName = (name: string) => {
     return {
         payload: {

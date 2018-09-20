@@ -85,7 +85,7 @@ class NewEventComponent extends React.Component<IProps, {}> {
     })
       .then(resp => resp.json())
       .then(userData => {
-        this.props.history.push("/home");
+        this.props.history.push("/calendar");
       })
       .catch(err => {
         console.log(err);
@@ -101,7 +101,7 @@ class NewEventComponent extends React.Component<IProps, {}> {
             <div className="row">
               <div className="col-lg-12 text-center">
                 <h2 className="section-heading text-uppercase">New Event</h2>
-                <h3 className="section-subheading text-muted" />
+                <h3 className="section-subheading text-muted" >{u.startDate} - {u.endDate}</h3>
               </div>
             </div>
             <div className="row">

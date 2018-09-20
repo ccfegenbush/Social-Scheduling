@@ -16,6 +16,8 @@ import newEventComponent from './components/events/new-event.component';
 import { InterestsFormComponent } from './components/interests/interests-form.component';
 import EditProfileComponent from './components/profile/edit-profile/edit-profile.component';
 import { EditInterestsComponent } from './components/profile/edit-interests/edit-interests.component';
+import { FriendComponent } from './components/friends/view-friends';
+import { FriendRequestComponent } from './components/friends/view-friend-request..component';
 
 class App extends React.Component {
   public state = { value: '' };
@@ -38,6 +40,8 @@ class App extends React.Component {
                 <Route path="/profile" component={ProfileComponent} />
                 <Route path="/edit-profile" component={EditProfileComponent} />
                 <Route path="/edit-interests" component={EditInterestsComponent} />
+                <Route path="/view-friends" component={FriendComponent} />
+                <Route path="/view-friend-requests" component={FriendRequestComponent} />
                 <Route path="/" component={LandingPage} />
                 <Route component={LandingPage} />
               </Switch>
