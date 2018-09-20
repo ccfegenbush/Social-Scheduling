@@ -121,4 +121,5 @@ CREATE TABLE project2.user_has_invitations (
   user_id INTEGER NOT NULL REFERENCES project2.users(user_id),
   status_id INTEGER DEFAULT 1
 );
->>>>>>> 2b98550e85cdf761e1228b1c0ff62420b1198791
+
+
