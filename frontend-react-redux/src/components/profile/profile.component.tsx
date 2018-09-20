@@ -45,9 +45,9 @@ export class ProfileComponent extends React.Component<any, any>  {
     }
 
     public render() {
-       const listInterests = this.state.interests.map(
-           (p:any) => <li key = 
-           {p.interest}>{p.interest}</li>)
+        const listInterests = this.state.interests.map(
+            (p: any) => <li key=
+                {p.interest}>{p.interest}</li>)
         return (
             <div>
                 <table style={{ background: '#ADD8E6' }} className="table table-striped">
@@ -76,8 +76,8 @@ export class ProfileComponent extends React.Component<any, any>  {
                 <div>
                     Interests:
                             <div>
-                                {listInterests}
-                            </div>
+                        {listInterests}
+                    </div>
                 </div>
             </div>
         );

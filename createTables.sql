@@ -82,7 +82,6 @@ TABLESPACE pg_default;
 
 ALTER TABLE project2.friend_request
     OWNER to postgres;
-<<<<<<< HEAD
 
 	-- Table: project2.user_has_invitations
 
@@ -121,4 +120,14 @@ CREATE TABLE project2.user_has_invitations (
   user_id INTEGER NOT NULL REFERENCES project2.users(user_id),
   status_id INTEGER DEFAULT 1
 );
->>>>>>> 2b98550e85cdf761e1228b1c0ff62420b1198791
+
+<<<<<<< HEAD
+
+=======
+CREATE TABLE project2.user_has_friend_requests (
+  request_id SERIAL PRIMARY KEY NOT NULL,
+  friend_id INTEGER NOT NULL REFERENCES project2.users(user_id),
+  user_id INTEGER NOT NULL REFERENCES project2.users(user_id),
+  status_id INTEGER DEFAULT 1
+);
+>>>>>>> c172a44321e1ad8aaafa074a6070688d03a891c4
