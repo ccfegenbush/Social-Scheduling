@@ -1,85 +1,75 @@
 import * as React from 'react';
-import { updateUsername } from '../../actions/sign-in/sign-in.actions';
 import { environment } from '../../environment';
 
 export class FriendRequestComponent extends React.Component<any, any>  {
 
     public constructor(props: any) {
         super(props);
-        const userJSON = localStorage.getItem("user")
-        const user = userJSON !== null ? JSON.parse(userJSON) : updateUsername
         this.state = {
-            age: '',
-            email: '',
-            firstname: '',
-            interests: [],
-            lastname: '',
-            profileInfo: [],
-            username: user,
+            friends: [],
+            requests: []
         }
     }
 
     public componentDidMount() {
-
-        let usersId = this.state.username === null ? this.state.username.usersId : 1
-        usersId = Number(usersId);
-
-        fetch(environment.context + `users/${usersId}`, {})
+        fetch(environment.context + `requests/user/${JSON.parse(localStorage.getItem('userId') || '{}')}`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'GET'
+        })
             .then(resp => resp.json())
-            .then(profileInfo => {
+            .then(requests => {
+                this.setState({ requests })
+                console.log(this.state.requests)
+                for (const i of this.state.requests) {
+                    console.log(i);
+                    const friendId = i.friendId;
 
-                this.setState({ profileInfo })
-                console.log(this.state.username)
+                    fetch(environment.context + `users/${friendId}`, {})
+                        .then(resp => resp.json())
+                        .then(friend => {
+                            this.setState({
+                                ...this.state,
+                                friends: [...this.state.friends, friend]
+                            })
+
+                            console.log(this.state)
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                }
             })
             .catch(err => {
                 console.log(err)
             })
 
-        fetch(environment.context + `users/${usersId}/interests`, {})
-            .then(resp => resp.json())
-            .then(interests => {
-                this.setState({ interests })
-                console.log(this.state.interests)
-            })
-            .catch(err => {
-                console.log(err)
-            })
     }
 
     public render() {
-       const listInterests = this.state.interests.map(
-           (p:any) => <li key = 
-           {p.interest}>{p.interest}</li>)
         return (
             <div>
                 <table style={{ background: '#ADD8E6' }} className="table table-striped">
+
                     <thead>
                         <tr>
                             <th scope="col">Username</th>
-                            <th scope="col">First Name</th>
-                            <th scope="col">Last Name</th>
-                            <th scope="col">Age</th>
-                            <th scope="col">Email</th>
+                            <th scope="col">Requestor's name</th>
                         </tr>
                     </thead>
                     <tbody id="profile-table-body">
                         {
-                            <tr key={this.state.id} >
-                                <td>{this.state.username.username}</td>
-                                <td>{this.state.username.firstName}</td>
-                                <td>{this.state.username.lastName}</td>
-                                <td>{this.state.username.age}</td>
-                                <td>{this.state.username.email}</td>
-                            </tr>
+                            this.state.friends.map((friend: any) => (
+                                <tr key={friend.id} >
+                                    <td>{friend.username}</td>
+                                    <td>{friend.firstName}</td>
+                                </tr>
+                            ))
                         }
                     </tbody>
                 </table>
-                <div>
-                    Interests:
-                            <div>
-                                {listInterests}
-                            </div>
-                </div>
             </div>
         );
     }
