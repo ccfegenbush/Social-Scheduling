@@ -1,13 +1,10 @@
 import * as React from 'react';
-// import { updateUsername } from '../../actions/sign-in/sign-in.actions';
 import { environment } from '../../environment';
 
 export class InvitationComponent extends React.Component<any, any>  {
 
     public constructor(props: any) {
         super(props);
-        // const userJSON = localStorage.getItem("user")
-        // const user = userJSON !== null ? JSON.parse(userJSON) : updateUsername
         this.state = {
             events: [],
             invitations:[]

@@ -4,6 +4,7 @@ import { RouteComponentProps } from "react-router";
 import * as newEventActions from "../../actions/event/events.actions";
 import { environment } from "../../environment";
 import { INewEventState, IState } from "../../reducers";
+import { Link } from "react-router-dom";
 
 interface IProps extends RouteComponentProps<{}>, INewEventState {
   updateEventName: (eventName: string) => any;
@@ -59,19 +60,27 @@ class NewEventComponent extends React.Component<IProps, {}> {
     this.props.updateAuthorId(e.target.value);
   };
 
+  public formatDate = (date: string) => {
+    const re = /(.+)(00:00:00)(.+)/g;
+    return date.replace(re, '$1');
+  }
+
   public onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     const ev = this.props;
     e.preventDefault();
+    const re = /(.+)(00:00:00)(.+)/g;
+    const newStartTime = ev.startDate.replace(re, '$1' + ev.startTime + ':00' + '$3');
+    const newEndTime = ev.endDate.replace(re, '$1' + ev.endTime + ':00' + '$3');
     const event = {
       authorId: JSON.parse(localStorage.getItem("userId") || "{}"),
       description: ev.description,
       endDate: ev.endTime,
-      endTime: ev.endTime,
+      endTime: newEndTime,
       eventType: ev.eventType,
       location: ev.eventLocation,
       name: ev.name,
       startDate: ev.startTime,
-      startTime: ev.startTime
+      startTime: newStartTime
     };
 
     console.log(event);
@@ -101,7 +110,8 @@ class NewEventComponent extends React.Component<IProps, {}> {
             <div className="row">
               <div className="col-lg-12 text-center">
                 <h2 className="section-heading text-uppercase">New Event</h2>
-                <h3 className="section-subheading text-muted" >{u.startDate} - {u.endDate}</h3>
+                { u.startDate ? <h3 className="section-subheading text-muted">Start Date: <span className="text-success">{ this.formatDate(u.startDate) }</span> - End Date: <span className="text-danger">{ this.formatDate(u.endDate)}</span> </h3> 
+                              : <h3 className="section-subheading text-muted"><Link to="/calendar" className="nav-link">Select date</Link></h3> }
               </div>
             </div>
             <div className="row">
@@ -151,13 +161,13 @@ class NewEventComponent extends React.Component<IProps, {}> {
                     <div className="col-md-6">
                       <div className="form-group">
                         <p className="help-block text-dark">
-                          Event Start Date/Time (test format: 2015-03-25T12:00:00Z)*:
+                          Event Start Time *:
                         </p>
 
                         <input
                           onChange={this.eventStartTimeChange}
                           value={u.startTime}
-                          type="text"
+                          type="time"
                           name="start time"
                           className="form-control"
                           placeholder="Start Time"
@@ -165,12 +175,12 @@ class NewEventComponent extends React.Component<IProps, {}> {
                         />
                       </div>
                       <div className="form-group">
-                        <p className="help-block text-dark">Event End Date/Time  (test format: 2015-03-25T12:00:00Z)*:</p>
+                        <p className="help-block text-dark">Event End Time *:</p>
 
                         <input
                           onChange={this.eventEndTimeChange}
                           value={u.endTime}
-                          type="text"
+                          type="time"
                           name="end time"
                           className="form-control"
                           placeholder="End Time"
@@ -193,15 +203,21 @@ class NewEventComponent extends React.Component<IProps, {}> {
                     <div className="clearfix" />
 
                     <div className="col-lg-12 text-center">
+                     
                       <button
                         className="btn btn-primary btn-xl text-uppercase px-5 mt-2"
                         type="submit"
                       >
                         Submit
                       </button>
+                       
                     </div>
                   </div>
                 </form>
+                <div className="col-lg-12 text-center">
+                  <Link to="/calendar" className="btn btn-default btn-xl mt-2">Go Back</Link>
+                </div>
+                
               </div>
             </div>
           </div>
