@@ -2,10 +2,12 @@ import { INewEventState } from ".";
 import { newEventTypes } from "../actions/event/events.types";
 
 const initialState: INewEventState = {
+    allEvents: [{}],
     authorId: 0,
     description: '',
     endDate: '',
     endTime: '',
+    errMessage: '',
     eventLocation: '',
     eventType: '',
     name: '',
@@ -15,6 +17,16 @@ const initialState: INewEventState = {
 
 export const newEventReducer = (state = initialState, action: any) => {
     switch (action.type) {
+        case newEventTypes.GET_ALL_EVENTS:
+            return {
+                ...state,
+                allEvents: action.payload.allEvents
+            }
+        case newEventTypes.GET_ERR_MESSAGE:
+            return {
+                ...state,
+                errMessage: action.payload.errMessage
+            }
         case newEventTypes.UPDATE_AUTHOR_ID:
             return {
                 ...state,

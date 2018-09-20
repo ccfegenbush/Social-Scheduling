@@ -2,7 +2,7 @@ import * as React from 'react';
 import { updateUsername } from '../../actions/sign-in/sign-in.actions';
 import { environment } from '../../environment';
 
-export class ProfileComponent extends React.Component<any, any>  {
+export class FriendRequestComponent extends React.Component<any, any>  {
 
     public constructor(props: any) {
         super(props);
