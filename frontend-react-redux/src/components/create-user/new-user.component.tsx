@@ -88,7 +88,7 @@ class NewUserComponent extends React.Component<IProps, {}> {
     public render() {
         const u = this.props;
         return (
-            <section className="contact">
+            <section className="contact pt-5">
                 <div className="container">
                     <div className="row">
                         <div className="col-lg-12 text-center">
