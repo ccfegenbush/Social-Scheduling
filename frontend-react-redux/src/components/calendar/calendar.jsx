@@ -5,7 +5,8 @@ import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { environment } from '../../environment';
 import * as newEventActions from "../../actions/event/events.actions";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+// import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Modal } from 'react-bootstrap';
 
 
 BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
@@ -55,16 +56,16 @@ class MyCalendar extends React.Component {
                 onSelectSlot={this.onSelectSlot}
                 onSelectEvent={this.toggle}
             />
-            <Modal isOpen={this.props.showModal} toggle={this.toggle} className='modal display-block'>
+            <Modal show={this.props.showModal} onHide={this.toggle}>
             <p>fwojef</p>
-                <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
-                <ModalBody className="modal-main">
+                <Modal.Header>Modal title</Modal.Header>
+                <Modal.Body>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </ModalBody>
-                <ModalFooter>
+                </Modal.Body>
+                <Modal.Footer>
                     <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
                     <Button color="secondary" onClick={this.toggle}>Cancel</Button>
-                </ModalFooter>
+                </Modal.Footer>
             </Modal>
         </div>
     }

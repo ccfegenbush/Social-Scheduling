@@ -739,6 +739,22 @@ ul.social-buttons li a:active, ul.social-buttons li a:focus, ul.social-buttons l
   }
 }
 
+.show {
+  opacity: 1;
+}
+
+.modal-backdrop {
+  opacity: 0.5;
+}
+
+.modal.fade.in {
+  opacity: 1;
+}
+
+.modal.fade.in .modal-dialog {
+  transform: translate(0,0);
+}
+
 .display-block {
   display: block;
 }
