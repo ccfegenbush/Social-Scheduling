@@ -22,8 +22,10 @@ export interface INewUserState {
 }
 
 export interface INewEventState {
+  allEvents: object[],
   authorId: number,
   description: string,
+  errMessage: string,
   endDate: string,
   endTime: string,
   eventLocation: string,
