@@ -4,6 +4,7 @@ import { RouteComponentProps } from "react-router";
 import * as newEventActions from "../../actions/event/events.actions";
 import { environment } from "../../environment";
 import { INewEventState, IState } from "../../reducers";
+import { Link } from "react-router-dom";
 
 interface IProps extends RouteComponentProps<{}>, INewEventState {
   updateEventName: (eventName: string) => any;
@@ -101,7 +102,8 @@ class NewEventComponent extends React.Component<IProps, {}> {
             <div className="row">
               <div className="col-lg-12 text-center">
                 <h2 className="section-heading text-uppercase">New Event</h2>
-                <h3 className="section-subheading text-muted" >{u.startDate} - {u.endDate}</h3>
+                { u.startDate ? <h3 className="section-subheading text-muted">{u.startDate} - {u.endDate}</h3> 
+                              : <h3 className="section-subheading text-muted"><Link to="/calendar" className="nav-link">Select date</Link></h3> }
               </div>
             </div>
             <div className="row">
@@ -157,7 +159,7 @@ class NewEventComponent extends React.Component<IProps, {}> {
                         <input
                           onChange={this.eventStartTimeChange}
                           value={u.startTime}
-                          type="text"
+                          type="time"
                           name="start time"
                           className="form-control"
                           placeholder="Start Time"
@@ -170,7 +172,7 @@ class NewEventComponent extends React.Component<IProps, {}> {
                         <input
                           onChange={this.eventEndTimeChange}
                           value={u.endTime}
-                          type="text"
+                          type="time"
                           name="end time"
                           className="form-control"
                           placeholder="End Time"
@@ -193,15 +195,21 @@ class NewEventComponent extends React.Component<IProps, {}> {
                     <div className="clearfix" />
 
                     <div className="col-lg-12 text-center">
+                     
                       <button
                         className="btn btn-primary btn-xl text-uppercase px-5 mt-2"
                         type="submit"
                       >
                         Submit
                       </button>
+                       
                     </div>
                   </div>
                 </form>
+                <div className="col-lg-12 text-center">
+                  <Link to="/calendar" className="btn btn-default btn-xl mt-2">Go Back</Link>
+                </div>
+                
               </div>
             </div>
           </div>
