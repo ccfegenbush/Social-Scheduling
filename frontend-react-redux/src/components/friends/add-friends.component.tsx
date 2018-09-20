@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { environment } from '../../environment';
 import * as Autocomplete from 'react-autocomplete';
-// import { getStocks, matchStocks } from './data';
 
 export class AddFriendComponent extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
+            Id: 0,
             friendName: '',
+            selectedUsername: '',
             userData: [],
             usernames: []
         }
@@ -33,28 +34,43 @@ export class AddFriendComponent extends React.Component<any, any> {
             .catch(err => {
                 console.log(err);
             })
-        
     }
 
     public onAddFriend = (e: any) => {
-        const u = this.state;
+        const username = this.state.value
+        const userId = JSON.parse(localStorage.getItem('userId') || '{}');
         e.preventDefault();
-        const user = {
-            friendName: u.friendName,
-            username: u.username
-        }
-        fetch(environment.context + 'friends', {
-            body: JSON.stringify(user),
+
+        // get the users id from their username
+
+        fetch(environment.context + `users/${username}/find`, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            method: 'POST'
+            method: 'GET'
+        })
+        .then(data => data.json())
+        .then((data) => {
+                this.setState({
+                   Id : data
+                })         
+        })
+
+        const id = {"id": this.state.Id} 
+        console.log("this.state.id: "+id)
+      
+        console.log("userid: " + userId)
+
+        fetch(environment.context + `users/${userId}/addFriendRequest`, {
+            body: JSON.stringify(id),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'Post'
         })
             .then(resp => resp.json())
-            .then(userData => {
-                this.props.history.push('/home');
-            })
             .catch(err => {
                 console.log(err);
             })
@@ -69,12 +85,10 @@ export class AddFriendComponent extends React.Component<any, any> {
       public getUsernames() {
         const allUsers = this.state.usernames
         const usernameObjs = allUsers.map((username:any) => ({name: username}));
-        console.log(usernameObjs);
         return usernameObjs
     }
 
     public render() {
-        // console.log(this.state.usernames)
         return (
             <div style={{ marginTop: 40, marginLeft: 50 }}>
                 <Autocomplete
@@ -99,7 +113,7 @@ export class AddFriendComponent extends React.Component<any, any> {
                         </div>
                     )}
                 />
-                <button onClick = {this.onAddFriend}>Add Friend</button>
+                <button onClick = {this.onAddFriend}> Add Friend!</button>
             </div>
         );
     }

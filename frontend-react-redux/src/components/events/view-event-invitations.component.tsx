@@ -1,89 +1,77 @@
 import * as React from 'react';
-// import { updateUsername } from '../../actions/sign-in/sign-in.actions';
 import { environment } from '../../environment';
 
 export class InvitationComponent extends React.Component<any, any>  {
 
     public constructor(props: any) {
         super(props);
-        // const userJSON = localStorage.getItem("user")
-        // const user = userJSON !== null ? JSON.parse(userJSON) : updateUsername
         this.state = {
-            "description": '',
-            "endDate": '',
-            "endTime": '',
-            "eventType": '',
-            "location": '',
-            "name": '',
-            "startDate": '',
-            "startTime": '',
-            // eventId = 0;
+            events: [],
+            invitations:[]
         }
     }
 
     public componentDidMount() {
-
-        let usersId = this.state.username === null ? this.state.username.usersId : 1
-        usersId = Number(usersId);
-
-        fetch(environment.context + `users/${usersId}`, {})
+        fetch(environment.context + `invitations/user/${JSON.parse(localStorage.getItem('userId') || '{}')}`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'GET'
+        })
             .then(resp => resp.json())
-            .then(profileInfo => {
-
-                this.setState({ profileInfo })
-                console.log(this.state.username)
+            .then(invitations => {
+                this.setState({ invitations })
+                console.log(this.state.invitations)
+                for(const i of this.state.invitations){
+                    console.log(i);
+                    const eventId = i.eventId;
+    
+                    fetch(environment.context + `events/${eventId}`, {})
+                    .then(resp => resp.json())
+                    .then(event => {
+                        this.setState({ 
+                            ...this.state,
+                            events: [...this.state.events, event]
+                         })
+        
+                        console.log(this.state)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+    
+                }
             })
             .catch(err => {
                 console.log(err)
             })
 
-        fetch(environment.context + `users/${usersId}/interests`, {})
-            .then(resp => resp.json())
-            .then(interests => {
-                this.setState({ interests })
-
-                console.log(this.state.interests)
-            })
-            .catch(err => {
-                console.log(err)
-            })
     }
 
     public render() {
-       const listInterests = this.state.interests.map(
-           (p:any) => <li key = 
-           {p.interest}>{p.interest}</li>)
         return (
             <div>
                 <table style={{ background: '#ADD8E6' }} className="table table-striped">
 
                     <thead>
                         <tr>
-                            <th scope="col">Username</th>
-                            <th scope="col">First Name</th>
-                            <th scope="col">Last Name</th>
-                            <th scope="col">Age</th>
-                            <th scope="col">Email</th>
+                            <th scope="col">Event Name</th>
+                            <th scope="col">Event Author</th>
                         </tr>
                     </thead>
                     <tbody id="profile-table-body">
                         {
-                            <tr key={this.state.id} >
-                                <td>{this.state.username.username}</td>
-                                <td>{this.state.username.firstName}</td>
-                                <td>{this.state.username.lastName}</td>
-                                <td>{this.state.username.age}</td>
-                                <td>{this.state.username.email}</td>
+                            this.state.events.map((event: any) => (                            
+                            <tr key={event.id} >
+                                <td>{event.name}</td>
+                                <td>{event.authorId}</td>
                             </tr>
+                            
+                        ))
                         }
                     </tbody>
                 </table>
-                <div>
-                    Interests:
-                            <div>
-                                {listInterests}
-                            </div>
-                </div>
             </div>
         );
     }

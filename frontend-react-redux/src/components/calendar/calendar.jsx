@@ -4,19 +4,12 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { environment } from '../../environment';
+import * as newEventActions from "../../actions/event/events.actions";
+
 
 BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 
-export default class MyCalendar extends React.Component {
-
-    constructor(props) {
-        super(props)
-        this.state = {
-            errMessage: '',
-            newEvents: []
-        }
-
-    }
+class MyCalendar extends React.Component {
 
     componentWillMount() {
         fetch(environment.context + `events`, {
@@ -32,28 +25,45 @@ export default class MyCalendar extends React.Component {
                     let oneEvent = { end: new Date(item.endTime), start: new Date(item.startTime), title: item.name };
                     allEvents.push(oneEvent);
                 })
-                this.setState({ newEvents: allEvents })
+                this.props.getAllEvents(allEvents);
             })
             .catch(err => {
-                this.state.errMessage = err;
+                this.props.getErrMessage(err);
             })
     }
 
-
-    onSelectSlot({start, end, slots, action }){
-        alert({start});
+    onSelectSlot = (slotInfo) => {
+        this.props.updateEventStartDate(slotInfo.start.toString());
+        this.props.updateEventEndDate(slotInfo.end.toString());
+        this.props.history.push('/make-event');
+        return;
     }
 
     render() {
         return <div className="mt-5 pt-5 container">
-            {this.state.errMessage}
-            <BigCalendar events={this.state.newEvents}
+            {this.props.errMessage}
+            <BigCalendar events={this.props.allEvents}
                 defaultDate={new Date()}
                 defaultView="month"
                 style={{ height: "100vh" }}
                 selectable={true}
+                onSelectSlot={this.onSelectSlot}
             />
         </div>
     }
 
 }
+
+const mapStateToProps = (state) => state.newEvent;
+
+const mapDispatchToProps = {
+    getAllEvents: newEventActions.getAllEvents,
+    getErrMessage: newEventActions.getErrMessage,
+    updateEventEndDate: newEventActions.updateEventEndDate,
+    updateEventStartDate: newEventActions.updateEventStartDate,
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(MyCalendar);

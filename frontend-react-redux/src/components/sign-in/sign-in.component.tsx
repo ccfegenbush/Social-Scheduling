@@ -24,7 +24,6 @@ class SignInComponent extends React.Component<IProps, {}> {
     e.preventDefault();
     fetch(environment.context + 'users/login', {
       body: JSON.stringify(this.props.credentials),
-      // credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -45,7 +44,7 @@ class SignInComponent extends React.Component<IProps, {}> {
         localStorage.setItem('user', JSON.stringify(resp));
         localStorage.setItem('userId', JSON.stringify(resp.id));
         this.props.setLoginUser(resp);
-        this.props.history.push('/calendar');
+        this.props.history.push('/home');
       })
       .catch(err => {
         console.log(err);
