@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { updateUsername } from '../../actions/sign-in/sign-in.actions';
 import { environment } from '../../environment';
+import { FaTwitter, FaFacebookF, FaLinkedinIn } from 'react-icons/fa';
+
 
 export class ProfileComponent extends React.Component<any, any>  {
-
+    
     public constructor(props: any) {
         super(props);
         const userJSON = localStorage.getItem("user")
@@ -45,41 +47,53 @@ export class ProfileComponent extends React.Component<any, any>  {
     }
 
     public render() {
+        const img = require('../../assets/profile.png');
+        const userInfo = this.state.username;
         const listInterests = this.state.interests.map(
             (p: any) => <li key=
                 {p.interest}>{p.interest}</li>)
         return (
-            <div>
-                <table style={{ background: '#ADD8E6' }} className="table table-striped">
-
-                    <thead>
-                        <tr>
-                            <th scope="col">Username</th>
-                            <th scope="col">First Name</th>
-                            <th scope="col">Last Name</th>
-                            <th scope="col">Age</th>
-                            <th scope="col">Email</th>
-                        </tr>
-                    </thead>
-                    <tbody id="profile-table-body">
-                        {
-                            <tr key={this.state.id} >
-                                <td>{this.state.username.username}</td>
-                                <td>{this.state.username.firstName}</td>
-                                <td>{this.state.username.lastName}</td>
-                                <td>{this.state.username.age}</td>
-                                <td>{this.state.username.email}</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-                <div>
-                    Interests:
-                            <div>
-                        {listInterests}
+            <section className="bg-light pt-5" id="team">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-lg-12 text-center">
+                            <h2 className="section-heading text-uppercase">My Profile</h2>
+                            <h3 className="section-subheading text-muted mb-0">{userInfo.username}</h3>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-sm-4 offset-md-4">
+                            <div className="team-member">
+                                <img className="mx-auto rounded-circle" src={img} alt="" />
+                                <h4>{`${userInfo.firstName} ${userInfo.lastName}`}</h4>
+                                <p className="text-muted">{userInfo.email}</p>
+                                <ul className="list-inline social-buttons">
+                                    <li className="list-inline-item">
+                                        <a href="#">
+                                            <FaTwitter/>
+                                        </a>
+                                    </li>
+                                    <li className="list-inline-item">
+                                        <a href="#">
+                                            <FaFacebookF/>
+                                        </a>
+                                    </li>
+                                    <li className="list-inline-item">
+                                        <a href="#">
+                                            <FaLinkedinIn/>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-lg-8 mx-auto text-center">
+                            <p className="large text-muted">Interests: {listInterests}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </section>
         );
     }
 }
