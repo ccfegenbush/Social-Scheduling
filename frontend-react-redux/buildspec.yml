@@ -6,7 +6,7 @@ phases:
   install:
     commands:
       - echo Installing source NPM dependencies...
-      - cd 4week && cd redux-sass && npm install
+      - cd frontend-react-redux && npm install
   build:
     commands:
       - echo Build started on `date`
