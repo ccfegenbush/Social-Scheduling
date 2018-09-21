@@ -71,7 +71,6 @@ export class FriendRequestComponent extends React.Component<any, any>  {
                 for (const i of this.state.newRequests) {
                     console.log(i);
                     const requestId = i.requestId;
-
                     const statusId = {"statusId": 2} 
                     fetch(environment.context + `requests/editStatus/${requestId}`, {
                         body: JSON.stringify(statusId),

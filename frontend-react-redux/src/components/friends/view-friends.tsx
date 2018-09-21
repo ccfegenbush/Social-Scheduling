@@ -20,7 +20,7 @@ export class FriendComponent extends React.Component<any, any>  {
     public componentDidMount() {
         const usersId = JSON.parse(localStorage.getItem('userId') || '{}');
 
-        // find all of our friends
+        // find all of our friends with a status of 2 or accepted
         fetch(environment.context + `requests/friend/${usersId}/status/2`, {
             headers: {
                 'Accept': 'application/json',
@@ -30,11 +30,24 @@ export class FriendComponent extends React.Component<any, any>  {
         })
             .then(resp => resp.json())
             .then(userData => {
+                this.setState({ userData })
                 for (const x of userData) {
-                    this.setState({
-                        ...this.state,
-                        friends: [...this.state.friends, x.userId]
+                    console.log(x.userId)
+                    fetch(environment.context + `users/${x.userId}`, {
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        method: 'GET'
                     })
+                        .then(resp => resp.json())
+                        .then(user => {
+                            this.setState({
+                                ...this.state,
+                                friends: [...this.state.friends, user.username]
+                            })
+                            console.log(this.state.friends)
+                        })
                 }
             })
             .catch(err => {
@@ -52,7 +65,7 @@ export class FriendComponent extends React.Component<any, any>  {
                     <div className="row">
                         <div className="col-lg-12 text-center">
                             <h2 className="section-heading text-uppercase">Friends List</h2>
-                            <h3 className="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+                            <h3 className="section-subheading text-muted">The more the merrier.</h3>
                         </div>
                     </div>
                     <div className="row">
