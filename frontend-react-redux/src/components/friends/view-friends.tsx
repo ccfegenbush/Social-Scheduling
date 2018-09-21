@@ -33,7 +33,7 @@ export class FriendComponent extends React.Component<any, any>  {
                 for (const x of userData) {
                     this.setState({
                         ...this.state,
-                       friends : [...this.state.friends, x.userId ]
+                        friends: [...this.state.friends, x.userId]
                     })
                 }
             })
@@ -45,8 +45,7 @@ export class FriendComponent extends React.Component<any, any>  {
     public render() {
         console.log(this.state.friends)
         const listFriends = this.state.friends.map(
-            (p: any) => <li key=
-                {p}>{p}</li>)
+            (p: any) => <li className="list-group-item" key={p}>{p}</li>)
         return (
             <section className="pt-5">
                 <div className="container">
@@ -71,9 +70,12 @@ export class FriendComponent extends React.Component<any, any>  {
                                 <i className="fas fa-laptop fa-stack-1x fa-inverse"></i>
                             </span>
                             <h4 className="service-heading">Your Friends</h4>
-                            <p className="text-muted">{listFriends}</p>
+                            <p className="text-muted">
+                                <ul className="list-group">
+                                    {listFriends}
+                                </ul>
+                            </p>
                         </div>
-
                     </div>
                 </div>
             </section>
