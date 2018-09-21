@@ -104,3 +104,11 @@ export const updateShowModal = (showModal: boolean) => {
         type: newEventTypes.UPDATE_SHOW_MODAL
     }
 }
+export const updateCurrentEvent = (event: object) => {
+    return {
+        payload: {
+            event
+        },
+        type: newEventTypes.UPDATE_CURRENT_EVENT
+    }
+}

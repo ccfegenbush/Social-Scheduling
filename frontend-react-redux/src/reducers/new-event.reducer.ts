@@ -4,6 +4,7 @@ import { newEventTypes } from "../actions/event/events.types";
 const initialState: INewEventState = {
     allEvents: [{}],
     authorId: 0,
+    currentEvent: {},
     description: '',
     endDate: '',
     endTime: '',
@@ -77,6 +78,11 @@ export const newEventReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 showModal: action.payload.showModal
+            }
+        case newEventTypes.UPDATE_CURRENT_EVENT:
+            return {
+                ...state,
+                currentEvent: action.payload.event
             }
     }
     return state;

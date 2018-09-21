@@ -4,7 +4,7 @@ import { IState } from "../../reducers";
 import { connect } from "react-redux";
 import { logoutCleanUp } from "../../utils";
 import * as signInActions from "../../actions/sign-in/sign-in.actions";
-
+import SocialPlanetLogo from '../../assets/socialPlanet.png';
 class AppNav extends React.Component<any, any> {
   public onClick = (e: any) => {
     this.props.setLoginUser({});
@@ -22,7 +22,9 @@ class AppNav extends React.Component<any, any> {
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark" id="mainNav">
         <div className="container">
-          <Link to={'/'} className="navbar-brand">Social Planit</Link>
+        <Link to="/calendar" className="unset-anchor">
+            <img className="img-adjust-position rev-logo" src={SocialPlanetLogo} alt="social" />
+          </Link>
           <button
             className="navbar-toggler navbar-toggler-right"
             type="button"
@@ -64,6 +66,11 @@ class AppNav extends React.Component<any, any> {
                       <li>
                         <Link to="/events/invitations" className="nav-link">
                           View Event invitations
+                      </Link>
+                      </li>
+                      <li>
+                        <Link to="/events/invite-user" className="nav-link">
+                          Invite Users to Event
                       </Link>
                       </li>
                     </ul>

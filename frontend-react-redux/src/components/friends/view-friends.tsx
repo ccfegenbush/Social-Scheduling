@@ -21,7 +21,7 @@ export class FriendComponent extends React.Component<any, any>  {
         const usersId = JSON.parse(localStorage.getItem('userId') || '{}');
 
         // find all of our friends
-        fetch(environment.context + `users/${usersId}/friends`, {
+        fetch(environment.context + `requests/friend/${usersId}/status/2`, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -33,7 +33,7 @@ export class FriendComponent extends React.Component<any, any>  {
                 for (const x of userData) {
                     this.setState({
                         ...this.state,
-                        friends: [...this.state.friends, x.username]
+                       friends : [...this.state.friends, x.userId ]
                     })
                 }
             })

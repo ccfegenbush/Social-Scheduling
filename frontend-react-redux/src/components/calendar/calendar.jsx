@@ -45,6 +45,24 @@ class MyCalendar extends React.Component {
         this.props.updateShowModal(!this.props.showModal);
     }
 
+    selectedEventChange = (event, e) => {
+        this.props.updateShowModal(!this.props.showModal);
+        fetch(environment.context + `events/name/${event.title}`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'GET'
+        })
+        .then(resp => resp.json())
+        .then(eventData => {
+            this.props.updateCurrentEvent(eventData);
+        })
+        .catch(err => {
+            this.props.getErrMessage(err);
+        })
+    }
+
     render() {
         return <div className="mt-5 pt-5 container">
             {this.props.errMessage}
@@ -54,13 +72,12 @@ class MyCalendar extends React.Component {
                 style={{ height: "100vh" }}
                 selectable={true}
                 onSelectSlot={this.onSelectSlot}
-                onSelectEvent={this.toggle}
+                onSelectEvent={this.selectedEventChange}
             />
             <Modal show={this.props.showModal} onHide={this.toggle}>
-            <p>fwojef</p>
-                <Modal.Header>Modal title</Modal.Header>
+                <Modal.Header>{this.props.currentEvent.name}</Modal.Header>
                 <Modal.Body>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    {this.props.currentEvent.description}
                 </Modal.Body>
                 <Modal.Footer>
                     <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
@@ -71,28 +88,12 @@ class MyCalendar extends React.Component {
     }
 }
 
-// const Modal = ({ handleClose, show, children }) => {
-//     const showHideClassName = show ? 'modal display-block' : 'modal display-none';
-  
-//     return (
-//       <div className={showHideClassName}>
-//         <section className='modal-main'>
-//           {children}
-//           <button
-//             onClick={handleClose}
-//           >
-//             Close
-//           </button>
-//         </section>
-//       </div>
-//     );
-//   };
-
 const mapStateToProps = (state) => state.newEvent;
 
 const mapDispatchToProps = {
     getAllEvents: newEventActions.getAllEvents,
     getErrMessage: newEventActions.getErrMessage,
+    updateCurrentEvent: newEventActions.updateCurrentEvent,
     updateEventEndDate: newEventActions.updateEventEndDate,
     updateEventStartDate: newEventActions.updateEventStartDate,
     updateShowModal: newEventActions.updateShowModal
