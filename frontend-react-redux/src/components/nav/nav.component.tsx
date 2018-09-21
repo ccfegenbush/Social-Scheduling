@@ -22,7 +22,7 @@ class AppNav extends React.Component<any, any> {
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark" id="mainNav">
         <div className="container">
-          <a className="navbar-brand">Social Planit</a>
+          <Link to={'/'} className="navbar-brand">Social Planit</Link>
           <button
             className="navbar-toggler navbar-toggler-right"
             type="button"
@@ -64,6 +64,11 @@ class AppNav extends React.Component<any, any> {
                       <li>
                         <Link to="/events/invitations" className="nav-link">
                           View Event invitations
+                      </Link>
+                      </li>
+                      <li>
+                        <Link to="/events/invite-user" className="nav-link">
+                          Invite Users to Event
                       </Link>
                       </li>
                     </ul>

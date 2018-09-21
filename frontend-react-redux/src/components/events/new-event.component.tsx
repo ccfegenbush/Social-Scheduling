@@ -105,7 +105,7 @@ class NewEventComponent extends React.Component<IProps, {}> {
     const u = this.props;
     return (
       <div>
-        <section className="contact">
+        <section className="contact pt-5">
           <div className="container">
             <div className="row">
               <div className="col-lg-12 text-center">
