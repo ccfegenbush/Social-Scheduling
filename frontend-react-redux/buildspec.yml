@@ -23,5 +23,5 @@ phases:
 artifacts:
   files:
     - '**/*'
-  base-directory: '4week/redux-sass/build*'
+  base-directory: 'frontend-react-redux/build*'
   discard-paths: yes
