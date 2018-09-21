@@ -4,7 +4,7 @@ import { IState } from "../../reducers";
 import { connect } from "react-redux";
 import { logoutCleanUp } from "../../utils";
 import * as signInActions from "../../actions/sign-in/sign-in.actions";
-import SocialPlanetLogo from "../../assets/socialPlanet.png";
+import SocialPlanetLogo from "../../assets/logo.png";
 class AppNav extends React.Component<any, any> {
   public onClick = (e: any) => {
     this.props.setLoginUser({});
