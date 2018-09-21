@@ -27,7 +27,7 @@ export class AddFriendComponent extends React.Component<any, any> {
                 for (const x of userData) {
                     this.setState({
                         ...this.state,
-                       usernames : [...this.state.usernames, x.username ]
+                        usernames: [...this.state.usernames, x.username]
                     })
                 }
             })
@@ -50,16 +50,16 @@ export class AddFriendComponent extends React.Component<any, any> {
             },
             method: 'GET'
         })
-        .then(data => data.json())
-        .then((data) => {
+            .then(data => data.json())
+            .then((data) => {
                 this.setState({
-                   Id : data
-                })         
-        })
+                    Id: data
+                })
+            })
 
-        const id = {"id": this.state.Id} 
-        console.log("this.state.id: "+id)
-      
+        const id = { "id": this.state.Id }
+        console.log("this.state.id: " + id)
+
         console.log("userid: " + userId)
 
         fetch(environment.context + `users/${userId}/addFriendRequest`, {
@@ -76,21 +76,24 @@ export class AddFriendComponent extends React.Component<any, any> {
             })
     }
 
-    public matchUserNames(state:any, value:any) {
+    public matchUserNames(state: any, value: any) {
         return (
-          state.name.toLowerCase().indexOf(value.toLowerCase()) !== -1 
+            state.name.toLowerCase().indexOf(value.toLowerCase()) !== -1
         );
-      }
+    }
 
-      public getUsernames() {
+    public getUsernames() {
         const allUsers = this.state.usernames
-        const usernameObjs = allUsers.map((username:any) => ({name: username}));
+        const usernameObjs = allUsers.map((username: any) => ({ name: username }));
         return usernameObjs
     }
 
     public render() {
         return (
-            <div style={{ marginTop: 40, marginLeft: 50 }}>
+            <React.Fragment>
+                <div className="mb-2">
+                    <span className="btn btn-primary" onClick={this.onAddFriend}> Add Friend!</span>
+                </div>
                 <Autocomplete
                     value={this.state.value}
                     inputProps={{ id: 'states-autocomplete' }}
@@ -113,8 +116,7 @@ export class AddFriendComponent extends React.Component<any, any> {
                         </div>
                     )}
                 />
-                <button onClick = {this.onAddFriend}> Add Friend!</button>
-            </div>
+            </React.Fragment>
         );
     }
 }
