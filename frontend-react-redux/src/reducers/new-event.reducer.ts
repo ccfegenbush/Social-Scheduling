@@ -11,6 +11,7 @@ const initialState: INewEventState = {
     errMessage: '',
     eventLocation: '',
     eventType: '',
+    eventVisibility: 0,
     name: '',
     showModal: false,
     startDate: '',
@@ -83,6 +84,11 @@ export const newEventReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 currentEvent: action.payload.event
+            }
+        case newEventTypes.UPDATE_EVENT_VISIBILITY:
+            return {
+                ...state,
+                eventVisibility: action.payload.eventVisibility
             }
     }
     return state;
