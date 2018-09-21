@@ -66,6 +66,11 @@ class AppNav extends React.Component<any, any> {
                           View Event invitations
                       </Link>
                       </li>
+                      <li>
+                        <Link to="/events/invite-user" className="nav-link">
+                          Invite Users to Event
+                      </Link>
+                      </li>
                     </ul>
                   </li>
 
