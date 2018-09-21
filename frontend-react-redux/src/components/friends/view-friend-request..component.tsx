@@ -6,7 +6,10 @@ export class FriendRequestComponent extends React.Component<any, any>  {
     public constructor(props: any) {
         super(props);
         this.state = {
+            currentRequest: [],
             friends: [],
+            newRequests: {},
+            requestId: 0,
             requests: []
         }
     }
@@ -51,46 +54,80 @@ export class FriendRequestComponent extends React.Component<any, any>  {
         const userId = JSON.parse(localStorage.getItem('userId') || '{}')
         console.log(`userId: ${userId}`)
         e.preventDefault();
-        
-        const id = friendId
-        fetch(environment.context + `users/${userId}/addFriend`, {
-            body: JSON.stringify(id),
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: 'Post'
-        })
-            .then(resp => {
-            console.log(resp.status)
-            if (resp.status === 401) {
-            console.log('Invalid request');
-            } else if (resp.status === 200) {
-            return resp.json();
-            } else {
-            console.log('Failed to approve user at this time');
-            }
-            throw new Error('Failed to make friend');
-      })
-            .catch(err => {
-                console.log(err);
-            })
-    }
 
-    public onDeny = (friendId: any, e: any) => {
-        console.log(`denying with id: ${friendId}` )
-        e.preventDefault();
-        fetch(environment.context + `requests/editStatus/${JSON.parse(localStorage.getItem('userId') || '{}')}`, {
-            body: JSON.stringify(friendId),
+        const id = friendId
+        fetch(environment.context + `requests/friend/${userId}/fr/${id}`, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            method: 'Post'
+            method: 'GET'
         })
+
             .then(resp => resp.json())
+            .then(newRequests => {
+                this.setState({ newRequests })
+                console.log(this.state.newRequests)
+                for (const i of this.state.newRequests) {
+                    console.log(i);
+                    const requestId = i.requestId;
+
+                    const statusId = {"statusId": 2} 
+                    fetch(environment.context + `requests/editStatus/${requestId}`, {
+                        body: JSON.stringify(statusId),
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        method: 'PUT'
+                    })
+                        .then(resp => resp.json())
+                  
+                }
+            })
             .catch(err => {
-                console.log(err);
+                console.log(err)
+            })
+    }
+
+    public onDeny = (friendId: any, e: any) => {
+        console.log(`denying with id: ${friendId}`)
+        const userId = JSON.parse(localStorage.getItem('userId') || '{}')
+        console.log(`userId: ${userId}`)
+        e.preventDefault();
+
+        const id = friendId
+        fetch(environment.context + `requests/friend/${userId}/fr/${id}`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'GET'
+        })
+
+            .then(resp => resp.json())
+            .then(newRequests => {
+                this.setState({ newRequests })
+                console.log(this.state.newRequests)
+                for (const i of this.state.newRequests) {
+                    console.log(i);
+                    const requestId = i.requestId;
+
+                    const statusId = {"statusId": 3} 
+                    fetch(environment.context + `requests/editStatus/${requestId}`, {
+                        body: JSON.stringify(statusId),
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        method: 'PUT'
+                    })
+                        .then(resp => resp.json())
+                  
+                }
+            })
+            .catch(err => {
+                console.log(err)
             })
     }
 
