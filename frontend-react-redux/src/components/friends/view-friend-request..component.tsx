@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { environment } from '../../environment';
-
 export class FriendRequestComponent extends React.Component<any, any>  {
-
     public constructor(props: any) {
         super(props);
         this.state = {
@@ -13,7 +11,6 @@ export class FriendRequestComponent extends React.Component<any, any>  {
             requests: []
         }
     }
-
     public componentDidMount() {
         fetch(environment.context + `requests/user/${JSON.parse(localStorage.getItem('userId') || '{}')}`, {
             headers: {
@@ -29,7 +26,6 @@ export class FriendRequestComponent extends React.Component<any, any>  {
                 for (const i of this.state.requests) {
                     console.log(i);
                     const friendId = i.userId;
-
                     fetch(environment.context + `users/${friendId}`, {})
                         .then(resp => resp.json())
                         .then(friend => {
@@ -48,13 +44,11 @@ export class FriendRequestComponent extends React.Component<any, any>  {
                 console.log(err)
             })
     }
-
     public onApprove = (friendId: any, e: any) => {
         console.log(`approving with id: ${friendId}`)
         const userId = JSON.parse(localStorage.getItem('userId') || '{}')
         console.log(`userId: ${userId}`)
         e.preventDefault();
-
         const id = friendId
         fetch(environment.context + `requests/friend/${userId}/fr/${id}`, {
             headers: {
@@ -63,7 +57,6 @@ export class FriendRequestComponent extends React.Component<any, any>  {
             },
             method: 'GET'
         })
-
             .then(resp => resp.json())
             .then(newRequests => {
                 this.setState({ newRequests })
@@ -88,13 +81,11 @@ export class FriendRequestComponent extends React.Component<any, any>  {
                 console.log(err)
             })
     }
-
     public onDeny = (friendId: any, e: any) => {
         console.log(`denying with id: ${friendId}`)
         const userId = JSON.parse(localStorage.getItem('userId') || '{}')
         console.log(`userId: ${userId}`)
         e.preventDefault();
-
         const id = friendId
         fetch(environment.context + `requests/friend/${userId}/fr/${id}`, {
             headers: {
@@ -103,7 +94,6 @@ export class FriendRequestComponent extends React.Component<any, any>  {
             },
             method: 'GET'
         })
-
             .then(resp => resp.json())
             .then(newRequests => {
                 this.setState({ newRequests })
@@ -111,7 +101,6 @@ export class FriendRequestComponent extends React.Component<any, any>  {
                 for (const i of this.state.newRequests) {
                     console.log(i);
                     const requestId = i.requestId;
-
                     const statusId = {"statusId": 3} 
                     fetch(environment.context + `requests/editStatus/${requestId}`, {
                         body: JSON.stringify(statusId),
@@ -129,12 +118,10 @@ export class FriendRequestComponent extends React.Component<any, any>  {
                 console.log(err)
             })
     }
-
     public render() {
         return (
             <div>
                 <table style={{ background: '#ADD8E6' }} className="table table-striped">
-
                     <thead>
                         <tr>
                             <th scope="col">Username</th>
