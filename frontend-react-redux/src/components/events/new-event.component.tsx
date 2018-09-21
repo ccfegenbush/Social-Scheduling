@@ -110,8 +110,8 @@ class NewEventComponent extends React.Component<IProps, {}> {
             <div className="row">
               <div className="col-lg-12 text-center">
                 <h2 className="section-heading text-uppercase">New Event</h2>
-                { u.startDate ? <h3 className="section-subheading text-muted">Start Date: <span className="text-success">{ this.formatDate(u.startDate) }</span> - End Date: <span className="text-danger">{ this.formatDate(u.endDate)}</span> </h3> 
-                              : <h3 className="section-subheading text-muted"><Link to="/calendar" className="nav-link">Select date</Link></h3> }
+                {u.startDate ? <h3 className="section-subheading text-muted">Start Date: <span className="text-success">{this.formatDate(u.startDate)}</span> - End Date: <span className="text-danger">{this.formatDate(u.endDate)}</span> </h3>
+                  : <h3 className="section-subheading text-muted"><Link to="/calendar" className="nav-link">Select date</Link></h3>}
               </div>
             </div>
             <div className="row">
@@ -133,15 +133,14 @@ class NewEventComponent extends React.Component<IProps, {}> {
                       </div>
                       <div className="form-group">
                         <p className="help-block text-dark">Event Type *:</p>
-                        <input
-                          onChange={this.eventTypeChange}
-                          value={u.eventType}
-                          type="text"
-                          name="event Type"
-                          className="form-control"
-                          placeholder="Event Type"
-                          required
-                        />
+                        <select placeholder="Event Type" className="form-control" name="event type" onChange={this.eventTypeChange} value={u.eventType}>
+                          <option value="Sports">Sports</option>
+                          <option value="Movies">Movies</option>
+                          <option value="Shopping">Shopping</option>
+                          <option value="Beach">Beach</option>
+                          <option value="Traveling">Traveling</option>
+                          <option value="Gaming">Gaming</option>
+                        </select>
                       </div>
                       <div className="form-group">
                         <p className="help-block text-dark">
@@ -203,21 +202,21 @@ class NewEventComponent extends React.Component<IProps, {}> {
                     <div className="clearfix" />
 
                     <div className="col-lg-12 text-center">
-                     
+
                       <button
                         className="btn btn-primary btn-xl text-uppercase px-5 mt-2"
                         type="submit"
                       >
                         Submit
                       </button>
-                       
+
                     </div>
                   </div>
                 </form>
                 <div className="col-lg-12 text-center">
                   <Link to="/calendar" className="btn btn-default btn-xl mt-2">Go Back</Link>
                 </div>
-                
+
               </div>
             </div>
           </div>
