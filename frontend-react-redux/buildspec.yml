@@ -1,7 +1,7 @@
 version: 0.1
 environment_variables:
   plaintext:
-    S3_BUCKET: '1808-demo-bucket-will'
+    S3_BUCKET: '1808-project2'
 phases:
   install:
     commands:
@@ -10,14 +10,14 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - cd 4week && cd redux-sass && npm run build
+      - cd frontend-react-redux && npm run build
   post_build:
     commands:
       - echo "$CODEBUILD_BUILD_SUCCEEDING"
       # if build succeeds copy the dist folder into the s3 bucket
       - |
         if [ "$CODEBUILD_BUILD_SUCCEEDING" = "1" ]; then
-            aws s3 cp "4week/redux-sass/build" "s3://${S3_BUCKET}" "--recursive";
+            aws s3 cp "frontend-react-redux/build" "s3://${S3_BUCKET}" "--recursive";
             echo "Build completed on date";
         fi
 artifacts:
