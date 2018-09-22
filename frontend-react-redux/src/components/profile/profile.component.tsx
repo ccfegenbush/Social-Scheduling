@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { updateUsername } from '../../actions/sign-in/sign-in.actions';
 import { environment } from '../../environment';
-import { FaTwitter, FaFacebookF, FaLinkedinIn } from 'react-icons/fa';
-
+import { FaTwitter, FaFacebookF, FaLinkedinIn, FaPenSquare } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 export class ProfileComponent extends React.Component<any, any>  {
 
@@ -87,7 +87,7 @@ export class ProfileComponent extends React.Component<any, any>  {
                             </div>
                         </div>
                         <div className="col-sm-6 mx-auto">
-                            <p className="large text-muted"><strong>My Interests: </strong>                                
+                            <p className="large text-muted"><strong>My Interests: <Link to="/edit-interests" className="btn btn-default pt-0"><FaPenSquare/></Link></strong>                                
                                 <ul className="list-group">
                                     {listInterests}
                                 </ul>
