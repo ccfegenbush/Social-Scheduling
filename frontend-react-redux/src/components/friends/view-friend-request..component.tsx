@@ -1,85 +1,167 @@
 import * as React from 'react';
-import { updateUsername } from '../../actions/sign-in/sign-in.actions';
 import { environment } from '../../environment';
-
 export class FriendRequestComponent extends React.Component<any, any>  {
-
     public constructor(props: any) {
         super(props);
-        const userJSON = localStorage.getItem("user")
-        const user = userJSON !== null ? JSON.parse(userJSON) : updateUsername
         this.state = {
-            age: '',
-            email: '',
-            firstname: '',
-            interests: [],
-            lastname: '',
-            profileInfo: [],
-            username: user,
+            currentRequest: [],
+            friends: [],
+            newRequests: {},
+            requestId: 0,
+            requests: []
         }
     }
-
     public componentDidMount() {
-
-        let usersId = this.state.username === null ? this.state.username.usersId : 1
-        usersId = Number(usersId);
-
-        fetch(environment.context + `users/${usersId}`, {})
+        fetch(environment.context + `requests/friend/${JSON.parse(localStorage.getItem('userId') || '{}')}/status/1`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'GET'
+        })
             .then(resp => resp.json())
-            .then(profileInfo => {
-
-                this.setState({ profileInfo })
-                console.log(this.state.username)
-            })
-            .catch(err => {
-                console.log(err)
-            })
-
-        fetch(environment.context + `users/${usersId}/interests`, {})
-            .then(resp => resp.json())
-            .then(interests => {
-                this.setState({ interests })
-                console.log(this.state.interests)
+            .then(requests => {
+                this.setState({ requests })
+                console.log(this.state.requests)
+                for (const i of this.state.requests) {
+                    console.log(i);
+                    const friendId = i.userId;
+                    fetch(environment.context + `users/${friendId}`, {})
+                        .then(resp => resp.json())
+                        .then(friend => {
+                            this.setState({
+                                ...this.state,
+                                friends: [...this.state.friends, friend]
+                            })
+                            console.log(this.state)
+                        })
+                        .catch(err => {
+                            console.log(err)
+                        })
+                }
             })
             .catch(err => {
                 console.log(err)
             })
     }
+    public onApprove = (friendId: any, e: any) => {
+        console.log(`approving with id: ${friendId}`)
+        const userId = JSON.parse(localStorage.getItem('userId') || '{}')
+        console.log(`userId: ${userId}`)
+        e.preventDefault();
+        const id = friendId
 
+        // find the requestee id by the userId and friendId
+        fetch(environment.context + `requests/friend/${userId}/fr/${id}`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'GET'
+        })
+            .then(resp => resp.json())
+            .then(newRequests => {
+                this.setState({ newRequests })
+                console.log(this.state.newRequests)
+                for (const i of this.state.newRequests) {
+                    console.log(i);
+                    const requestId = i.requestId;
+                    const statusId = { "statusId": 2 }
+
+                    // edits the status of the friend
+                    fetch(environment.context + `requests/editStatus/${requestId}`, {
+                        body: JSON.stringify(statusId),
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        method: 'PUT'
+                    })
+                        .then(resp => resp.json())
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        const array = [...this.state.friends]; // make a separate copy of the array
+        const index = array.indexOf(e.target.value)
+        array.splice(index, 1);
+        this.setState({ friends: array });
+
+    }
+    public onDeny = (friendId: any, e: any) => {
+        console.log(`denying with id: ${friendId}`)
+        const userId = JSON.parse(localStorage.getItem('userId') || '{}')
+        console.log(`userId: ${userId}`)
+        e.preventDefault();
+        const id = friendId
+        fetch(environment.context + `requests/friend/${userId}/fr/${id}`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'GET'
+        })
+            .then(resp => resp.json())
+            .then(newRequests => {
+                this.setState({ newRequests })
+                console.log(this.state.newRequests)
+                for (const i of this.state.newRequests) {
+                    console.log(i);
+                    const requestId = i.requestId;
+                    const statusId = {"statusId": 3} 
+                    fetch(environment.context + `requests/editStatus/${requestId}`, {
+                        body: JSON.stringify(statusId),
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        method: 'PUT'
+                    })
+                        .then(resp => resp.json())
+
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+            const array = [...this.state.friends]; // make a separate copy of the array
+            const index = array.indexOf(e.target.value)
+            array.splice(index, 1);
+            this.setState({ friends: array });
+    
+    }
     public render() {
-       const listInterests = this.state.interests.map(
-           (p:any) => <li key = 
-           {p.interest}>{p.interest}</li>)
         return (
             <div>
                 <table style={{ background: '#ADD8E6' }} className="table table-striped">
                     <thead>
                         <tr>
                             <th scope="col">Username</th>
-                            <th scope="col">First Name</th>
-                            <th scope="col">Last Name</th>
-                            <th scope="col">Age</th>
-                            <th scope="col">Email</th>
+                            <th scope="col">Requestor's name</th>
+                            <th scope="col">Accept or Deny</th>
                         </tr>
                     </thead>
                     <tbody id="profile-table-body">
                         {
-                            <tr key={this.state.id} >
-                                <td>{this.state.username.username}</td>
-                                <td>{this.state.username.firstName}</td>
-                                <td>{this.state.username.lastName}</td>
-                                <td>{this.state.username.age}</td>
-                                <td>{this.state.username.email}</td>
-                            </tr>
+                            this.state.friends.map((friend: any) => (
+                                <tr key={friend.id} >
+                                    <td>{friend.username}</td>
+                                    <td>{friend.firstName}</td>
+                                    <td>
+                                        <button onClick={(e) => this.onApprove(friend.id, e)}>
+                                            Accept
+                                        </button>
+                                        <button onClick={(e) => this.onDeny(friend.id, e)}>
+                                            Deny
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
                         }
                     </tbody>
                 </table>
-                <div>
-                    Interests:
-                            <div>
-                                {listInterests}
-                            </div>
-                </div>
             </div>
         );
     }

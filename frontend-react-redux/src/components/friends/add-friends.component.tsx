@@ -6,10 +6,11 @@ export class AddFriendComponent extends React.Component<any, any> {
     constructor(props: any) {
         super(props);
         this.state = {
-            Id: 0,
+            friendId: 0,
             friendName: '',
             selectedUsername: '',
             userData: [],
+      
             usernames: []
         }
     }
@@ -27,7 +28,7 @@ export class AddFriendComponent extends React.Component<any, any> {
                 for (const x of userData) {
                     this.setState({
                         ...this.state,
-                       usernames : [...this.state.usernames, x.username ]
+                        usernames: [...this.state.usernames, x.username]
                     })
                 }
             })
@@ -37,6 +38,7 @@ export class AddFriendComponent extends React.Component<any, any> {
     }
 
     public onAddFriend = (e: any) => {
+        let friendId = 1;
         const username = this.state.value
         const userId = JSON.parse(localStorage.getItem('userId') || '{}');
         e.preventDefault();
@@ -50,47 +52,50 @@ export class AddFriendComponent extends React.Component<any, any> {
             },
             method: 'GET'
         })
-        .then(data => data.json())
-        .then((data) => {
-                this.setState({
-                   Id : data
-                })         
-        })
-
-        const id = {"id": this.state.Id} 
-        console.log("this.state.id: "+id)
-      
-        console.log("userid: " + userId)
-
-        fetch(environment.context + `users/${userId}/addFriendRequest`, {
-            body: JSON.stringify(id),
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: 'Post'
-        })
             .then(resp => resp.json())
-            .catch(err => {
-                console.log(err);
+            .then(data => {
+                console.log("data"+data)
+                friendId = data
+                const id = { "id": friendId }
+                console.log("userid: " + userId)
+                console.log("friendid: " + friendId)
+                fetch(environment.context + `users/${userId}/addFriendRequest`, {
+                    body: JSON.stringify(id),
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    method: 'POST'
+                })
+                    .then(resp => resp.json())
+                    .catch(err => {
+                        console.log(err);
+                    })
+                
             })
+            .catch(err => {
+                console.log(err)
+            })   
     }
 
-    public matchUserNames(state:any, value:any) {
+    public matchUserNames(state: any, value: any) {
         return (
-          state.name.toLowerCase().indexOf(value.toLowerCase()) !== -1 
+            state.name.toLowerCase().indexOf(value.toLowerCase()) !== -1
         );
-      }
+    }
 
-      public getUsernames() {
+    public getUsernames() {
         const allUsers = this.state.usernames
-        const usernameObjs = allUsers.map((username:any) => ({name: username}));
+        const usernameObjs = allUsers.map((username: any) => ({ name: username }));
         return usernameObjs
     }
 
     public render() {
         return (
-            <div style={{ marginTop: 40, marginLeft: 50 }}>
+            <React.Fragment>
+                <div className="mb-2">
+                    <span className="btn btn-primary" onClick={this.onAddFriend}> Add Friend!</span>
+                </div>
                 <Autocomplete
                     value={this.state.value}
                     inputProps={{ id: 'states-autocomplete' }}
@@ -113,8 +118,7 @@ export class AddFriendComponent extends React.Component<any, any> {
                         </div>
                     )}
                 />
-                <button onClick = {this.onAddFriend}> Add Friend!</button>
-            </div>
+            </React.Fragment>
         );
     }
 }

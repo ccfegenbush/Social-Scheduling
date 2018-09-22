@@ -82,7 +82,7 @@ section h3.section-subheading {
 
 @media (min-width: 768px) {
   section {
-    padding: 150px 0;
+    padding: 250px 0;
   }
 }
 
@@ -211,7 +211,7 @@ header.masthead {
 
 header.masthead .intro-text {
   padding-top: 150px;
-  padding-bottom: 100px;
+  padding-bottom: 150px;
 }
 
 header.masthead .intro-text .intro-lead-in {
@@ -718,4 +718,53 @@ ul.social-buttons li a {
 
 ul.social-buttons li a:active, ul.social-buttons li a:focus, ul.social-buttons li a:hover {
   background-color: #fed136;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width:100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+
+  .modal-main {
+    position:fixed;
+    background: white;
+    width: 80%;
+    height: 100%;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+  }
+}
+
+.show {
+  opacity: 1;
+}
+
+.modal-backdrop {
+  opacity: 0.5;
+}
+
+.modal.fade.in {
+  opacity: 1;
+}
+
+.modal.fade.in .modal-dialog {
+  transform: translate(0,0);
+}
+
+.display-block {
+  display: block;
+}
+
+.display-none {
+  display: none;
+}
+
+.rev-logo {
+  width: auto;
+  height: 4em;
+  margin-right: 2em;
 }

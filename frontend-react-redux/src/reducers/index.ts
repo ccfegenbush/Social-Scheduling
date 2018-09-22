@@ -22,17 +22,24 @@ export interface INewUserState {
 }
 
 export interface INewEventState {
-  allEvents: object[],
   authorId: number,
+  calendarEvents: object[],
   description: string,
   errMessage: string,
   endDate: string,
   endTime: string,
   eventLocation: string,
+  key: number,
   name: string,
   startDate: string,
   startTime: string, 
-  eventType: string
+  eventType: string,
+  eventVisibility: number,
+  privateEvents: object[],
+  publicEvents: object[],
+  showModal: boolean,
+  showPublic: boolean,
+  currentEvent: object,
 }
 
 export interface IState {

@@ -10,12 +10,21 @@ export const getErrMessage = (errMessage: string) => {
     }
 }
 
-export const getAllEvents = (allEvents: object[]) => {
+export const setPublicEvents = (publicEvents: object[]) => {
     return {
         payload: {
-            allEvents
+            publicEvents
         },
-        type: newEventTypes.GET_ALL_EVENTS
+        type: newEventTypes.SET_PUBLIC_EVENTS
+    }
+}
+
+export const setPrivateEvents = (privateEvents: object[]) => {
+    return {
+        payload: {
+            privateEvents
+        },
+        type: newEventTypes.SET_PRIVATE_EVENTS
     }
 }
 
@@ -94,5 +103,53 @@ export const updateAuthorId = (authorId: number) => {
             authorId
         },
         type: newEventTypes.UPDATE_AUTHOR_ID
+    }
+}
+export const updateShowModal = (showModal: boolean) => {
+    return {
+        payload: {
+            showModal
+        },
+        type: newEventTypes.UPDATE_SHOW_MODAL
+    }
+}
+export const updateCurrentEvent = (event: object) => {
+    return {
+        payload: {
+            event
+        },
+        type: newEventTypes.UPDATE_CURRENT_EVENT
+    }
+}
+export const updateEventVisibility = (eventVisibility: number) => {
+    return {
+        payload: {
+            eventVisibility
+        },
+        type: newEventTypes.UPDATE_EVENT_VISIBILITY
+    }
+}
+export const updateShowPublic = (showPublic: boolean) => {
+    return {
+        payload: {
+            showPublic
+        },
+        type: newEventTypes.UPDATE_SHOW_PUBLIC
+    }
+}
+export const updateKey = (key: number) => {
+    return {
+        payload: {
+            key
+        },
+        type: newEventTypes.UPDATE_KEY
+    }
+}
+export const updateCalendarEvents = (calendarEvents: object[]) => {
+    return {
+        payload: {
+            calendarEvents
+        },
+        type: newEventTypes.UPDATE_CALENDAR_EVENTS
     }
 }

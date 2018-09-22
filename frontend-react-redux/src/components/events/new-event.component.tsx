@@ -17,6 +17,7 @@ interface IProps extends RouteComponentProps<{}>, INewEventState {
   updateEventLocation: (location: string) => any;
   updateAuthorId: (authorId: number) => any;
   onSubmit: (user: any) => any;
+  updateEventVisibility: (eventVisbility: number) => any;
 }
 
 class NewEventComponent extends React.Component<IProps, {}> {
@@ -60,6 +61,14 @@ class NewEventComponent extends React.Component<IProps, {}> {
     this.props.updateAuthorId(e.target.value);
   };
 
+  public eventVisbilityChange = () => {
+    if (this.props.eventVisibility === 1) {
+      this.props.updateEventVisibility(2);
+    } else {
+      this.props.updateEventVisibility(1);
+    }
+  }
+
   public formatDate = (date: string) => {
     const re = /(.+)(00:00:00)(.+)/g;
     return date.replace(re, '$1');
@@ -80,7 +89,8 @@ class NewEventComponent extends React.Component<IProps, {}> {
       location: ev.eventLocation,
       name: ev.name,
       startDate: ev.startTime,
-      startTime: newStartTime
+      startTime: newStartTime,
+      visibility: ev.eventVisibility,
     };
 
     console.log(event);
@@ -105,13 +115,13 @@ class NewEventComponent extends React.Component<IProps, {}> {
     const u = this.props;
     return (
       <div>
-        <section className="contact">
+        <section className="contact pt-5">
           <div className="container">
             <div className="row">
               <div className="col-lg-12 text-center">
                 <h2 className="section-heading text-uppercase">New Event</h2>
-                { u.startDate ? <h3 className="section-subheading text-muted">Start Date: <span className="text-success">{ this.formatDate(u.startDate) }</span> - End Date: <span className="text-danger">{ this.formatDate(u.endDate)}</span> </h3> 
-                              : <h3 className="section-subheading text-muted"><Link to="/calendar" className="nav-link">Select date</Link></h3> }
+                {u.startDate ? <h3 className="section-subheading text-muted">Start Date: <span className="text-success">{this.formatDate(u.startDate)}</span> - End Date: <span className="text-danger">{this.formatDate(u.endDate)}</span> </h3>
+                  : <h3 className="section-subheading text-muted"><Link to="/calendar" className="nav-link">Select date</Link></h3>}
               </div>
             </div>
             <div className="row">
@@ -133,15 +143,14 @@ class NewEventComponent extends React.Component<IProps, {}> {
                       </div>
                       <div className="form-group">
                         <p className="help-block text-dark">Event Type *:</p>
-                        <input
-                          onChange={this.eventTypeChange}
-                          value={u.eventType}
-                          type="text"
-                          name="event Type"
-                          className="form-control"
-                          placeholder="Event Type"
-                          required
-                        />
+                        <select placeholder="Event Type" className="form-control" name="event type" onChange={this.eventTypeChange} value={u.eventType}>
+                          <option value="Sports">Sports</option>
+                          <option value="Movies">Movies</option>
+                          <option value="Shopping">Shopping</option>
+                          <option value="Beach">Beach</option>
+                          <option value="Traveling">Traveling</option>
+                          <option value="Gaming">Gaming</option>
+                        </select>
                       </div>
                       <div className="form-group">
                         <p className="help-block text-dark">
@@ -203,21 +212,23 @@ class NewEventComponent extends React.Component<IProps, {}> {
                     <div className="clearfix" />
 
                     <div className="col-lg-12 text-center">
-                     
+                      
+                      Make Event Public?<input type="checkbox" onChange={this.eventVisbilityChange}></input>
+
                       <button
                         className="btn btn-primary btn-xl text-uppercase px-5 mt-2"
                         type="submit"
                       >
                         Submit
                       </button>
-                       
+
                     </div>
                   </div>
                 </form>
                 <div className="col-lg-12 text-center">
                   <Link to="/calendar" className="btn btn-default btn-xl mt-2">Go Back</Link>
                 </div>
-                
+
               </div>
             </div>
           </div>
@@ -237,7 +248,8 @@ const mapDispatchToProps = {
   updateEventName: newEventActions.updateEventName,
   updateEventStartDate: newEventActions.updateEventStartDate,
   updateEventStartTime: newEventActions.updateEventStartTime,
-  updateEventType: newEventActions.updateEventType
+  updateEventType: newEventActions.updateEventType,
+  updateEventVisibility: newEventActions.updateEventVisibility
 };
 export default connect(
   mapStateToProps,

@@ -4,7 +4,7 @@ import { IState } from "../../reducers";
 import { connect } from "react-redux";
 import { logoutCleanUp } from "../../utils";
 import * as signInActions from "../../actions/sign-in/sign-in.actions";
-
+import SocialPlanetLogo from "../../assets/logo.png";
 class AppNav extends React.Component<any, any> {
   public onClick = (e: any) => {
     this.props.setLoginUser({});
@@ -20,9 +20,16 @@ class AppNav extends React.Component<any, any> {
 
   public render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark" id="mainNav">
+      
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark py-2" id="mainNav">
         <div className="container">
-          <a className="navbar-brand">Social Planit</a>
+          <Link to="/calendar" className="unset-anchor">
+            <img
+              className="img-adjust-position rev-logo"
+              src={SocialPlanetLogo}
+              alt="social"
+            />
+          </Link>
           <button
             className="navbar-toggler navbar-toggler-right"
             type="button"
@@ -37,125 +44,100 @@ class AppNav extends React.Component<any, any> {
           </button>
           <div className="collapse navbar-collapse" id="navbarResponsive">
             {this.props.signIn.signinUser.id ||
-              localStorage.getItem("userId") ? (
-                <ul className="navbar-nav text-uppercase ml-auto">
-                  <li className="nav-item">
-                    <Link to="/calendar" className="nav-link">
-                      Calendar
+            localStorage.getItem("userId") ? (
+              <ul className="navbar-nav text-uppercase ml-auto">
+                <li className="nav-item">
+                  <Link to="/calendar" className="nav-link">
+                    Calendar
                   </Link>
-                  </li>
-
-                  <li className="nav-item dropdown">
-                    <a
-                      href="#"
-                      className="dropdown-toggle nav-link"
-                      data-toggle="dropdown"
-                      role="button"
-                      aria-expanded="false"
-                    >
-                      Event
+                </li>
+                <li className="nav-item">
+                  <Link to="/make-event" className="nav-link">
+                    Make Event
+                  </Link>
+                </li>
+                <li className="nav-item dropdown">
+                  <a
+                    href="#"
+                    className="dropdown-toggle nav-link"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-expanded="false"
+                  >
+                    Friends
                   </a>
-                    <ul className="dropdown-menu bg-dark">
-                      <li>
-                        <Link to="/make-event" className="nav-link">
-                          Make Event
+                  <ul className="dropdown-menu bg-dark">
+                    <li>
+                      <Link to="/view-friends" className="nav-link">
+                        View Friends
                       </Link>
-                      </li>
-                      <li>
-                        <Link to="/events/invitations" className="nav-link">
-                          View Event invitations
+                    </li>
+                    <li>
+                      <Link to="/view-friend-requests" className="nav-link">
+                        View Friend Requests
                       </Link>
-                      </li>
-                    </ul>
-                  </li>
+                    </li>
+                  </ul>
+                </li>
 
-                  <li className="nav-item dropdown">
-                    <a
-                      href="#"
-                      className="dropdown-toggle nav-link"
-                      data-toggle="dropdown"
-                      role="button"
-                      aria-expanded="false"
-                    >
-                      Friends
+                <li className="nav-item dropdown">
+                  <a
+                    href="#"
+                    className="dropdown-toggle nav-link"
+                    data-toggle="dropdown"
+                    role="button"
+                    aria-expanded="false"
+                  >
+                    Profile
                   </a>
-                    <ul className="dropdown-menu bg-dark">
-                      <li>
-                        <Link to="/add-friends" className="nav-link">
-                          Add Friends
+                  <ul className="dropdown-menu bg-dark">
+                    <li>
+                      <Link to="/profile" className="nav-link">
+                        View Profile
                       </Link>
-                      </li>
-                      <li>
-                        <Link to="/view-friends" className="nav-link">
-                          View Friends
+                    </li>
+                    <li>
+                      <Link to="/edit-profile" className="nav-link">
+                        Edit Profile
                       </Link>
-                      </li>
-                      <li>
-                        <Link to="/view-friend-requests" className="nav-link">
-                          View Friend Requests
+                    </li>
+                    <li className="nav-item">
+                      <Link to="/edit-interests" className="nav-link">
+                        Edit Interests
                       </Link>
-                      </li>
-                    </ul>
-                  </li>
-
-                  <li className="nav-item dropdown">
-                    <a
-                      href="#"
-                      className="dropdown-toggle nav-link"
-                      data-toggle="dropdown"
-                      role="button"
-                      aria-expanded="false"
-                    >
-                      Profile
-                  </a>
-                    <ul className="dropdown-menu bg-dark">
-                      <li>
-                        <Link to="/profile" className="nav-link">
-                          View Profile
-                      </Link>
-                      </li>
-                      <li>
-                        <Link to="/edit-profile" className="nav-link">
-                          Edit Profile
-                      </Link>
-                      </li>
-                      <li className="nav-item">
-                        <Link to="/edit-interests" className="nav-link">
-                          Edit Interests
-                      </Link>
-                      </li>
-                    </ul>
-                  </li>
-                  <li className="nav-item" onClick={this.onClick}>
-                    <Link to="/sign-in" className="nav-link">
-                      Sign Out
+                    </li>
+                  </ul>
+                </li>
+                <li className="nav-item" onClick={this.onClick}>
+                  <Link to="/sign-in" className="nav-link">
+                    Sign Out
                   </Link>
-                  </li>
-                </ul>
-              ) : (
-                <ul className="navbar-nav text-uppercase ml-auto">
-                  <li className="nav-item">
-                    {localStorage.getItem("userId")
-                      ? JSON.parse(localStorage.getItem("userId") || "{}")
-                      : null}
-                  </li>
-                  <li className="nav-item">
-                    <Link to="/" className="nav-link">
-                      Home
+                </li>
+              </ul>
+            ) : (
+              <ul className="navbar-nav text-uppercase ml-auto">
+                <li className="nav-item">
+                  {localStorage.getItem("userId")
+                    ? JSON.parse(localStorage.getItem("userId") || "{}")
+                    : null}
+                </li>
+                <li className="nav-item">
+                  <Link to="/" className="nav-link">
+                    Home
                   </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to="/sign-in" className="nav-link">
-                      Sign In
+                </li>
+                <li className="nav-item">
+                  <Link to="/sign-in" className="nav-link">
+                    Sign In
                   </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to="/register" className="nav-link">
-                      Register
+                </li>
+                <li className="nav-item">
+                  <Link to="/register" className="nav-link">
+                    Register
                   </Link>
-                  </li>
-                </ul>
-              )}
+                </li>
+              </ul>
+            )}
           </div>
         </div>
       </nav>
