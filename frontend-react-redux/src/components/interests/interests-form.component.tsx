@@ -69,7 +69,7 @@ export class InterestsFormComponent extends React.Component<any, any> {
                                     return (
                                         <div key={index} className="form-group pt-2">
                                             <label htmlFor={`inputInterest${index}`} >{`Interest #${index + 1}`}</label>
-                                            <span className="float-right"><button className="btn btn-default" onClick={(e) => this.removeInterest(e, index)}><FaTrash className="text-danger"/></button></span>
+                                            <span className="float-right"><button className="btn btn-light" onClick={(e) => this.removeInterest(e, index)}><FaTrash className="text-danger"/></button></span>
 
                                             <select className="form-control"
                                                 onChange={this.handleChange}

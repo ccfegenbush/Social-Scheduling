@@ -85,7 +85,7 @@ export class EditInterestsComponent extends React.Component<any, any> {
                                     return (
                                         <div key={index} className="form-group">
                                             <label htmlFor={`inputInterest${index}`} >{`Interest #${index + 1}`}</label>
-                                            <span className="float-right"><button onClick={(e) => this.removeInterest(e, index)} className="btn btn-default"><FaTrash className="text-danger" /></button></span>
+                                            <span className="float-right"><button onClick={(e) => this.removeInterest(e, index)} className="btn btn-light"><FaTrash className="text-danger" /></button></span>
                                             <select className="form-control"
                                                 onChange={this.handleChange}
                                                 value={interests[index].id}
