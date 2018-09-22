@@ -20,6 +20,7 @@ class AppNav extends React.Component<any, any> {
 
   public render() {
     return (
+      
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark py-2" id="mainNav">
         <div className="container">
           <Link to="/calendar" className="unset-anchor">

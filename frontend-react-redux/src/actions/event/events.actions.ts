@@ -112,3 +112,11 @@ export const updateCurrentEvent = (event: object) => {
         type: newEventTypes.UPDATE_CURRENT_EVENT
     }
 }
+export const updateEventVisibility = (eventVisibility: number) => {
+    return {
+        payload: {
+            eventVisibility
+        },
+        type: newEventTypes.UPDATE_EVENT_VISIBILITY
+    }
+}

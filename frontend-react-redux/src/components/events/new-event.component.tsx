@@ -17,6 +17,7 @@ interface IProps extends RouteComponentProps<{}>, INewEventState {
   updateEventLocation: (location: string) => any;
   updateAuthorId: (authorId: number) => any;
   onSubmit: (user: any) => any;
+  updateEventVisibility: (eventVisbility: number) => any;
 }
 
 class NewEventComponent extends React.Component<IProps, {}> {
@@ -59,6 +60,10 @@ class NewEventComponent extends React.Component<IProps, {}> {
   public authorIdChange = (e: any) => {
     this.props.updateAuthorId(e.target.value);
   };
+
+  public eventVisbilityChange = (e: any) => {
+    this.props.updateEventVisibility(1);
+  }
 
   public formatDate = (date: string) => {
     const re = /(.+)(00:00:00)(.+)/g;
@@ -202,6 +207,8 @@ class NewEventComponent extends React.Component<IProps, {}> {
                     <div className="clearfix" />
 
                     <div className="col-lg-12 text-center">
+                      
+                      Make Event Private?<input type="checkbox" onClick={() => this.eventVisbilityChange}></input>
 
                       <button
                         className="btn btn-primary btn-xl text-uppercase px-5 mt-2"
