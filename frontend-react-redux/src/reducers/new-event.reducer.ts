@@ -17,7 +17,7 @@ const initialState: INewEventState = {
     privateEvents: [{}],
     publicEvents: [{}],
     showModal: false,
-    showPublic: false,
+    showPublic: true,
     startDate: '',
     startTime: ''
 }

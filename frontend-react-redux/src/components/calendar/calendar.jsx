@@ -54,24 +54,14 @@ class MyCalendar extends React.Component {
 
     togglePublicPrivate = () => {
       
-        if (this.props.showPublic === true) {
+        if (this.props.showPublic) {
             this.props.updateCalendarEvents(this.props.publicEvents);
-            this.props.updateShowPublic(false);
+            this.props.updateShowPublic(!this.props.showPublic);
         } else {
             this.props.updateCalendarEvents(this.props.privateEvents);
-            this.props.updateShowPublic(true);
+            this.props.updateShowPublic(!this.props.showPublic);
         }
         
-    }
-
-    displayCalendarEvents = () => {
-        if (!this.props.showPublic) {
-            this.props.updateKey(Math.random());
-            return this.props.privateEvents;
-        } else {
-            this.props.updateKey(Math.random());
-            return this.props.publicEvents;
-        }
     }
 
     selectedEventChange = (event, e) => {
