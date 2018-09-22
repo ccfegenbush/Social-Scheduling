@@ -61,8 +61,12 @@ class NewEventComponent extends React.Component<IProps, {}> {
     this.props.updateAuthorId(e.target.value);
   };
 
-  public eventVisbilityChange = (e: any) => {
-    this.props.updateEventVisibility(1);
+  public eventVisbilityChange = () => {
+    if (this.props.eventVisibility === 1) {
+      this.props.updateEventVisibility(2);
+    } else {
+      this.props.updateEventVisibility(1);
+    }
   }
 
   public formatDate = (date: string) => {
@@ -85,7 +89,8 @@ class NewEventComponent extends React.Component<IProps, {}> {
       location: ev.eventLocation,
       name: ev.name,
       startDate: ev.startTime,
-      startTime: newStartTime
+      startTime: newStartTime,
+      visibility: ev.eventVisibility,
     };
 
     console.log(event);
@@ -208,7 +213,7 @@ class NewEventComponent extends React.Component<IProps, {}> {
 
                     <div className="col-lg-12 text-center">
                       
-                      Make Event Private?<input type="checkbox" onClick={() => this.eventVisbilityChange}></input>
+                      Make Event Public?<input type="checkbox" onChange={this.eventVisbilityChange}></input>
 
                       <button
                         className="btn btn-primary btn-xl text-uppercase px-5 mt-2"
@@ -243,7 +248,8 @@ const mapDispatchToProps = {
   updateEventName: newEventActions.updateEventName,
   updateEventStartDate: newEventActions.updateEventStartDate,
   updateEventStartTime: newEventActions.updateEventStartTime,
-  updateEventType: newEventActions.updateEventType
+  updateEventType: newEventActions.updateEventType,
+  updateEventVisibility: newEventActions.updateEventVisibility
 };
 export default connect(
   mapStateToProps,

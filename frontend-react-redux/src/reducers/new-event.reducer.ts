@@ -2,8 +2,8 @@ import { INewEventState } from ".";
 import { newEventTypes } from "../actions/event/events.types";
 
 const initialState: INewEventState = {
-    allEvents: [{}],
     authorId: 0,
+    calendarEvents: [{}],
     currentEvent: {},
     description: '',
     endDate: '',
@@ -11,19 +11,28 @@ const initialState: INewEventState = {
     errMessage: '',
     eventLocation: '',
     eventType: '',
-    eventVisibility: 0,
+    eventVisibility: 2,
+    key: 0,
     name: '',
+    privateEvents: [{}],
+    publicEvents: [{}],
     showModal: false,
+    showPublic: false,
     startDate: '',
     startTime: ''
 }
 
 export const newEventReducer = (state = initialState, action: any) => {
     switch (action.type) {
-        case newEventTypes.GET_ALL_EVENTS:
+        case newEventTypes.SET_PUBLIC_EVENTS:
             return {
                 ...state,
-                allEvents: action.payload.allEvents
+                publicEvents: action.payload.publicEvents
+            }
+        case newEventTypes.SET_PRIVATE_EVENTS:
+            return {
+                ...state,
+                privateEvents: action.payload.privateEvents
             }
         case newEventTypes.GET_ERR_MESSAGE:
             return {
@@ -89,6 +98,21 @@ export const newEventReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 eventVisibility: action.payload.eventVisibility
+            }
+        case newEventTypes.UPDATE_SHOW_PUBLIC:
+            return {
+                ...state,
+                showPublic: action.payload.showPublic
+            }
+        case newEventTypes.UPDATE_KEY:
+            return {
+                ...state,
+                key: action.payload.key
+            }
+        case newEventTypes.UPDATE_CALENDAR_EVENTS:
+            return {
+                ...state,
+                calendarEvents: action.payload.calendarEvents
             }
     }
     return state;

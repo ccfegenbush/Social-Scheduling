@@ -13,7 +13,7 @@ BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 
 class MyCalendar extends React.Component {
 
-    componentWillMount() {
+    componentDidMount() {
         fetch(environment.context + `events`, {
             headers: {
                 'Content-Type': 'application/json',
@@ -22,12 +22,19 @@ class MyCalendar extends React.Component {
         })
             .then(resp => resp.json())
             .then(events => {
-                let allEvents = [];
+                let privateEvents = [];
+                let publicEvents = [];
                 events.forEach((item) => {
                     let oneEvent = { end: new Date(item.endTime), start: new Date(item.startTime), title: item.name };
-                    allEvents.push(oneEvent);
+                    if (item.visibility === 2) {
+                        privateEvents.push(oneEvent);
+                    } else {
+                        publicEvents.push(oneEvent);
+                    }
                 })
-                this.props.getAllEvents(allEvents);
+                this.props.setPrivateEvents(privateEvents);
+                this.props.setPublicEvents(publicEvents);
+                this.props.updateCalendarEvents(privateEvents);
             })
             .catch(err => {
                 this.props.getErrMessage(err);
@@ -41,8 +48,30 @@ class MyCalendar extends React.Component {
         return;
     }
 
-    toggle = () => {
+    toggleModal = () => {
         this.props.updateShowModal(!this.props.showModal);
+    }
+
+    togglePublicPrivate = () => {
+      
+        if (this.props.showPublic === true) {
+            this.props.updateCalendarEvents(this.props.publicEvents);
+            this.props.updateShowPublic(false);
+        } else {
+            this.props.updateCalendarEvents(this.props.privateEvents);
+            this.props.updateShowPublic(true);
+        }
+        
+    }
+
+    displayCalendarEvents = () => {
+        if (!this.props.showPublic) {
+            this.props.updateKey(Math.random());
+            return this.props.privateEvents;
+        } else {
+            this.props.updateKey(Math.random());
+            return this.props.publicEvents;
+        }
     }
 
     selectedEventChange = (event, e) => {
@@ -66,7 +95,8 @@ class MyCalendar extends React.Component {
     render() {
         return <div className="mt-5 pt-5 container">
             {this.props.errMessage}
-            <BigCalendar events={this.props.allEvents}
+            <button onClick={this.togglePublicPrivate}>Public/Private</button>
+            <BigCalendar events={this.props.calendarEvents}
                 defaultDate={new Date()}
                 defaultView="month"
                 style={{ height: "100vh" }}
@@ -74,14 +104,14 @@ class MyCalendar extends React.Component {
                 onSelectSlot={this.onSelectSlot}
                 onSelectEvent={this.selectedEventChange}
             />
-            <Modal show={this.props.showModal} onHide={this.toggle}>
+            <Modal show={this.props.showModal} onHide={this.toggleModal}>
                 <Modal.Header>{this.props.currentEvent.name}</Modal.Header>
                 <Modal.Body>
                     {this.props.currentEvent.description}
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
-                    <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+                    <Button color="primary" onClick={this.toggleModal}>Do Something</Button>{' '}
+                    <Button color="secondary" onClick={this.toggleModal}>Cancel</Button>
                 </Modal.Footer>
             </Modal>
         </div>
@@ -91,12 +121,16 @@ class MyCalendar extends React.Component {
 const mapStateToProps = (state) => state.newEvent;
 
 const mapDispatchToProps = {
-    getAllEvents: newEventActions.getAllEvents,
     getErrMessage: newEventActions.getErrMessage,
+    setPrivateEvents: newEventActions.setPrivateEvents,
+    setPublicEvents: newEventActions.setPublicEvents,
+    updateCalendarEvents: newEventActions.updateCalendarEvents,
     updateCurrentEvent: newEventActions.updateCurrentEvent,
     updateEventEndDate: newEventActions.updateEventEndDate,
     updateEventStartDate: newEventActions.updateEventStartDate,
-    updateShowModal: newEventActions.updateShowModal
+    updateKey: newEventActions.updateKey,
+    updateShowModal: newEventActions.updateShowModal,
+    updateShowPublic: newEventActions.updateShowPublic
 };
 
 export default connect(
