@@ -15,7 +15,7 @@ export class FriendRequestComponent extends React.Component<any, any>  {
     }
 
     public componentDidMount() {
-        fetch(environment.context + `requests/user/${JSON.parse(localStorage.getItem('userId') || '{}')}`, {
+        fetch(environment.context + `requests/friend/${JSON.parse(localStorage.getItem('userId') || '{}')}/status/1`, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -56,6 +56,8 @@ export class FriendRequestComponent extends React.Component<any, any>  {
         e.preventDefault();
 
         const id = friendId
+
+        // find the requestee id by the userId and friendId
         fetch(environment.context + `requests/friend/${userId}/fr/${id}`, {
             headers: {
                 'Accept': 'application/json',
@@ -63,7 +65,6 @@ export class FriendRequestComponent extends React.Component<any, any>  {
             },
             method: 'GET'
         })
-
             .then(resp => resp.json())
             .then(newRequests => {
                 this.setState({ newRequests })
@@ -71,7 +72,9 @@ export class FriendRequestComponent extends React.Component<any, any>  {
                 for (const i of this.state.newRequests) {
                     console.log(i);
                     const requestId = i.requestId;
-                    const statusId = {"statusId": 2} 
+                    const statusId = { "statusId": 2 }
+
+                    // edits the status of the friend
                     fetch(environment.context + `requests/editStatus/${requestId}`, {
                         body: JSON.stringify(statusId),
                         headers: {
@@ -81,12 +84,16 @@ export class FriendRequestComponent extends React.Component<any, any>  {
                         method: 'PUT'
                     })
                         .then(resp => resp.json())
-                  
                 }
             })
             .catch(err => {
                 console.log(err)
             })
+        const array = [...this.state.friends]; // make a separate copy of the array
+        const index = array.indexOf(e.target.value)
+        array.splice(index, 1);
+        this.setState({ friends: array });
+
     }
 
     public onDeny = (friendId: any, e: any) => {
@@ -112,7 +119,7 @@ export class FriendRequestComponent extends React.Component<any, any>  {
                     console.log(i);
                     const requestId = i.requestId;
 
-                    const statusId = {"statusId": 3} 
+                    const statusId = { "statusId": 3 }
                     fetch(environment.context + `requests/editStatus/${requestId}`, {
                         body: JSON.stringify(statusId),
                         headers: {
@@ -122,12 +129,18 @@ export class FriendRequestComponent extends React.Component<any, any>  {
                         method: 'PUT'
                     })
                         .then(resp => resp.json())
-                  
+
                 }
             })
             .catch(err => {
                 console.log(err)
             })
+
+            const array = [...this.state.friends]; // make a separate copy of the array
+            const index = array.indexOf(e.target.value)
+            array.splice(index, 1);
+            this.setState({ friends: array });
+    
     }
 
     public render() {
