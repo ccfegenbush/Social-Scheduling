@@ -40,6 +40,8 @@ export interface INewEventState {
   showModal: boolean,
   showPublic: boolean,
   currentEvent: object,
+  userFriends: object[],
+  userInterests: object[]
 }
 
 export interface IState {

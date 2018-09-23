@@ -14,6 +14,32 @@ BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 class MyCalendar extends React.Component {
 
     componentDidMount() {
+        fetch(environment.context + `users/${JSON.parse(localStorage.getItem('userId') || '{}')}/friends`, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            method: 'GET'
+        })
+            .then(resp => resp.json())
+            .then(friends => {
+                this.props.setUserFriends(friends);
+            })
+            .catch(err => {
+                this.props.getErrMessage(err);
+            })
+        fetch(environment.context + `users/${JSON.parse(localStorage.getItem('userId') || '{}')}/interests`, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            method: 'GET'
+        })
+            .then(resp => resp.json())
+            .then(interests => {
+                this.props.setUserInterests(interests);
+            })
+            .catch(err => {
+                this.props.getErrMessage(err);
+            })
         fetch(environment.context + `events`, {
             headers: {
                 'Content-Type': 'application/json',
@@ -22,19 +48,31 @@ class MyCalendar extends React.Component {
         })
             .then(resp => resp.json())
             .then(events => {
-                let privateEvents = [];
-                let publicEvents = [];
                 events.forEach((item) => {
                     let oneEvent = { end: new Date(item.endTime), start: new Date(item.startTime), title: item.name };
-                    if (item.visibility === 2) {
-                        privateEvents.push(oneEvent);
-                    } else {
-                        publicEvents.push(oneEvent);
+                    for (let j of this.props.userFriends) {
+                        for (let i of this.props.userInterests) {
+                            if (i.interest === item.eventType) {
+                                if (j.id === item.authorId || item.authorId === JSON.parse(localStorage.getItem('userId') || '{}')) {
+                                    if (item.visibility === 2) {
+                                        alert("private friends")
+                                        this.props.setPrivateEvents(oneEvent);
+                                    } else {
+                                        alert("public friends")
+                                        this.props.setPublicEvents(oneEvent);
+                                    }
+                                } else {
+                                    if (item.visibility === 1) {
+                                        alert("public not friends")
+                                        this.props.setPublicEvents(oneEvent);
+                                    }
+                                }
+                            }
+                            }
+                        }
                     }
-                })
-                this.props.setPrivateEvents(privateEvents);
-                this.props.setPublicEvents(publicEvents);
-                this.props.updateCalendarEvents(privateEvents);
+                )
+                this.props.updateCalendarEvents(this.props.privateEvents)
             })
             .catch(err => {
                 this.props.getErrMessage(err);
@@ -114,6 +152,8 @@ const mapDispatchToProps = {
     getErrMessage: newEventActions.getErrMessage,
     setPrivateEvents: newEventActions.setPrivateEvents,
     setPublicEvents: newEventActions.setPublicEvents,
+    setUserFriends: newEventActions.setUserFriends,
+    setUserInterests: newEventActions.setUserInterests,
     updateCalendarEvents: newEventActions.updateCalendarEvents,
     updateCurrentEvent: newEventActions.updateCurrentEvent,
     updateEventEndDate: newEventActions.updateEventEndDate,

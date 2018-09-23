@@ -19,7 +19,9 @@ const initialState: INewEventState = {
     showModal: false,
     showPublic: true,
     startDate: '',
-    startTime: ''
+    startTime: '',
+    userFriends: [{}],
+    userInterests: [{}]
 }
 
 export const newEventReducer = (state = initialState, action: any) => {
@@ -27,12 +29,28 @@ export const newEventReducer = (state = initialState, action: any) => {
         case newEventTypes.SET_PUBLIC_EVENTS:
             return {
                 ...state,
-                publicEvents: action.payload.publicEvents
+                publicEvents: [
+                    ...state.publicEvents,
+                    action.payload.publicEvents
+                ]
             }
         case newEventTypes.SET_PRIVATE_EVENTS:
             return {
                 ...state,
-                privateEvents: action.payload.privateEvents
+                privateEvents: [
+                    ...state.privateEvents,
+                    action.payload.privateEvents
+                ]
+            }
+        case newEventTypes.SET_USER_INTERESTS:
+            return {
+                ...state,
+                userInterests: action.payload.userInterests
+            }
+        case newEventTypes.SET_USER_FRIENDS:
+            return {
+                ...state,
+                userFriends: action.payload.userFriends
             }
         case newEventTypes.GET_ERR_MESSAGE:
             return {

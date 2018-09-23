@@ -1,12 +1,12 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { FriendRequestComponent } from './components/friends/view-friend-request.component';
+import App from './App';
+import { shallow } from 'enzyme';
+// import signInComponent from './components/sign-in/sign-in.component';
 import { InterestsFormComponent } from './components/interests/interests-form.component';
+import { FriendRequestComponent } from './components/friends/view-friend-request.component';
 import { AddFriendComponent } from './components/friends/add-friends.component';
 import { InvitationComponent } from './components/events/view-event-invitations.component';
-import {shallow} from 'enzyme';
-import { ViewFriendProfile } from './components/friends/view-friends-profile.component';
-
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
@@ -17,10 +17,17 @@ it('renders without crashing', () => {
   ReactDOM.unmountComponentAtNode(div);
 });
 
-it('renders without crashing', () => {
-  shallow(<ViewFriendProfile />);
+describe('App', () => {
+  let wrapper : any
+  beforeEach(() => {
+  wrapper = shallow(<App />);
+  });
+
+  it('should render a <div />', () => {
+    expect(wrapper.find('div').length).toEqual(1);
+  });
+
+  it('should render the Interest Component', () => {
+    expect(wrapper.containsMatchingElement(<InterestsFormComponent/>)).toEqual(true);
+  });
 });
-
-
-
-
