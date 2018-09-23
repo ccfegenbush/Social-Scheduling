@@ -71,12 +71,7 @@ class MyCalendar extends React.Component {
                             }
                         }
                     }
-<<<<<<< HEAD
                 })
-=======
-                }
-                )
->>>>>>> cee0c1c85768ed8f5786e3b480cda5790e0cb66b
                 this.props.updateCalendarEvents(this.props.privateEvents)
             }})
             .catch(err => {
@@ -116,7 +111,6 @@ class MyCalendar extends React.Component {
             },
             method: 'GET'
         })
-<<<<<<< HEAD
         .then(resp => resp.json())
         .then(eventData => {
             this.props.updateCurrentEvent(eventData);
@@ -138,15 +132,6 @@ class MyCalendar extends React.Component {
         .catch(err => {
             this.props.getErrMessage(err);
         })
-=======
-            .then(resp => resp.json())
-            .then(eventData => {
-                this.props.updateCurrentEvent(eventData);
-            })
-            .catch(err => {
-                this.props.getErrMessage(err);
-            })
->>>>>>> cee0c1c85768ed8f5786e3b480cda5790e0cb66b
     }
 
     render() {
