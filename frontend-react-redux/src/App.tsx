@@ -17,8 +17,9 @@ import { InterestsFormComponent } from './components/interests/interests-form.co
 import EditProfileComponent from './components/profile/edit-profile/edit-profile.component';
 import { EditInterestsComponent } from './components/profile/edit-interests/edit-interests.component';
 import { FriendComponent } from './components/friends/view-friends';
-import { FriendRequestComponent } from './components/friends/view-friend-request..component';
+import { FriendRequestComponent } from './components/friends/view-friend-request.component';
 import { InviteToEvent } from './components/events/invite-to-event.component';
+import { ViewFriendProfile } from './components/friends/view-friends-profile.component';
 
 class App extends React.Component {
   public state = { value: '' };
@@ -36,6 +37,7 @@ class App extends React.Component {
                 <Route path="/calendar" component={MyCalendar} />
                 <Route path="/set-interests" component={InterestsFormComponent} />
                 <Route path="/add-friends" component={AddFriendComponent} />
+                <Route path="/friends-profile" component={ViewFriendProfile} />
                 <Route path="/make-event" component={newEventComponent} />
                 <Route path="/events/invitations" component={InvitationComponent} />
                 <Route path="/profile" component={ProfileComponent} />

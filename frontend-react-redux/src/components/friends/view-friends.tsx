@@ -2,6 +2,8 @@ import * as React from 'react';
 import { updateUsername } from '../../actions/sign-in/sign-in.actions';
 import { environment } from '../../environment';
 import { AddFriendComponent } from './add-friends.component';
+// import { BufferViewProfile } from './view-friend-buffer.component';
+import { Link } from 'react-router-dom';
 
 export class FriendComponent extends React.Component<any, any>  {
 
@@ -11,9 +13,15 @@ export class FriendComponent extends React.Component<any, any>  {
         const user = userJSON !== null ? JSON.parse(userJSON) : updateUsername
         this.state = {
             friends: [],
+            newTo : {
+                param1:'',
+                pathname: "/friends-profile"
+            },
             profileInfo: [],
+            selectedFriend: '',
             userData: [],
             username: user,
+
         }
     }
 
@@ -55,10 +63,33 @@ export class FriendComponent extends React.Component<any, any>  {
             })
     }
 
+    public changeNewFriend( friendName: string){
+        console.log("change works")
+        this.setState({
+            ...this.state,
+           newTo : {
+               ...this.state.newTo,
+               param1: friendName
+           }
+        })
+    }
+
     public render() {
         console.log(this.state.friends)
-        const listFriends = this.state.friends.map(
-            (p: any) => <li className="list-group-item" key={p}>{p}</li>)
+
+        const listFriends = this.state.friends.map(  
+            (username: any) =>
+                <li onClick={() => this.changeNewFriend(username)}
+                    className="list-group-item" 
+                    key={username}
+                  >
+
+                    <Link to={ this.state.newTo}  >
+                        {username}
+                    </Link>
+                </li>
+        )
+
         return (
             <section className="pt-5">
                 <div className="container">
