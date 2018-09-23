@@ -10,7 +10,7 @@ export const getErrMessage = (errMessage: string) => {
     }
 }
 
-export const setPublicEvents = (publicEvents: object[]) => {
+export const setPublicEvents = (publicEvents: object) => {
     return {
         payload: {
             publicEvents
@@ -19,12 +19,30 @@ export const setPublicEvents = (publicEvents: object[]) => {
     }
 }
 
-export const setPrivateEvents = (privateEvents: object[]) => {
+export const setPrivateEvents = (privateEvents: object) => {
     return {
         payload: {
             privateEvents
         },
         type: newEventTypes.SET_PRIVATE_EVENTS
+    }
+}
+
+export const setUserInterests = (userInterests: object[]) => {
+    return {
+        payload: {
+            userInterests
+        },
+        type: newEventTypes.SET_USER_INTERESTS
+    }
+}
+
+export const setUserFriends = (userFriends: object[]) => {
+    return {
+        payload: {
+            userFriends
+        },
+        type: newEventTypes.SET_USER_FRIENDS
     }
 }
 

@@ -42,6 +42,7 @@ class SignInComponent extends React.Component<IProps, {}> {
       })
       .then(resp => {
         localStorage.setItem('user', JSON.stringify(resp));
+        console.log(JSON.parse(localStorage.getItem('user') || '{}'));
         localStorage.setItem('userId', JSON.stringify(resp.id));
         this.props.setLoginUser(resp);
         this.props.history.push('/home');
