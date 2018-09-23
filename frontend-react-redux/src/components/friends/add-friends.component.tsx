@@ -93,7 +93,7 @@ export class AddFriendComponent extends React.Component<any, any> {
         return (
             <React.Fragment>
                 <div className="mb-2">
-                    <span className="btn btn-primary" onClick={this.onAddFriend}> Add Friend!</span>
+                    <span className="btn btn-primary px-5" onClick={this.onAddFriend}> Add Friend! </span>
                 </div>
                 <Autocomplete
                     value={this.state.value}

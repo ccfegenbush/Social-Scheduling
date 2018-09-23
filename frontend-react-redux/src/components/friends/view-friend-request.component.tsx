@@ -127,7 +127,6 @@ export class FriendRequestComponent extends React.Component<any, any>  {
                 this.setState({ newRequests })
                 console.log(this.state.newRequests)
                 for (const i of this.state.newRequests) {
-                    console.log(i);
                     const requestId = i.requestId;
                     const statusId = {"statusId": 3} 
 
