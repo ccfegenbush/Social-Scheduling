@@ -4,10 +4,16 @@ import App from './App';
 import { shallow } from 'enzyme';
 // import signInComponent from './components/sign-in/sign-in.component';
 import { InterestsFormComponent } from './components/interests/interests-form.component';
+import { FriendRequestComponent } from './components/friends/view-friend-request.component';
+import { AddFriendComponent } from './components/friends/add-friends.component';
+import { InvitationComponent } from './components/events/view-event-invitations.component';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
+  ReactDOM.render(<FriendRequestComponent />, div);
+  ReactDOM.render(<InterestsFormComponent />, div);
+  ReactDOM.render(<AddFriendComponent />, div);
+  ReactDOM.render(<InvitationComponent />, div);
   ReactDOM.unmountComponentAtNode(div);
 });
 

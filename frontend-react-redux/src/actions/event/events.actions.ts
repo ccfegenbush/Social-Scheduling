@@ -155,14 +155,6 @@ export const updateShowPublic = (showPublic: boolean) => {
         type: newEventTypes.UPDATE_SHOW_PUBLIC
     }
 }
-export const updateKey = (key: number) => {
-    return {
-        payload: {
-            key
-        },
-        type: newEventTypes.UPDATE_KEY
-    }
-}
 export const updateCalendarEvents = (calendarEvents: object[]) => {
     return {
         payload: {
