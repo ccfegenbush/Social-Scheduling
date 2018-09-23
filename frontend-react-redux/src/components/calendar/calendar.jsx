@@ -14,6 +14,7 @@ BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 class MyCalendar extends React.Component {
 
     componentDidMount() {
+        alert(JSON.parse(localStorage.getItem('userId') || '{}'))
         fetch(environment.context + `users/${JSON.parse(localStorage.getItem('userId') || '{}')}/friends`, {
             headers: {
                 'Content-Type': 'application/json',
@@ -48,6 +49,7 @@ class MyCalendar extends React.Component {
         })
             .then(resp => resp.json())
             .then(events => {
+                if (this.props.calendarEvents.length === 1) {
                 events.forEach((item) => {
                     let oneEvent = { end: new Date(item.endTime), start: new Date(item.startTime), title: item.name };
                     for (let j of this.props.userFriends) {
@@ -73,7 +75,7 @@ class MyCalendar extends React.Component {
                     }
                 )
                 this.props.updateCalendarEvents(this.props.privateEvents)
-            })
+            }})
             .catch(err => {
                 this.props.getErrMessage(err);
             })
@@ -158,7 +160,6 @@ const mapDispatchToProps = {
     updateCurrentEvent: newEventActions.updateCurrentEvent,
     updateEventEndDate: newEventActions.updateEventEndDate,
     updateEventStartDate: newEventActions.updateEventStartDate,
-    updateKey: newEventActions.updateKey,
     updateShowModal: newEventActions.updateShowModal,
     updateShowPublic: newEventActions.updateShowPublic
 };

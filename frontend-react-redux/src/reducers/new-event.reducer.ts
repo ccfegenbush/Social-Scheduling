@@ -12,7 +12,6 @@ const initialState: INewEventState = {
     eventLocation: '',
     eventType: '',
     eventVisibility: 2,
-    key: 0,
     name: '',
     privateEvents: [{}],
     publicEvents: [{}],
@@ -121,11 +120,6 @@ export const newEventReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 showPublic: action.payload.showPublic
-            }
-        case newEventTypes.UPDATE_KEY:
-            return {
-                ...state,
-                key: action.payload.key
             }
         case newEventTypes.UPDATE_CALENDAR_EVENTS:
             return {
