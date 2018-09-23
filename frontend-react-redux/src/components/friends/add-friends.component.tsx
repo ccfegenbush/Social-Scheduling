@@ -43,9 +43,9 @@ export class AddFriendComponent extends React.Component<any, any> {
         const userId = JSON.parse(localStorage.getItem('userId') || '{}');
         e.preventDefault();
 
-        // get the users id from their username
+        // get the users id from their username   
 
-        fetch(environment.context + `users/${username}/find`, {
+             fetch(environment.context + `users/${username}/find`, {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -70,8 +70,7 @@ export class AddFriendComponent extends React.Component<any, any> {
                     .then(resp => resp.json())
                     .catch(err => {
                         console.log(err);
-                    })
-                
+                    })  
             })
             .catch(err => {
                 console.log(err)
