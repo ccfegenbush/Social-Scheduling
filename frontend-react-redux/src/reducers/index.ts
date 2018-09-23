@@ -22,6 +22,7 @@ export interface INewUserState {
 }
 
 export interface INewEventState {
+  author: object,
   authorId: number,
   calendarEvents: object[],
   description: string,

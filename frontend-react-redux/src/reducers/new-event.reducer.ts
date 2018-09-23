@@ -2,6 +2,7 @@ import { INewEventState } from ".";
 import { newEventTypes } from "../actions/event/events.types";
 
 const initialState: INewEventState = {
+    author: {},
     authorId: 0,
     calendarEvents: [{}],
     currentEvent: {},
@@ -125,6 +126,11 @@ export const newEventReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 calendarEvents: action.payload.calendarEvents
+            }
+        case newEventTypes.UPDATE_EVENT_AUTHOR:
+            return {
+                ...state,
+                author: action.payload.author
             }
     }
     return state;

@@ -14,7 +14,6 @@ BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 class MyCalendar extends React.Component {
 
     componentDidMount() {
-        alert(JSON.parse(localStorage.getItem('userId') || '{}'))
         fetch(environment.context + `users/${JSON.parse(localStorage.getItem('userId') || '{}')}/friends`, {
             headers: {
                 'Content-Type': 'application/json',
@@ -54,26 +53,25 @@ class MyCalendar extends React.Component {
                     let oneEvent = { end: new Date(item.endTime), start: new Date(item.startTime), title: item.name };
                     for (let j of this.props.userFriends) {
                         for (let i of this.props.userInterests) {
-                            if (i.interest === item.eventType) {
-                                if (j.id === item.authorId || item.authorId === JSON.parse(localStorage.getItem('userId') || '{}')) {
-                                    if (item.visibility === 2) {
-                                        alert("private friends")
-                                        this.props.setPrivateEvents(oneEvent);
+                            if (!this.props.publicEvents.some(pu => pu.title === item.name) || 
+                            !this.props.privateEvents.some(pr => pr.title === item.name)) {
+                                if (i.interest === item.eventType) {
+                                    if (j.id === item.authorId || item.authorId === JSON.parse(localStorage.getItem('userId') || '{}')) {
+                                        if (item.visibility === 2) {
+                                            this.props.setPrivateEvents(oneEvent);
+                                        } else {
+                                            this.props.setPublicEvents(oneEvent);
+                                        }
                                     } else {
-                                        alert("public friends")
-                                        this.props.setPublicEvents(oneEvent);
-                                    }
-                                } else {
-                                    if (item.visibility === 1) {
-                                        alert("public not friends")
-                                        this.props.setPublicEvents(oneEvent);
+                                        if (item.visibility === 1) {
+                                            this.props.setPublicEvents(oneEvent);
+                                        }
                                     }
                                 }
                             }
-                            }
                         }
                     }
-                )
+                })
                 this.props.updateCalendarEvents(this.props.privateEvents)
             }})
             .catch(err => {
@@ -120,6 +118,20 @@ class MyCalendar extends React.Component {
         .catch(err => {
             this.props.getErrMessage(err);
         })
+        fetch(environment.context + `users/${this.props.currentEvent.authorId}`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'GET'
+        })
+        .then(resp => resp.json())
+        .then(user => {
+            this.props.updateEventAuthor(user);
+        })
+        .catch(err => {
+            this.props.getErrMessage(err);
+        })
     }
 
     render() {
@@ -135,13 +147,16 @@ class MyCalendar extends React.Component {
                 onSelectEvent={this.selectedEventChange}
             />
             <Modal show={this.props.showModal} onHide={this.toggleModal}>
-                <Modal.Header>{this.props.currentEvent.name}</Modal.Header>
+                <Modal.Header>Title: {this.props.currentEvent.name}
+                <p>By: {this.props.author.username + '-' + this.props.author.firstName + ' ' + this.props.author.lastName}</p></Modal.Header>
                 <Modal.Body>
-                    {this.props.currentEvent.description}
+                    <p>Type: {this.props.currentEvent.eventType}</p>
+                    <p>Location: {this.props.currentEvent.location}</p>
+                    <p>Description: {this.props.currentEvent.description}</p>
+                    <p>Contact: {this.props.author.email}</p>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button color="primary" onClick={this.toggleModal}>Do Something</Button>{' '}
-                    <Button color="secondary" onClick={this.toggleModal}>Cancel</Button>
+                    <Button color="secondary" onClick={this.toggleModal}>Close</Button>
                 </Modal.Footer>
             </Modal>
         </div>
@@ -158,6 +173,7 @@ const mapDispatchToProps = {
     setUserInterests: newEventActions.setUserInterests,
     updateCalendarEvents: newEventActions.updateCalendarEvents,
     updateCurrentEvent: newEventActions.updateCurrentEvent,
+    updateEventAuthor: newEventActions.updateEventAuthor,
     updateEventEndDate: newEventActions.updateEventEndDate,
     updateEventStartDate: newEventActions.updateEventStartDate,
     updateShowModal: newEventActions.updateShowModal,

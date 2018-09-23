@@ -163,3 +163,11 @@ export const updateCalendarEvents = (calendarEvents: object[]) => {
         type: newEventTypes.UPDATE_CALENDAR_EVENTS
     }
 }
+export const updateEventAuthor = (author: object) => {
+    return {
+        payload: {
+            author
+        },
+        type: newEventTypes.UPDATE_EVENT_AUTHOR
+    }
+}
