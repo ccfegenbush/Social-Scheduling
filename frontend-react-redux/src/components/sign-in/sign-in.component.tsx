@@ -39,8 +39,9 @@ class SignInComponent extends React.Component<IProps, {}> {
         throw new Error("Failed to login");
       })
       .then(resp => {
-        localStorage.setItem("user", JSON.stringify(resp));
-        localStorage.setItem("userId", JSON.stringify(resp.id));
+        localStorage.setItem('user', JSON.stringify(resp));
+        console.log(JSON.parse(localStorage.getItem('user') || '{}'));
+        localStorage.setItem('userId', JSON.stringify(resp.id));
         this.props.setLoginUser(resp);
         this.fetchUserInterests();
       })
