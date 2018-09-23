@@ -27,6 +27,10 @@ describe('App', () => {
     expect(wrapper.find('div').length).toEqual(1);
   });
 
+  it('should render 16 <Route />', () => {
+    expect(wrapper.find('Route').length).toEqual(17);
+  });
+
   it('should render the Interest Component', () => {
     expect(wrapper.containsMatchingElement(<InterestsFormComponent/>)).toEqual(true);
   });
