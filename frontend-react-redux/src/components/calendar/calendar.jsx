@@ -68,9 +68,9 @@ class MyCalendar extends React.Component {
                                     }
                                 }
                             }
-                            }
                         }
                     }
+                }
                 )
                 this.props.updateCalendarEvents(this.props.privateEvents)
             })
@@ -91,7 +91,7 @@ class MyCalendar extends React.Component {
     }
 
     togglePublicPrivate = () => {
-      
+
         if (this.props.showPublic) {
             this.props.updateCalendarEvents(this.props.publicEvents);
             this.props.updateShowPublic(!this.props.showPublic);
@@ -99,7 +99,7 @@ class MyCalendar extends React.Component {
             this.props.updateCalendarEvents(this.props.privateEvents);
             this.props.updateShowPublic(!this.props.showPublic);
         }
-        
+
     }
 
     selectedEventChange = (event, e) => {
@@ -111,17 +111,17 @@ class MyCalendar extends React.Component {
             },
             method: 'GET'
         })
-        .then(resp => resp.json())
-        .then(eventData => {
-            this.props.updateCurrentEvent(eventData);
-        })
-        .catch(err => {
-            this.props.getErrMessage(err);
-        })
+            .then(resp => resp.json())
+            .then(eventData => {
+                this.props.updateCurrentEvent(eventData);
+            })
+            .catch(err => {
+                this.props.getErrMessage(err);
+            })
     }
 
     render() {
-        return <div className="mt-5 pt-5 container">
+        return <div className="mt-3 container">
             {this.props.errMessage}
             <button onClick={this.togglePublicPrivate}>Public/Private</button>
             <BigCalendar events={this.props.calendarEvents}

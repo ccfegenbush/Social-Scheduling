@@ -60,7 +60,7 @@ export class ProfileComponent extends React.Component<any, any>  {
                             <h3 className="section-subheading text-muted mb-3">{userInfo.username}</h3>
                         </div>
                     </div>
-                    <hr/>
+                    <hr />
                     <div className="row">
                         <div className="col-sm-6 float-right">
                             <div className="team-member">
@@ -87,11 +87,11 @@ export class ProfileComponent extends React.Component<any, any>  {
                             </div>
                         </div>
                         <div className="col-sm-6 mx-auto">
-                            <p className="large text-muted"><strong>My Interests: <Link to="/edit-interests" className="btn btn-default pt-0"><FaPenSquare/></Link></strong>                                
-                                <ul className="list-group">
-                                    {listInterests}
-                                </ul>
+                            <p className="large text-muted"><strong>My Interests: <Link to="/edit-interests" className="btn btn-default pt-0"><FaPenSquare /></Link></strong>
                             </p>
+                            <ul className="list-group">
+                                {listInterests}
+                            </ul>
                         </div>
                     </div>
                 </div>
