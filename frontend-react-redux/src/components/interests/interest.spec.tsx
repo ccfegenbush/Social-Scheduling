@@ -2,7 +2,8 @@ import * as React from 'react';
 import {shallow} from 'enzyme';
 import { InterestsFormComponent } from './interests-form.component';
 
-describe('Calculator', () => {
+
+describe('ProfileComponent', () => {
   let wrapper: any;
   beforeEach(() => {
     wrapper = shallow(<InterestsFormComponent />);
