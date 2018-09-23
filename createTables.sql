@@ -48,8 +48,40 @@ CREATE TABLE project2.event(
 	event_start_time TIMESTAMP NOT NULL,
 	event_end_time TIMESTAMP NOT NULL,
 	event_location VARCHAR(100) NOT NULL,
-	event_author_id INTEGER REFERENCES project2.users(user_id)
+	event_author_id INTEGER REFERENCES project2.users(user_id),
+     event_status integer DEFAULT 2
 );
+
+-- Table: project2.event
+
+-- DROP TABLE project2.event;
+
+-- CREATE TABLE project2.event
+-- (
+--     event_id integer NOT NULL,
+--     event_name character varying(100) COLLATE pg_catalog."default" NOT NULL,
+--     event_type character varying(15) COLLATE pg_catalog."default" NOT NULL,
+--     event_description character varying(250) COLLATE pg_catalog."default" NOT NULL,
+--     event_start_date character varying(250) COLLATE pg_catalog."default" NOT NULL,
+--     event_end_date character varying(250) COLLATE pg_catalog."default" NOT NULL,
+--     event_start_time character varying(250) COLLATE pg_catalog."default" NOT NULL,
+--     event_end_time character varying(250) COLLATE pg_catalog."default" NOT NULL,
+--     event_location character varying(100) COLLATE pg_catalog."default" NOT NULL,
+--     event_author_id integer,
+--     event_status integer DEFAULT 2,
+--     CONSTRAINT event_pkey PRIMARY KEY (event_id),
+--     CONSTRAINT event_event_author_id_fkey FOREIGN KEY (event_author_id)
+--         REFERENCES project2.users (user_id) MATCH SIMPLE
+--         ON UPDATE NO ACTION
+--         ON DELETE NO ACTION
+-- )
+-- WITH (
+--     OIDS = FALSE
+-- )
+-- TABLESPACE pg_default;
+
+-- ALTER TABLE project2.event
+--     OWNER to postgres;
 
 CREATE TABLE project2.user_has_friends (
   user_id INTEGER NOT NULL REFERENCES project2.users(user_id),
