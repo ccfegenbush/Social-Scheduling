@@ -7,7 +7,9 @@ export class FriendRequestComponent extends React.Component<any, any> {
       currentRequest: [],
       friends: [],
       newRequests: {},
+      newRequests2: {},
       requestId: 0,
+      requestId2: 0,
       requests: []
     };
   }
@@ -55,10 +57,11 @@ export class FriendRequestComponent extends React.Component<any, any> {
   }
 
   public onApprove = (friendId: any, e: any) => {
+    e.preventDefault();
     console.log(`approving with id: ${friendId}`);
     const userId = JSON.parse(localStorage.getItem("userId") || "{}");
     // console.log(`userId: ${userId}`);
-    e.preventDefault();
+    
     const id = friendId;
 
     // find the requestee id by the userId and friendId
@@ -114,40 +117,46 @@ export class FriendRequestComponent extends React.Component<any, any> {
       .catch(err => {
         console.log(err);
       });
-
-      fetch(environment.context + `requests/friend/${id}/fr/${userId}`, {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
-        },
-        method: "GET"
-      })
-        .then(resp => resp.json())
-        .then(newRequests => {
-          this.setState({ newRequests });
-          console.log(this.state.newRequests);
-          for (const i of this.state.newRequests) {
-            console.log(i);
-            const requestId = i.requestId;
-            const statusId = { statusId: 2 };
-            console.log(requestId);
-            // on here we edit the status to be 2 or approved
-            fetch(environment.context + `requests/editStatus/${requestId}`, {
-              body: JSON.stringify(statusId),
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-              },
-              method: "PUT"
-            }).then(resp => resp.json());
-          }
+     
+      // gets the second requestID
+      setTimeout(() => {
+        console.log("making second fetch call")
+        fetch(environment.context + `requests/friend/${id}/fr/${userId}`, {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          method: "GET"
         })
-        .catch(err => {
-          console.log(err);
-        });
+          .then(resp => resp.json())
+          .then(newRequests2 => {
+  
+              this.setState({ newRequests2 });
+              console.log("making second fetch call and setting state2"+this.state.newRequests2);      
+            
+            for (const j of this.state.newRequests2) {
+              console.log(j);
+              const requestId2 = j.requestId;
+              const statusId = { statusId: 2 };
+              console.log(requestId2);
+              // on here we edit the status to be 2 or approved
+
+              fetch(environment.context + `requests/editStatus/${requestId2}`, {
+                body: JSON.stringify(statusId),
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json"
+                },
+                method: "PUT"
+              }).then(resp => resp.json());
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }, 3000);
+     
   };
-
-
 
   // deny a friend request
   public onDeny = (friendId: any, e: any) => {
