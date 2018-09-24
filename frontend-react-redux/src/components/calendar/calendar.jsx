@@ -14,6 +14,32 @@ BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 class MyCalendar extends React.Component {
 
     componentDidMount() {
+        fetch(environment.context + `users/${JSON.parse(localStorage.getItem('userId') || '{}')}/friends`, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            method: 'GET'
+        })
+            .then(resp => resp.json())
+            .then(friends => {
+                this.props.setUserFriends(friends);
+            })
+            .catch(err => {
+                this.props.getErrMessage(err);
+            })
+        fetch(environment.context + `users/${JSON.parse(localStorage.getItem('userId') || '{}')}/interests`, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            method: 'GET'
+        })
+            .then(resp => resp.json())
+            .then(interests => {
+                this.props.setUserInterests(interests);
+            })
+            .catch(err => {
+                this.props.getErrMessage(err);
+            })
         fetch(environment.context + `events`, {
             headers: {
                 'Content-Type': 'application/json',
@@ -22,20 +48,30 @@ class MyCalendar extends React.Component {
         })
             .then(resp => resp.json())
             .then(events => {
-                let privateEvents = [];
-                let publicEvents = [];
+                if (this.props.calendarEvents.length === 1) {
                 events.forEach((item) => {
                     let oneEvent = { end: new Date(item.endTime), start: new Date(item.startTime), title: item.name };
-                    if (item.visibility === 2) {
-                        privateEvents.push(oneEvent);
-                    } else {
-                        publicEvents.push(oneEvent);
-                    }
+                    if (this.props.userInterests.filter(e => e.interest === item.eventType).length > 0) {
+                        alert("please show once")
+                        if (this.props.userFriends.filter(e => e.id === item.id).length > 0 || 
+                        item.authorId === JSON.parse(localStorage.getItem('userId') || '{}')) {
+                            // if (!this.props.publicEvents.includes(item) || 
+                            // !this.props.privateEvents.includes(item)) {
+                            
+                                if (item.visibility === 2) {
+                                    this.props.setPrivateEvents(oneEvent);
+                                } else {
+                                    this.props.setPublicEvents(oneEvent);
+                                }
+                            } else {
+                                if (item.visibility === 1) {
+                                    this.props.setPublicEvents(oneEvent);
+                                }
+                            }
+                        }
                 })
-                this.props.setPrivateEvents(privateEvents);
-                this.props.setPublicEvents(publicEvents);
-                this.props.updateCalendarEvents(privateEvents);
-            })
+                this.props.updateCalendarEvents(this.props.privateEvents)
+            }})
             .catch(err => {
                 this.props.getErrMessage(err);
             })
@@ -52,16 +88,22 @@ class MyCalendar extends React.Component {
         this.props.updateShowModal(!this.props.showModal);
     }
 
+    makeUnique = (a) => {
+        return Array.from(new Set(a));
+    }
+
     togglePublicPrivate = () => {
-      
+
         if (this.props.showPublic) {
             this.props.updateCalendarEvents(this.props.publicEvents);
+            // this.props.updateCalendarEvents(this.makeUnique(this.props.calendarEvents));
             this.props.updateShowPublic(!this.props.showPublic);
         } else {
             this.props.updateCalendarEvents(this.props.privateEvents);
+            // this.props.updateCalendarEvents(this.makeUnique(this.props.calendarEvents));
             this.props.updateShowPublic(!this.props.showPublic);
         }
-        
+
     }
 
     selectedEventChange = (event, e) => {
@@ -80,10 +122,24 @@ class MyCalendar extends React.Component {
         .catch(err => {
             this.props.getErrMessage(err);
         })
+        fetch(environment.context + `users/${this.props.currentEvent.authorId}`, {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: 'GET'
+        })
+        .then(resp => resp.json())
+        .then(user => {
+            this.props.updateEventAuthor(user);
+        })
+        .catch(err => {
+            this.props.getErrMessage(err);
+        })
     }
 
     render() {
-        return <div className="mt-5 pt-5 container">
+        return <div className="mt-3 container">
             {this.props.errMessage}
             <button onClick={this.togglePublicPrivate}>Public/Private</button>
             <BigCalendar events={this.props.calendarEvents}
@@ -95,13 +151,16 @@ class MyCalendar extends React.Component {
                 onSelectEvent={this.selectedEventChange}
             />
             <Modal show={this.props.showModal} onHide={this.toggleModal}>
-                <Modal.Header>{this.props.currentEvent.name}</Modal.Header>
+                <Modal.Header>Title: {this.props.currentEvent.name}
+                <p>By: {this.props.author.username + '-' + this.props.author.firstName + ' ' + this.props.author.lastName}</p></Modal.Header>
                 <Modal.Body>
-                    {this.props.currentEvent.description}
+                    <p>Type: {this.props.currentEvent.eventType}</p>
+                    <p>Location: {this.props.currentEvent.location}</p>
+                    <p>Description: {this.props.currentEvent.description}</p>
+                    <p>Contact: {this.props.author.email}</p>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button color="primary" onClick={this.toggleModal}>Do Something</Button>{' '}
-                    <Button color="secondary" onClick={this.toggleModal}>Cancel</Button>
+                    <Button color="secondary" onClick={this.toggleModal}>Close</Button>
                 </Modal.Footer>
             </Modal>
         </div>
@@ -114,11 +173,13 @@ const mapDispatchToProps = {
     getErrMessage: newEventActions.getErrMessage,
     setPrivateEvents: newEventActions.setPrivateEvents,
     setPublicEvents: newEventActions.setPublicEvents,
+    setUserFriends: newEventActions.setUserFriends,
+    setUserInterests: newEventActions.setUserInterests,
     updateCalendarEvents: newEventActions.updateCalendarEvents,
     updateCurrentEvent: newEventActions.updateCurrentEvent,
+    updateEventAuthor: newEventActions.updateEventAuthor,
     updateEventEndDate: newEventActions.updateEventEndDate,
     updateEventStartDate: newEventActions.updateEventStartDate,
-    updateKey: newEventActions.updateKey,
     updateShowModal: newEventActions.updateShowModal,
     updateShowPublic: newEventActions.updateShowPublic
 };

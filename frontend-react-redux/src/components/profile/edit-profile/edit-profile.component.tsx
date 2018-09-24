@@ -109,15 +109,6 @@ class EditProfileComponent extends React.Component<IProps, {}> {
                                     placeholder="Username"
                                     required />
                             </div>
-                            {/* <label htmlFor="inputPassword" className="sr-only">Password</label>
-                    <input
-                    onChange={this.passwordChange}
-                    value={u.password}
-                    type="password"
-                    name="password"
-                    className="form-control"
-                    placeholder="Password"
-                    required /> */}
                             <div className="form-group">
                                 <label htmlFor="inputFirstName" className="sr-only">First Name</label>
                                 <input

@@ -22,6 +22,7 @@ export interface INewUserState {
 }
 
 export interface INewEventState {
+  author: object,
   authorId: number,
   calendarEvents: object[],
   description: string,
@@ -29,7 +30,6 @@ export interface INewEventState {
   endDate: string,
   endTime: string,
   eventLocation: string,
-  key: number,
   name: string,
   startDate: string,
   startTime: string, 
@@ -40,6 +40,8 @@ export interface INewEventState {
   showModal: boolean,
   showPublic: boolean,
   currentEvent: object,
+  userFriends: object[],
+  userInterests: object[]
 }
 
 export interface IState {

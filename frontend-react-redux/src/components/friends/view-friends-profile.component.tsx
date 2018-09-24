@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { updateUsername } from '../../actions/sign-in/sign-in.actions';
 import { environment } from '../../environment';
-import { FaTwitter, FaFacebookF, FaLinkedinIn, FaPenSquare } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { FaTwitter, FaFacebookF, FaLinkedinIn } from 'react-icons/fa';
 
-export class ProfileComponent extends React.Component<any, any>  {
+
+export class ViewFriendProfile extends React.Component<any, any>  {
 
     public constructor(props: any) {
         super(props);
@@ -23,6 +23,8 @@ export class ProfileComponent extends React.Component<any, any>  {
 
     public componentDidMount() {
         const usersId = JSON.parse(localStorage.getItem('userId') || '{}');
+        const test = JSON.parse(localStorage.getItem("friendName") || '{}');
+        console.log(test)
 
         fetch(environment.context + `users/${usersId}`, {})
             .then(resp => resp.json())
@@ -44,6 +46,7 @@ export class ProfileComponent extends React.Component<any, any>  {
             .catch(err => {
                 console.log(err)
             })
+            console.log(test)
     }
 
     public render() {
@@ -60,7 +63,7 @@ export class ProfileComponent extends React.Component<any, any>  {
                             <h3 className="section-subheading text-muted mb-3">{userInfo.username}</h3>
                         </div>
                     </div>
-                    <hr />
+                    <hr/>
                     <div className="row">
                         <div className="col-sm-6 float-right">
                             <div className="team-member">
@@ -87,11 +90,11 @@ export class ProfileComponent extends React.Component<any, any>  {
                             </div>
                         </div>
                         <div className="col-sm-6 mx-auto">
-                            <p className="large text-muted"><strong>My Interests: <Link to="/edit-interests" className="btn btn-default pt-0"><FaPenSquare /></Link></strong>
+                            <p className="large text-muted"><strong>My Interests: </strong>                                
+                                <ul className="list-group">
+                                    {listInterests}
+                                </ul>
                             </p>
-                            <ul className="list-group">
-                                {listInterests}
-                            </ul>
                         </div>
                     </div>
                 </div>

@@ -47,7 +47,7 @@ export class InterestsFormComponent extends React.Component<any, any> {
             })
                 .then(resp => resp.json())
                 .then(interestData => {
-                    this.props.history.push('/home');
+                    this.props.history.push('/calendar');
                 })
                 .catch(err => {
                     console.log(err);
@@ -90,7 +90,7 @@ export class InterestsFormComponent extends React.Component<any, any> {
                                 })
                             }
 
-                            <button className="btn btn-lg btn-primary btn-block" type="submit" value="Add Node server"><FaCheck/> Sign in</button>
+                            <button className="btn btn-lg btn-primary btn-block" type="submit" value="Add Node server"><FaCheck/> Submit</button>
                             {/* {errorMessage && <p id="error-message">{errorMessage}</p>} */}
                         </form>
                     </div>

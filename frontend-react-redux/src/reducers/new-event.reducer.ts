@@ -2,6 +2,7 @@ import { INewEventState } from ".";
 import { newEventTypes } from "../actions/event/events.types";
 
 const initialState: INewEventState = {
+    author: {},
     authorId: 0,
     calendarEvents: [{}],
     currentEvent: {},
@@ -12,14 +13,15 @@ const initialState: INewEventState = {
     eventLocation: '',
     eventType: '',
     eventVisibility: 2,
-    key: 0,
     name: '',
     privateEvents: [{}],
     publicEvents: [{}],
     showModal: false,
     showPublic: true,
     startDate: '',
-    startTime: ''
+    startTime: '',
+    userFriends: [{}],
+    userInterests: [{}]
 }
 
 export const newEventReducer = (state = initialState, action: any) => {
@@ -27,12 +29,28 @@ export const newEventReducer = (state = initialState, action: any) => {
         case newEventTypes.SET_PUBLIC_EVENTS:
             return {
                 ...state,
-                publicEvents: action.payload.publicEvents
+                publicEvents: [
+                    ...state.publicEvents,
+                    action.payload.publicEvents
+                ]
             }
         case newEventTypes.SET_PRIVATE_EVENTS:
             return {
                 ...state,
-                privateEvents: action.payload.privateEvents
+                privateEvents: [
+                    ...state.privateEvents,
+                    action.payload.privateEvents
+                ]
+            }
+        case newEventTypes.SET_USER_INTERESTS:
+            return {
+                ...state,
+                userInterests: action.payload.userInterests
+            }
+        case newEventTypes.SET_USER_FRIENDS:
+            return {
+                ...state,
+                userFriends: action.payload.userFriends
             }
         case newEventTypes.GET_ERR_MESSAGE:
             return {
@@ -104,15 +122,15 @@ export const newEventReducer = (state = initialState, action: any) => {
                 ...state,
                 showPublic: action.payload.showPublic
             }
-        case newEventTypes.UPDATE_KEY:
-            return {
-                ...state,
-                key: action.payload.key
-            }
         case newEventTypes.UPDATE_CALENDAR_EVENTS:
             return {
                 ...state,
                 calendarEvents: action.payload.calendarEvents
+            }
+        case newEventTypes.UPDATE_EVENT_AUTHOR:
+            return {
+                ...state,
+                author: action.payload.author
             }
     }
     return state;
