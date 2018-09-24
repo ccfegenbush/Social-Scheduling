@@ -51,26 +51,24 @@ class MyCalendar extends React.Component {
                 if (this.props.calendarEvents.length === 1) {
                 events.forEach((item) => {
                     let oneEvent = { end: new Date(item.endTime), start: new Date(item.startTime), title: item.name };
-                    for (let j of this.props.userFriends) {
-                        for (let i of this.props.userInterests) {
-                            if (!this.props.publicEvents.some(pu => pu.title === item.name) || 
-                            !this.props.privateEvents.some(pr => pr.title === item.name)) {
-                                if (i.interest === item.eventType) {
-                                    if (j.id === item.authorId || item.authorId === JSON.parse(localStorage.getItem('userId') || '{}')) {
-                                        if (item.visibility === 2) {
-                                            this.props.setPrivateEvents(oneEvent);
-                                        } else {
-                                            this.props.setPublicEvents(oneEvent);
-                                        }
-                                    } else {
-                                        if (item.visibility === 1) {
-                                            this.props.setPublicEvents(oneEvent);
-                                        }
-                                    }
+                    if (this.props.userInterests.filter(e => e.interest === item.eventType).length > 0) {
+                        alert("please show once")
+                        if (this.props.userFriends.filter(e => e.id === item.id).length > 0 || 
+                        item.authorId === JSON.parse(localStorage.getItem('userId') || '{}')) {
+                            // if (!this.props.publicEvents.includes(item) || 
+                            // !this.props.privateEvents.includes(item)) {
+                            
+                                if (item.visibility === 2) {
+                                    this.props.setPrivateEvents(oneEvent);
+                                } else {
+                                    this.props.setPublicEvents(oneEvent);
+                                }
+                            } else {
+                                if (item.visibility === 1) {
+                                    this.props.setPublicEvents(oneEvent);
                                 }
                             }
                         }
-                    }
                 })
                 this.props.updateCalendarEvents(this.props.privateEvents)
             }})
@@ -90,13 +88,19 @@ class MyCalendar extends React.Component {
         this.props.updateShowModal(!this.props.showModal);
     }
 
+    makeUnique = (a) => {
+        return Array.from(new Set(a));
+    }
+
     togglePublicPrivate = () => {
 
         if (this.props.showPublic) {
             this.props.updateCalendarEvents(this.props.publicEvents);
+            // this.props.updateCalendarEvents(this.makeUnique(this.props.calendarEvents));
             this.props.updateShowPublic(!this.props.showPublic);
         } else {
             this.props.updateCalendarEvents(this.props.privateEvents);
+            // this.props.updateCalendarEvents(this.makeUnique(this.props.calendarEvents));
             this.props.updateShowPublic(!this.props.showPublic);
         }
 
