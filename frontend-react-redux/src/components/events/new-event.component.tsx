@@ -213,7 +213,7 @@ class NewEventComponent extends React.Component<IProps, {}> {
 
                     <div className="col-lg-12 text-center">
                       
-                      Make Event Public?<input type="checkbox" onChange={this.eventVisbilityChange}></input>
+                     <div className="mb-2">Make Event Public? <input type="checkbox" onChange={this.eventVisbilityChange}></input></div> 
 
                       <button
                         className="btn btn-primary btn-xl text-uppercase px-5 mt-2"

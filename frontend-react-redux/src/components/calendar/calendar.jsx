@@ -140,7 +140,8 @@ class MyCalendar extends React.Component {
     render() {
         return <div className="mt-3 container">
             {this.props.errMessage}
-            <button onClick={this.togglePublicPrivate}>Public/Private</button>
+            <button onClick={this.togglePublicPrivate} className="btn btn-info mb-1">Public</button>{ ' ' }
+            <button onClick={this.togglePublicPrivate} className="btn btn-dark mb-1"> Private </button>
             <BigCalendar events={this.props.calendarEvents}
                 defaultDate={new Date()}
                 defaultView="month"
