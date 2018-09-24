@@ -61,7 +61,8 @@ class NewEventComponent extends React.Component<IProps, {}> {
     this.props.updateAuthorId(e.target.value);
   };
 
-  public eventVisbilityChange = () => {
+  public eventVisbilityChange = (e: any) => {
+    alert(e.target.value);
     if (this.props.eventVisibility === 1) {
       this.props.updateEventVisibility(2);
     } else {
@@ -80,15 +81,16 @@ class NewEventComponent extends React.Component<IProps, {}> {
     const re = /(.+)(00:00:00)(.+)/g;
     const newStartTime = ev.startDate.replace(re, '$1' + ev.startTime + ':00' + '$3');
     const newEndTime = ev.endDate.replace(re, '$1' + ev.endTime + ':00' + '$3');
+    
     const event = {
       authorId: JSON.parse(localStorage.getItem("userId") || "{}"),
       description: ev.description,
-      endDate: ev.endTime,
+      endDate: newEndTime,
       endTime: newEndTime,
       eventType: ev.eventType,
       location: ev.eventLocation,
       name: ev.name,
-      startDate: ev.startTime,
+      startDate: newStartTime,
       startTime: newStartTime,
       visibility: ev.eventVisibility,
     };

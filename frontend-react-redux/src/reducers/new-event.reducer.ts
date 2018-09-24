@@ -4,7 +4,7 @@ import { newEventTypes } from "../actions/event/events.types";
 const initialState: INewEventState = {
     author: {},
     authorId: 0,
-    calendarEvents: [{}],
+    calendarEvents: [],
     currentEvent: {},
     description: '',
     endDate: '',
@@ -14,8 +14,8 @@ const initialState: INewEventState = {
     eventType: '',
     eventVisibility: 2,
     name: '',
-    privateEvents: [{}],
-    publicEvents: [{}],
+    privateEvents: [],
+    publicEvents: [],
     showModal: false,
     showPublic: true,
     startDate: '',
@@ -29,18 +29,12 @@ export const newEventReducer = (state = initialState, action: any) => {
         case newEventTypes.SET_PUBLIC_EVENTS:
             return {
                 ...state,
-                publicEvents: [
-                    ...state.publicEvents,
-                    action.payload.publicEvents
-                ]
+                publicEvents: action.payload.publicEvents
             }
         case newEventTypes.SET_PRIVATE_EVENTS:
             return {
                 ...state,
-                privateEvents: [
-                    ...state.privateEvents,
-                    action.payload.privateEvents
-                ]
+                privateEvents: action.payload.privateEvents
             }
         case newEventTypes.SET_USER_INTERESTS:
             return {

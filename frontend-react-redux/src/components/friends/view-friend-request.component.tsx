@@ -7,7 +7,9 @@ export class FriendRequestComponent extends React.Component<any, any> {
       currentRequest: [],
       friends: [],
       newRequests: {},
+      newRequests2: {},
       requestId: 0,
+      requestId2: 0,
       requests: []
     };
   }
@@ -15,9 +17,9 @@ export class FriendRequestComponent extends React.Component<any, any> {
     // Fetches the Pending friend requests
     fetch(
       environment.context +
-        `requests/friend/${JSON.parse(
-          localStorage.getItem("userId") || "{}"
-        )}/status/1`,
+      `requests/friend/${JSON.parse(
+        localStorage.getItem("userId") || "{}"
+      )}/status/1`,
       {
         headers: {
           Accept: "application/json",
@@ -29,9 +31,9 @@ export class FriendRequestComponent extends React.Component<any, any> {
       .then(resp => resp.json())
       .then(requests => {
         this.setState({ requests });
-        console.log(this.state.requests);
+        // console.log(this.state.requests);
         for (const i of this.state.requests) {
-          console.log(i);
+          // console.log(i);
           const friendId = i.userId;
 
           // this finds all the users with the given id
@@ -42,7 +44,7 @@ export class FriendRequestComponent extends React.Component<any, any> {
                 ...this.state,
                 friends: [...this.state.friends, friend]
               });
-              console.log(this.state);
+              // console.log(this.state);
             })
             .catch(err => {
               console.log(err);
@@ -53,11 +55,13 @@ export class FriendRequestComponent extends React.Component<any, any> {
         console.log(err);
       });
   }
+
   public onApprove = (friendId: any, e: any) => {
+    e.preventDefault();
     console.log(`approving with id: ${friendId}`);
     const userId = JSON.parse(localStorage.getItem("userId") || "{}");
-    console.log(`userId: ${userId}`);
-    e.preventDefault();
+    // console.log(`userId: ${userId}`);
+    
     const id = friendId;
 
     // find the requestee id by the userId and friendId
@@ -96,11 +100,13 @@ export class FriendRequestComponent extends React.Component<any, any> {
     array.splice(index, 1);
     this.setState({ friends: array });
 
-    const userIdz = { id };
+    const userIdz = {"id": id };
     console.log("userid: " + id);
     console.log("friendid: " + userId);
-    fetch(environment.context + `users/${userIdz}/addFriendRequest`, {
-      body: JSON.stringify(id),
+
+      // update the mutual friends
+    fetch(environment.context + `users/${userId}/addFriendRequest`, {
+      body: JSON.stringify(userIdz),
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
@@ -111,8 +117,48 @@ export class FriendRequestComponent extends React.Component<any, any> {
       .catch(err => {
         console.log(err);
       });
+     
+      // gets the second requestID
+      setTimeout(() => {
+        console.log("making second fetch call")
+        fetch(environment.context + `requests/friend/${id}/fr/${userId}`, {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          method: "GET"
+        })
+          .then(resp => resp.json())
+          .then(newRequests2 => {
+  
+              this.setState({ newRequests2 });
+              console.log("making second fetch call and setting state2"+this.state.newRequests2);      
+            
+            for (const j of this.state.newRequests2) {
+              console.log(j);
+              const requestId2 = j.requestId;
+              const statusId = { statusId: 2 };
+              console.log(requestId2);
+              // on here we edit the status to be 2 or approved
+
+              fetch(environment.context + `requests/editStatus/${requestId2}`, {
+                body: JSON.stringify(statusId),
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json"
+                },
+                method: "PUT"
+              }).then(resp => resp.json());
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }, 3000);
+     
   };
 
+  // deny a friend request
   public onDeny = (friendId: any, e: any) => {
     console.log(`denying with id: ${friendId}`);
     const userId = JSON.parse(localStorage.getItem("userId") || "{}");
@@ -154,6 +200,7 @@ export class FriendRequestComponent extends React.Component<any, any> {
     array.splice(index, 1);
     this.setState({ friends: array });
   };
+
   public render() {
     return (
       <div className="container mt-5 pt-5">
