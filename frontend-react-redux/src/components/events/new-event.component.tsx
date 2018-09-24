@@ -62,7 +62,6 @@ class NewEventComponent extends React.Component<IProps, {}> {
   };
 
   public eventVisbilityChange = (e: any) => {
-    alert(e.target.value);
     if (this.props.eventVisibility === 1) {
       this.props.updateEventVisibility(2);
     } else {
