@@ -110,11 +110,9 @@ class MyCalendar extends React.Component {
             
         if (this.props.showPublic === false) {
             this.props.updateCalendarEvents(this.props.publicEvents);
-            // this.props.updateCalendarEvents(this.makeUnique(this.props.calendarEvents));
             this.props.updateShowPublic(true);
         } else {
             this.props.updateCalendarEvents(this.props.privateEvents);
-            // this.props.updateCalendarEvents(this.makeUnique(this.props.calendarEvents));
             this.props.updateShowPublic(false);
         }
     }
