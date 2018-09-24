@@ -167,15 +167,17 @@ class MyCalendar extends React.Component {
                 onSelectEvent={this.selectedEventChange}
             />
             <Modal show={this.props.showModal} onHide={this.toggleModal}>
-                <Modal.Header>Title: {this.props.currentEvent.name}
-                    <p>By: {this.props.author.username + '-' + this.props.author.firstName + ' ' + this.props.author.lastName}</p></Modal.Header>
+                <Modal.Header className="bg-light text-uppercase">
+                    Title: {this.props.currentEvent.name} <br/>
+                    By: {this.props.author.firstName + ' ' + this.props.author.lastName}
+                </Modal.Header>
                 <Modal.Body>
-                    <p>Type: {this.props.currentEvent.eventType}</p>
-                    <p>Location: {this.props.currentEvent.location}</p>
-                    <p>Description: {this.props.currentEvent.description}</p>
-                    <p>Contact: {this.props.author.email}</p>
+                    <p className="item-intro text-muted">Type: {this.props.currentEvent.eventType}</p>
+                    <p className="item-intro text-muted">Location: {this.props.currentEvent.location}</p>
+                    <p className="item-intro text-muted">Description: {this.props.currentEvent.description}</p>
+                    <p className="item-intro text-muted">Contact: {this.props.author.email}</p>
                 </Modal.Body>
-                <Modal.Footer>
+                <Modal.Footer className="bg-light">
                     <Button color="secondary" onClick={this.toggleModal}>Close</Button>
                 </Modal.Footer>
             </Modal>
