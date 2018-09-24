@@ -52,12 +52,10 @@ class MyCalendar extends React.Component {
                 events.forEach((item) => {
                     let oneEvent = { end: new Date(item.endTime), start: new Date(item.startTime), title: item.name };
                     if (this.props.userInterests.filter(e => e.interest === item.eventType).length > 0) {
-                        alert("please show once")
                         if (this.props.userFriends.filter(e => e.id === item.id).length > 0 || 
                         item.authorId === JSON.parse(localStorage.getItem('userId') || '{}')) {
-                            // if (!this.props.publicEvents.includes(item) || 
-                            // !this.props.privateEvents.includes(item)) {
-                            
+                            if (!this.props.publicEvents.includes(item) || 
+                            !this.props.privateEvents.includes(item)) {
                                 if (item.visibility === 2) {
                                     this.props.setPrivateEvents(oneEvent);
                                 } else {
@@ -69,8 +67,9 @@ class MyCalendar extends React.Component {
                                 }
                             }
                         }
+                    }
                 })
-                this.props.updateCalendarEvents(this.props.privateEvents)
+                this.props.updateCalendarEvents(this.props.privateEvents);
             }})
             .catch(err => {
                 this.props.getErrMessage(err);
@@ -141,7 +140,8 @@ class MyCalendar extends React.Component {
     render() {
         return <div className="mt-3 container">
             {this.props.errMessage}
-            <button onClick={this.togglePublicPrivate}>Public/Private</button>
+            <button onClick={this.togglePublicPrivate} className="btn btn-info mb-1">Public</button>{ ' ' }
+            <button onClick={this.togglePublicPrivate} className="btn btn-dark mb-1"> Private </button>
             <BigCalendar events={this.props.calendarEvents}
                 defaultDate={new Date()}
                 defaultView="month"
