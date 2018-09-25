@@ -63,7 +63,7 @@ class MyCalendar extends React.Component {
                     if (this.props.userInterests.filter(e => e.interest === item.eventType).length > 0) {
                         // if (this.props.userFriends.filter( (f) => {f.id === item.id} ).length > 0 &&
                         //     item.authorId === JSON.parse(localStorage.getItem('userId') || '{}')) {
-                        if (this.props.userFriends.filter(f => f.id === item.authorId).length > 0) {
+                        if (this.props.userFriends.filter(f => f.id === item.authorId).length > 0 || (item.authorId === JSON.parse(localStorage.getItem('userId') || '{}'))) {
                             if (!this.props.publicEvents.includes(item) || !this.props.privateEvents.includes(item)) {
                                 if (item.visibility === 2) {
                                     newAllPrivateEvent.push(oneEvent);
