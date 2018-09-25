@@ -8,7 +8,6 @@ import * as newEventActions from "../../actions/event/events.actions";
 // import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Button, Modal } from 'react-bootstrap';
 
-
 BigCalendar.setLocalizer(BigCalendar.momentLocalizer(moment));
 
 class MyCalendar extends React.Component {
@@ -62,18 +61,18 @@ class MyCalendar extends React.Component {
                 events.forEach((item) => {
                     let oneEvent = { end: new Date(item.endTime), start: new Date(item.startTime), title: item.name };
                     if (this.props.userInterests.filter(e => e.interest === item.eventType).length > 0) {
-                        if (this.props.userFriends.filter(e => e.id === item.id).length > 0 ||
-                            item.authorId === JSON.parse(localStorage.getItem('userId') || '{}')) {
-                            if (!this.props.publicEvents.includes(item) ||
-                                !this.props.privateEvents.includes(item)) {
+                        // if (this.props.userFriends.filter( (f) => {f.id === item.id} ).length > 0 &&
+                        //     item.authorId === JSON.parse(localStorage.getItem('userId') || '{}')) {
+                        if (this.props.userFriends.filter(f => f.id === item.authorId).length > 0) {
+                            if (!this.props.publicEvents.includes(item) || !this.props.privateEvents.includes(item)) {
                                 if (item.visibility === 2) {
                                     newAllPrivateEvent.push(oneEvent);
                                 } else {
                                     newAllPublicEvent.push(oneEvent);
                                 }
                             }
-
                         }
+                        // }
                     }
                 })
                 this.props.setPrivateEvents(newAllPrivateEvent);
@@ -107,7 +106,7 @@ class MyCalendar extends React.Component {
     }
 
     togglePublicPrivate = () => {
-            
+
         if (this.props.showPublic === false) {
             this.props.updateCalendarEvents(this.props.publicEvents);
             // this.props.updateCalendarEvents(this.makeUnique(this.props.calendarEvents));
@@ -120,7 +119,7 @@ class MyCalendar extends React.Component {
     }
 
     selectedEventChange = (event, e) => {
-        this.props.updateShowModal(!this.props.showModal);
+
         fetch(environment.context + `events/name/${event.title}`, {
             headers: {
                 'Accept': 'application/json',
@@ -131,31 +130,34 @@ class MyCalendar extends React.Component {
             .then(resp => resp.json())
             .then(eventData => {
                 this.props.updateCurrentEvent(eventData);
+                fetch(environment.context + `users/${this.props.currentEvent.authorId}`, {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    method: 'GET'
+                })
+                    .then(resp => resp.json())
+                    .then(user => {
+                        this.props.updateEventAuthor(user);
+                        this.props.updateShowModal(!this.props.showModal);
+                    })
+                    .catch(err => {
+                        this.props.getErrMessage(err);
+                    })
             })
             .catch(err => {
                 this.props.getErrMessage(err);
             })
-        fetch(environment.context + `users/${this.props.currentEvent.authorId}`, {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: 'GET'
-        })
-            .then(resp => resp.json())
-            .then(user => {
-                this.props.updateEventAuthor(user);
-            })
-            .catch(err => {
-                this.props.getErrMessage(err);
-            })
+
     }
 
     render() {
         return <div className="mt-3 container">
             {this.props.errMessage}
-            { (this.props.showPublic === false) ? <button onClick={this.togglePublicPrivate} className="btn btn-dark mb-1"> Private </button>
-                : <button onClick={this.togglePublicPrivate} className="btn btn-info mb-1">Public</button>
+            {(this.props.showPublic === false) ? 
+                <button onClick={this.togglePublicPrivate} className="btn btn-info mb-1">Public</button>
+            :   <button onClick={this.togglePublicPrivate} className="btn btn-dark mb-1"> Private </button>
             }
 
             <BigCalendar events={this.props.calendarEvents}
@@ -167,8 +169,8 @@ class MyCalendar extends React.Component {
                 onSelectEvent={this.selectedEventChange}
             />
             <Modal show={this.props.showModal} onHide={this.toggleModal}>
-                <Modal.Header className="bg-light text-uppercase">
-                    Title: {this.props.currentEvent.name} <br/>
+                <Modal.Header className="bg-light text-uppercase text-dark">
+                    Title: {this.props.currentEvent.name} <br />
                     By: {this.props.author.firstName + ' ' + this.props.author.lastName}
                 </Modal.Header>
                 <Modal.Body>
